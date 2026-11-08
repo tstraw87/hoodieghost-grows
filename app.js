@@ -21,8 +21,8 @@ resizeCanvas();
 
 class Particle {
   constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
+    this.x = Math.random() * window.innerWidth;
+    this.y = Math.random() * window.innerHeight;
     this.size = Math.random() * 120 + 80;
     this.speedX = Math.random() * 0.4 - 0.2;
     this.speedY = Math.random() * 0.2 - 0.1;
@@ -45,7 +45,6 @@ for(let i=0; i<35; i++) particles.push(new Particle());
 
 // --- RESERVOIR ANIMATION ENGINE ---
 const rezCanvas = document.getElementById('rezCanvas');
-const rezCtx = rezCanvas ? rezCanvas.getContext('2d') : null;
 let bubbles =;
 
 class Bubble {
@@ -62,13 +61,12 @@ class Bubble {
       this.x = Math.random() * (rezCanvas ? rezCanvas.width : 400);
     }
   }
-  draw() {
-    if (!rezCtx) return;
-    rezCtx.strokeStyle = "rgba(255,255,255,0.4)";
-    rezCtx.lineWidth = 1.5;
-    rezCtx.beginPath();
-    rezCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    rezCtx.stroke();
+  draw(rCtx) {
+    rCtx.strokeStyle = "rgba(255,255,255,0.4)";
+    rCtx.lineWidth = 1.5;
+    rCtx.beginPath();
+    rCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    rCtx.stroke();
   }
 }
 for(let i=0; i<25; i++) bubbles.push(new Bubble());
@@ -137,7 +135,7 @@ function runNutrientAudit() {
   }
 
   if (waterSrc === "RO" && (!document.getElementById('nut_cal').checked || !document.getElementById('nut_mag').checked)) {
-    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Calcium AND Magnesium checks checked.");
+    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Calcium AND Magnesium checked.");
   }
   if (current.stage === "LateFlower" && document.getElementById('nut_silica') && document.getElementById('nut_silica').checked) {
     alerts.push("❌ SILICA FLAG WARNING: Clear Silica shelf entries before late-season bloom cycles.");
@@ -178,7 +176,8 @@ function updateVisualOutputs(vpd, state) {
 }
 
 function renderReservoir(color) {
-  if (!rezCanvas || !rezCtx) return;
+  if (!rezCanvas) return;
+  const rezCtx = rezCanvas.getContext('2d');
   rezCanvas.width = rezCanvas.parentElement.clientWidth;
   rezCanvas.height = 150;
 
@@ -188,7 +187,7 @@ function renderReservoir(color) {
 
   bubbles.forEach(b => {
     b.update();
-    b.draw();
+    b.draw(rezCtx);
   });
 }
 
@@ -199,6 +198,7 @@ function switchTent(val) {
   document.getElementById('rhSlider').value = current.rh;
   document.getElementById('stageSelect').value = current.stage;
   document.getElementById('ageSlider').value = current.age;
+  document.getElementById('ageDisplay').innerText = current.age; // FIXED SLIDER RESET SYNC
   document.getElementById('waterSource').value = current.water;
   document.getElementById('rawPPM').value = current.ppm;
   
@@ -212,6 +212,7 @@ function updateStage() {
   runNutrientAudit();
 }
 
+// FIXED THE DISCONNECTED AGE SLIDER LOGIC
 function updateAge() {
   let val = document.getElementById('ageSlider').value;
   dataStorage[activeTent].age = val;
@@ -276,6 +277,7 @@ function appLoop() {
 }
 
 window.addEventListener('load', () => {
+  resizeCanvas();
   switchTent('tent1');
   appLoop();
 });
