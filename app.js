@@ -135,7 +135,7 @@ function runNutrientAudit() {
   }
 
   if (waterSrc === "RO" && (!document.getElementById('nut_cal').checked || !document.getElementById('nut_mag').checked)) {
-    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Calcium AND Magnesium checked.");
+    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Calcium AND Magnesium checks checked.");
   }
   if (current.stage === "LateFlower" && document.getElementById('nut_silica') && document.getElementById('nut_silica').checked) {
     alerts.push("❌ SILICA FLAG WARNING: Clear Silica shelf entries before late-season bloom cycles.");
@@ -198,7 +198,7 @@ function switchTent(val) {
   document.getElementById('rhSlider').value = current.rh;
   document.getElementById('stageSelect').value = current.stage;
   document.getElementById('ageSlider').value = current.age;
-  document.getElementById('ageDisplay').innerText = current.age; // FIXED SLIDER RESET SYNC
+  document.getElementById('ageDisplay').innerText = current.age; 
   document.getElementById('waterSource').value = current.water;
   document.getElementById('rawPPM').value = current.ppm;
   
@@ -212,7 +212,7 @@ function updateStage() {
   runNutrientAudit();
 }
 
-// FIXED THE DISCONNECTED AGE SLIDER LOGIC
+// FIXED THE AGING SLIDER HOOK INTERFACE
 function updateAge() {
   let val = document.getElementById('ageSlider').value;
   dataStorage[activeTent].age = val;
