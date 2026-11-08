@@ -1,13 +1,6 @@
-/**
- * HOODIEGHOST GROWS ENGINE
- * Complete state, dynamic tracking metrics & localized persistence management.
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Current Global Active Workspace Scope
     let currentTent = 'tent1';
 
-    // Elements Lookup Matrix
     const tentButtons = document.querySelectorAll('.tent-btn');
     const ageSlider = document.getElementById('age-slider');
     const ageText = document.getElementById('age-text');
@@ -24,14 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const inventoryGrid = document.getElementById('inventory-grid');
     const tempUnitRadios = document.querySelectorAll('input[name="temp-unit"]');
 
-    // Default structural schemas per workspace sandbox environment
     const defaultData = {
         tent1: { age: 1, airTemp: 78, rh: 60, unit: 'F', cal: false, mag: false, additives: ['Ghost Root Booster', 'Neon Foliar Blast'] },
         tent2: { age: 25, airTemp: 76, rh: 55, unit: 'F', cal: false, mag: false, additives: ['Hydro Grow A', 'Hydro Grow B'] },
         tent3: { age: 60, airTemp: 74, rh: 45, unit: 'F', cal: false, mag: false, additives: ['Organic Bloom Pack'] }
     };
 
-    // Initialize local tracking datasets
     function getTentState(tentId) {
         const stored = localStorage.getItem(`hoodieghost_${tentId}`);
         if (stored) {
@@ -44,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(`hoodieghost_${tentId}`, JSON.stringify(data));
     }
 
-    // Dynamic stage mapper based on continuous timeline ranges
     function determineGrowthStage(day) {
         if (day <= 7) return 'Germination';
         if (day <= 21) return 'Seedling';
@@ -53,45 +43,37 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'Harvest Window';
     }
 
-    // VPD Calculation Engine with Offset Mechanics
     function calculateVPD() {
         const airTemp = parseFloat(airTempInput.value) || 0;
         const rh = parseFloat(roomRhInput.value) || 0;
-        const selectedUnit = document.querySelector('input[name="temp-unit"]:checked').value;
+        const checkedUnitElement = document.querySelector('input[name="temp-unit"]:checked');
+        const selectedUnit = checkedUnitElement ? checkedUnitElement.value : 'F';
 
         let tempC = airTemp;
         if (selectedUnit === 'F') {
             tempC = (airTemp - 32) * 5 / 9;
         }
 
-        // Apply specific -2° Leaf-to-Air Offset Target
         const leafTempC = tempC - 2;
         const leafTempF = (leafTempC * 9 / 5) + 32;
 
-        // Render leaf value feedback
         if (selectedUnit === 'F') {
             leafTempDisplay.textContent = `${leafTempF.toFixed(1)}°F`;
         } else {
             leafTempDisplay.textContent = `${leafTempC.toFixed(1)}°C`;
         }
 
-        // Tetens Equation parameters for saturated vapor pressures (SVP)
         const svpAir = 0.61078 * Math.exp((17.27 * tempC) / (tempC + 237.3));
         const svpLeaf = 0.61078 * Math.exp((17.27 * leafTempC) / (leafTempC + 237.3));
-
-        // Actual vapor pressure calculation of room atmosphere
         const avpAir = svpAir * (rh / 100);
 
-        // Vapor Pressure Deficit calculation (Target Leaf SVP - Real Air AVP)
         let vpd = svpLeaf - avpAir;
         if (vpd < 0) vpd = 0;
 
         vpdDisplay.textContent = `${vpd.toFixed(2)} kPa`;
     }
 
-    // Split Feed Logic Validation
     function checkDeficiencyAlarms() {
-        // Warning triggers when either independent channel registers unchecked state
         if (!calCheck.checked || !magCheck.checked) {
             roWarning.classList.remove('hidden');
         } else {
@@ -99,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Build Inventory Components dynamically
     function renderAdditives(additivesArray) {
         inventoryGrid.innerHTML = '';
         additivesArray.forEach((item, index) => {
@@ -113,12 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Compile view layout tracking directly from current tent states
     function loadActiveTentView(tentId) {
         currentTent = tentId;
         const state = getTentState(tentId);
 
-        // Map component elements
         ageSlider.value = state.age;
         ageText.textContent = `Day ${state.age}`;
         stageText.textContent = determineGrowthStage(state.age);
@@ -138,18 +117,20 @@ document.addEventListener('DOMContentLoaded', () => {
         checkDeficiencyAlarms();
     }
 
-    // Extract current interface settings to save back to memory ledger
     function updateCurrentTentStore() {
         const additives = [];
         inventoryGrid.querySelectorAll('.inventory-item span').forEach(el => {
             additives.push(el.textContent);
         });
 
+        const checkedUnitElement = document.querySelector('input[name="temp-unit"]:checked');
+        const selectedUnit = checkedUnitElement ? checkedUnitElement.value : 'F';
+
         const state = {
             age: parseInt(ageSlider.value),
             airTemp: parseFloat(airTempInput.value) || 0,
             rh: parseFloat(roomRhInput.value) || 0,
-            unit: document.querySelector('input[name="temp-unit"]:checked').value,
+            unit: selectedUnit,
             cal: calCheck.checked,
             mag: magCheck.checked,
             additives: additives
@@ -157,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         saveTentState(currentTent, state);
     }
 
-    // Event Loop Hook Listeners
     tentButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             tentButtons.forEach(b => b.classList.remove('active'));
@@ -194,7 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Append New Additives Terminal Command Execution
     injectBtn.addEventListener('click', () => {
         const text = additiveInput.value.trim();
         if (text) {
@@ -210,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') injectBtn.click();
     });
 
-    // Delete Additive Handler via event delegation matrix
     inventoryGrid.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
             const idx = parseInt(e.target.getAttribute('data-index'));
@@ -221,7 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Atmospheric Floating Background Fog Canvas Animation Loop
     const canvas = document.getElementById('fog-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -236,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     class FogParticle {
         constructor() {
             this.reset();
-            this.y = Math.random() * canvas.height; // Spread initially across height
+            this.y = Math.random() * canvas.height;
         }
         reset() {
             this.x = Math.random() * canvas.width;
@@ -256,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         draw() {
             ctx.beginPath();
             let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-            gradient.addColorStop(0, `rgba(102, 255, 51, ${this.alpha})`); // Subtle Toxic Neon Hue blend
+            gradient.addColorStop(0, `rgba(102, 255, 51, ${this.alpha})`);
             gradient.addColorStop(0.4, `rgba(29, 31, 33, ${this.alpha * 0.5})`);
             gradient.addColorStop(1, 'rgba(20, 22, 23, 0)');
             ctx.fillStyle = gradient;
@@ -265,4 +242,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Populate initial background atmosphere context
+    for (let i = 0; i < 25; i++) {
+        particles.push(new FogParticle());
+    }
+
+    function animateFog() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateFog);
+    }
+    animateFog();
+
+    loadActiveTentView('tent1');
+});
