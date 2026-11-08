@@ -1,100 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HoodieGhost Grows Dashboard</title>
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <canvas id="fog-canvas"></canvas>
-    <div class="dashboard-wrapper">
-        <header class="main-header">
-            <div class="mascot-frame">
-                <img src="logo.png" alt="Logo" id="mascot-img" onerror="this.style.visibility='hidden';">
-            </div>
-            <h1 class="dripping-title">HOODIEGHOST GROWS</h1>
-        </header>
+HoodieGhost Grows Dashboard
 
-        <nav class="tent-nav">
-            <button class="tent-btn active" data-tent="tent1">Tent 1</button>
-            <button class="tent-btn" data-tent="tent2">Tent 2</button>
-            <button class="tent-btn" data-tent="tent3">Tent 3</button>
-        </nav>
+:root {
+--bg-color: #141617;
+--panel-color: #1D1F21;
+--input-color: #0F1011;
+--accent-neon: #66FF33;
+--accent-blue: #99CCFF;
+--text-main: #FFFFFF;
+--text-muted: #8A8F93;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: var(--bg-color); color: var(--text-main); font-family: sans-serif; min-height: 100vh; padding: 20px; }
+.dashboard-wrapper { max-width: 1024px; margin: 0 auto; }
+.main-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; }
+.mascot-frame { width: 180px; height: 180px; border-radius: 50%; border: 4px solid var(--accent-neon); overflow: hidden; background: var(--input-color); display: flex; align-items: center; justify-content: center; }
+.mascot-frame img { width: 100%; height: 100%; object-fit: cover; }
+.dripping-title { font-size: 2.8rem; color: var(--accent-neon); text-shadow: 0 0 10px rgba(102,255,51,0.5); text-align: center; margin-top: 10px; font-weight: 900; }
+.tent-nav { display: flex; gap: 10px; margin-bottom: 15px; background: var(--input-color); padding: 5px; border-radius: 8px; }
+.tent-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-size: 1.1rem; padding: 10px; cursor: pointer; font-weight: bold; }
+.tent-btn.active { background: var(--panel-color); color: var(--accent-blue); border-radius: 6px; }
+.action-trigger-btn { width: 100%; background: #000; border: 2px dashed #FF3333; color: #FF3333; padding: 12px; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
+.grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 768px) { .grid-container { grid-template-columns: 1fr; } }
+.panel-card { background: var(--panel-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+.panel-heading { font-size: 1.3rem; color: var(--text-main); margin-bottom: 15px; border-bottom: 1px dashed #444; padding-bottom: 5px; font-weight: bold; }
+.slider-container input { width: 100%; accent-color: var(--accent-neon); margin: 10px 0; }
+.age-display { font-size: 1.3rem; font-weight: 700; color: var(--accent-neon); }
+.calendar-subsystem { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; background: var(--input-color); padding: 10px; border-radius: 6px; }
+.calendar-subsystem label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
+.calendar-subsystem input, .calendar-subsystem textarea { background: var(--panel-color); border: 1px solid #444; color: #fff; padding: 8px; border-radius: 4px; font-family: inherit; outline: none; }
+.calendar-subsystem textarea { height: 70px; resize: none; }
+.reservoir-visual-wrapper { background: var(--input-color); padding: 12px; border-radius: 8px; margin-bottom: 15px; }
+.reservoir-tank { width: 100%; height: 90px; background: rgba(255,255,255,0.02); border: 2px solid #555; position: relative; overflow: hidden; border-radius: 6px; }
+.liquid-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #2288ff, #66aaff); transition: height 0.3s; }
+.reservoir-label-overlay { position: absolute; width: 100%; text-align: center; top: 38%; font-size: 0.9rem; color: #fff; text-shadow: 1px 1px 2px #000; font-weight: bold; }
+.reservoir-controls { margin-top: 8px; }
+.reservoir-controls input { width: 100%; accent-color: var(--accent-blue); }
+.checkbox-group { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.warning-banner { background: rgba(255,51,51,0.2); border: 1px solid #FF3333; color: #FF3333; padding: 10px; border-radius: 6px; text-align: center; margin-top: 10px; font-weight: bold; }
+.terminal-form { display: flex; gap: 10px; margin-bottom: 10px; }
+.terminal-form input { flex: 1; background: var(--input-color); border: 1px solid #444; color: #fff; padding: 8px; border-radius: 4px; outline: none; }
+.terminal-form button { background: var(--accent-neon); color: #000; padding: 0 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+.inventory-list { list-style: none; max-height: 120px; overflow-y: auto; }
+.inventory-item { background: var(--input-color); padding: 8px; margin-bottom: 5px; border-radius: 4px; display: flex; justify-content: space-between; font-size: 0.9rem; border-left: 3px solid var(--accent-neon); }
+.delete-btn { background: none; border: none; color: #FF3333; cursor: pointer; font-weight: bold; }
+.hidden { display: none !important; }HOODIEGHOST GROWS
 
-        <div class="action-bar-panel">
-            <button id="new-grow-btn" class="action-trigger-btn">☣️ INITIALIZE NEW GROW TERMINAL</button>
-        </div>
 
-        <main class="grid-container">
-            <section class="panel-card timeline-panel">
-                <h2 class="panel-heading">Plant Timeline & Calendar</h2>
-                <div class="slider-container">
-                    <input type="range" id="age-slider" min="1" max="120" value="1">
-                    <div class="age-display"><span id="age-text">Day 1</span> - <span id="stage-text">Germination</span></div>
-                </div>
-                <div class="calendar-subsystem">
-                    <label>Grow Log Date</label>
-                    <input type="date" id="log-date-picker">
-                    <textarea id="daily-log-notes" placeholder="Type logs, notes, or training adjustments..."></textarea>
-                </div>
-            </section>
+Tent 1
+Tent 2
+Tent 3
 
-            <section class="panel-card vpd-panel">
-                <h2 class="panel-heading">VPD Engine</h2>
-                <div class="unit-selector">
-                    <label><input type="radio" name="temp-unit" value="F" checked> °F</label>
-                    <label><input type="radio" name="temp-unit" value="C"> °C</label>
-                </div>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label>Air Temp</label>
-                        <input type="number" id="air-temp" value="78" step="0.1">
-                    </div>
-                    <div class="input-group">
-                        <label>Humidity (%)</label>
-                        <input type="number" id="room-rh" value="60" min="0" max="100">
-                    </div>
-                </div>
-                <div class="vpd-output">
-                    <div class="metric-label">Target Leaf Temp (-2° Offset): <span id="leaf-temp-display">76.0°F</span></div>
-                    <div class="metric-value" id="vpd-display">0.00 kPa</div>
-                </div>
-            </section>
+☣️ INITIALIZE NEW GROW TERMINAL
+Plant Timeline & Calendar
 
-            <section class="panel-card feeds-panel">
-                <h2 class="panel-heading">Reservoir & Split Feeds</h2>
-                <div class="reservoir-visual-wrapper">
-                    <div class="reservoir-tank">
-                        <div class="liquid-layer" id="reservoir-liquid">
-                            <div class="bubbles-generator"></div>
-                        </div>
-                        <div class="reservoir-label-overlay">RESERVOIR VOLUME: <span id="volume-display">100%</span></div>
-                    </div>
-                    <div class="reservoir-controls">
-                        <input type="range" id="reservoir-volume-slider" min="0" max="100" value="100">
-                    </div>
-                </div>
-                <div class="checkbox-group">
-                    <label class="custom-checkbox"><input type="checkbox" id="cal-check"> Independent Calcium</label>
-                    <label class="custom-checkbox"><input type="checkbox" id="mag-check"> Independent Magnesium</label>
-                </div>
-                <div id="ro-warning" class="warning-banner hidden">⚠️ CRITICAL DEFICIENCY RISK: Pure RO Water Layout Detected!</div>
-            </section>
 
-            <section class="panel-card inventory-panel">
-                <h2 class="panel-heading">Additive Terminal</h2>
-                <div class="terminal-form">
-                    <input type="text" id="additive-input" placeholder="Type booster brand...">
-                    <button id="inject-btn">Inject</button>
-                </div>
-                <ul id="inventory-grid" class="inventory-list"></ul>
-            </section>
-        </main>
-    </div>
-    <script src="app.js"></script>
-</body>
-</html>
+Day 1 - Germination
+
+Grow Log Date
+VPD Engine
+ °F
+ °C
+Air Temp
+Humidity (%)
+Target Leaf Temp (-2° Offset): 76.0°F
+0.00 kPa
+
+Reservoir & Split Feeds
+
+
+
+RESERVOIR VOLUME: 100%
+
+
+
+
+
+ Independent Calcium
+ Independent Magnesium
+⚠️ CRITICAL DEFICIENCY RISK: Pure RO Water Layout Detected!
+Additive Terminal
+
+
+Injectdocument.addEventListener('DOMContentLoaded', () => {
+let activeTent = 'tent1';
+const db = {
+tent1: { age: 1, temp: 78, rh: 60, unit: 'F', cal: false, mag: false, res: 100, adds: ['Ghost Root Booster'], notes: {} },
+tent2: { age: 25, temp: 76, rh: 55, unit: 'F', cal: false, mag: false, res: 80, adds: ['Hydro Grow A'], notes: {} },
+tent3: { age: 60, temp: 74, rh: 45, unit: 'F', cal: false, mag: false, res: 50, adds: ['Organic Bloom Pack'], notes: {} }
+};
+const slider = document.getElementById('age-slider');
+const ageTxt = document.getElementById('age-text');
+const stageTxt = document.getElementById('stage-text');
+const airInput = document.getElementById('air-temp');
+const rhInput = document.getElementById('room-rh');
+const leafDisplay = document.getElementById('leaf-temp-display');
+const vpdDisplay = document.getElementById('vpd-display');
+const cCheck = document.getElementById('cal-check');
+const mCheck = document.getElementById('mag-check');
+const warnBox = document.getElementById('ro-warning');
+const addInput = document.getElementById('additive-input');
+const grid = document.getElementById('inventory-grid');
+const dateInput = document.getElementById('log-date-picker');
+const notesInput = document.getElementById('daily-log-notes');
+const liquid = document.getElementById('reservoir-liquid');
+const volTxt = document.getElementById('volume-display');
+const resSlider = document.getElementById('reservoir-volume-slider');
+dateInput.value = new Date().toISOString().split('T')[0];
+function loadLocal(id) {
+const data = localStorage.getItem('hg_' + id);
+return data ? JSON.parse(data) : db[id];
+}
+function syncView() {
+const s = loadLocal(activeTent);
+slider.value = s.age;
+ageTxt.textContent = 'Day ' + s.age;
+stageTxt.textContent = s.age <= 7 ? 'Germination' : s.age <= 21 ? 'Seedling' : s.age <= 56 ? 'Vegetative' : 'Flowering';
+airInput.value = s.temp;
+rhInput.value = s.rh;
+document.getElementById('unit-f').checked = s.unit === 'F';
+document.getElementById('unit-c').checked = s.unit === 'C';
+cCheck.checked = s.cal;
+mCheck.checked = s.mag;
+resSlider.value = s.res;
+volTxt.textContent = s.res + '%';
+liquid.style.height = s.res + '%';
+const dayKey = dateInput.value;
+if (!s.notes) s.notes = {};
+notesInput.value = s.notes[dayKey] || '';
+grid.innerHTML = '';
+s.adds.forEach((item, i) => {
+grid.innerHTML += '' + item + '✕';
+});
+let t = parseFloat(s.temp) || 0;
+let rh = parseFloat(s.rh) || 0;
+let tc = s.unit === 'F' ? (t - 32) * 5 / 9 : t;
+let lc = tc - 2;
+leafDisplay.textContent = s.unit === 'F' ? ((lc * 9 / 5) + 32).toFixed(1) + '°F' : lc.toFixed(1) + '°C';
+let svpAir = 0.61078 * Math.exp((17.27 * tc) / (tc + 237.3));
+let svpLeaf = 0.61078 * Math.exp((17.27 * lc) / (lc + 237.3));
+let vpd = svpLeaf - (svpAir * (rh / 100));
+vpdDisplay.textContent = Math.max(0, vpd).toFixed(2) + ' kPa';
+warnBox.classList.toggle('hidden', s.cal && s.mag);
+}
+function saveCurrent() {
+const s = loadLocal(activeTent);
+s.age = parseInt(slider.value);
+s.temp = parseFloat(airInput.value) || 0;
+s.rh = parseFloat(rhInput.value) || 0;
+s.unit = document.getElementById('unit-f').checked ? 'F' : 'C';
+s.cal = cCheck.checked;
+s.mag = mCheck.checked;
+s.res = parseInt(resSlider.value);
+if (!s.notes) s.notes = {};
+s.notes[dateInput.value] = notesInput.value;
+localStorage.setItem('hg_' + activeTent, JSON.stringify(s));
+syncView();
+}
+window.delAdd = (index) => {
+const s = loadLocal(activeTent);
+s.adds.splice(index, 1);
+localStorage.setItem('hg_' + activeTent, JSON.stringify(s));
+syncView();
+};
+['tent1', 'tent2', 'tent3'].forEach(id => {
+document.getElementById('btn-' + id).addEventListener('click', (e) => {
+document.querySelectorAll('.tent-btn').forEach(b => b.classList.remove('active'));
+e.target.classList.add('active');
+activeTent = id;
+syncView();
+});
+});
+document.getElementById('inject-btn').addEventListener('click', () => {
+const val = addInput.value.trim();
+if(val) {
+const s = loadLocal(activeTent);
+s.adds.push(val);
+localStorage.setItem('hg_' + activeTent, JSON.stringify(s));
+addInput.value = '';
+syncView();
+}
+});
+document.getElementById('new-grow-btn').addEventListener('click', () => {
+if (confirm("Reset active tent records to start a clean grow?")) {
+localStorage.setItem('hg_' + activeTent, JSON.stringify({ age: 1, temp: 78, rh: 60, unit: 'F', cal: false, mag: false, res: 100, adds: [], notes: {} }));
+syncView();
+}
+});
+[slider, resSlider].forEach(el => el.addEventListener('input', saveCurrent));
+[airInput, rhInput, cCheck, mCheck, dateInput, notesInput].forEach(el => el.addEventListener('input', saveCurrent));
+document.querySelectorAll('input[name="temp-unit"]').forEach(r => r.addEventListener('change', saveCurrent));
+syncView();
+});
