@@ -7,7 +7,6 @@ let dataStorage = JSON.parse(localStorage.getItem('hoodieghost_master_db')) || {
   tent3: { name: "Tent 3", temp: 72, rh: 65, stage: "Seedling", age: 8, water: "RO", ppm: 0, history: }
 };
 
-// --- BACKGROUND CANVAS ENGINE ---
 const canvas = document.getElementById('fogCanvas');
 const ctx = canvas.getContext('2d');
 let particles =;
@@ -43,7 +42,6 @@ class Particle {
 }
 for(let i=0; i<35; i++) particles.push(new Particle());
 
-// --- RESERVOIR ANIMATION ENGINE ---
 const rezCanvas = document.getElementById('rezCanvas');
 let bubbles =;
 
@@ -212,7 +210,6 @@ function updateStage() {
   runNutrientAudit();
 }
 
-// FIXED THE AGING SLIDER HOOK INTERFACE
 function updateAge() {
   let val = document.getElementById('ageSlider').value;
   dataStorage[activeTent].age = val;
