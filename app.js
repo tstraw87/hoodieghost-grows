@@ -1,280 +1,268 @@
-let isFahrenheit = true;
-let activeTent = "tent1";
+/**
+ * HOODIEGHOST GROWS ENGINE
+ * Complete state, dynamic tracking metrics & localized persistence management.
+ */
 
-let dataStorage = JSON.parse(localStorage.getItem('hoodieghost_master_db')) || {
-  tent1: { name: "Tent 1", temp: 75, rh: 60, stage: "Vegetative", age: 18, water: "RO", ppm: 0, history: },
-  tent2: { name: "Tent 2", temp: 78, rh: 50, stage: "EarlyFlower", age: 45, water: "Tap", ppm: 210, history: },
-  tent3: { name: "Tent 3", temp: 72, rh: 65, stage: "Seedling", age: 8, water: "RO", ppm: 0, history: }
-};
+document.addEventListener('DOMContentLoaded', () => {
+    // Current Global Active Workspace Scope
+    let currentTent = 'tent1';
 
-const canvas = document.getElementById('fogCanvas');
-const ctx = canvas.getContext('2d');
-let particles =;
+    // Elements Lookup Matrix
+    const tentButtons = document.querySelectorAll('.tent-btn');
+    const ageSlider = document.getElementById('age-slider');
+    const ageText = document.getElementById('age-text');
+    const stageText = document.getElementById('stage-text');
+    const airTempInput = document.getElementById('air-temp');
+    const roomRhInput = document.getElementById('room-rh');
+    const leafTempDisplay = document.getElementById('leaf-temp-display');
+    const vpdDisplay = document.getElementById('vpd-display');
+    const calCheck = document.getElementById('cal-check');
+    const magCheck = document.getElementById('mag-check');
+    const roWarning = document.getElementById('ro-warning');
+    const additiveInput = document.getElementById('additive-input');
+    const injectBtn = document.getElementById('inject-btn');
+    const inventoryGrid = document.getElementById('inventory-grid');
+    const tempUnitRadios = document.querySelectorAll('input[name="temp-unit"]');
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+    // Default structural schemas per workspace sandbox environment
+    const defaultData = {
+        tent1: { age: 1, airTemp: 78, rh: 60, unit: 'F', cal: false, mag: false, additives: ['Ghost Root Booster', 'Neon Foliar Blast'] },
+        tent2: { age: 25, airTemp: 76, rh: 55, unit: 'F', cal: false, mag: false, additives: ['Hydro Grow A', 'Hydro Grow B'] },
+        tent3: { age: 60, airTemp: 74, rh: 45, unit: 'F', cal: false, mag: false, additives: ['Organic Bloom Pack'] }
+    };
 
-class Particle {
-  constructor() {
-    this.x = Math.random() * window.innerWidth;
-    this.y = Math.random() * window.innerHeight;
-    this.size = Math.random() * 120 + 80;
-    this.speedX = Math.random() * 0.4 - 0.2;
-    this.speedY = Math.random() * 0.2 - 0.1;
-  }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x > canvas.width) this.x = 0;
-    if (this.x < 0) this.x = canvas.width;
-  }
-  draw(colorHex) {
-    ctx.fillStyle = colorHex;
-    ctx.globalAlpha = 0.03;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-for(let i=0; i<35; i++) particles.push(new Particle());
-
-const rezCanvas = document.getElementById('rezCanvas');
-let bubbles =;
-
-class Bubble {
-  constructor() {
-    this.x = Math.random() * 400;
-    this.y = 150;
-    this.speed = Math.random() * 1.5 + 0.5;
-    this.radius = Math.random() * 4 + 1;
-  }
-  update() {
-    this.y -= this.speed;
-    if (this.y < 40) {
-      this.y = 150;
-      this.x = Math.random() * (rezCanvas ? rezCanvas.width : 400);
+    // Initialize local tracking datasets
+    function getTentState(tentId) {
+        const stored = localStorage.getItem(`hoodieghost_${tentId}`);
+        if (stored) {
+            try { return JSON.parse(stored); } catch(e) { return defaultData[tentId]; }
+        }
+        return defaultData[tentId];
     }
-  }
-  draw(rCtx) {
-    rCtx.strokeStyle = "rgba(255,255,255,0.4)";
-    rCtx.lineWidth = 1.5;
-    rCtx.beginPath();
-    rCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    rCtx.stroke();
-  }
-}
-for(let i=0; i<25; i++) bubbles.push(new Bubble());
 
-function calculateVPD() {
-  const current = dataStorage[activeTent];
-  let t = parseFloat(document.getElementById('tempSlider').value);
-  let rh = parseFloat(document.getElementById('rhSlider').value);
-  
-  current.temp = t;
-  current.rh = rh;
-  document.getElementById('tempVal').innerText = t;
-  document.getElementById('rhVal').innerText = rh;
+    function saveTentState(tentId, data) {
+        localStorage.setItem(`hoodieghost_${tentId}`, JSON.stringify(data));
+    }
 
-  let tempC = isFahrenheit ? (t - 32) * 5/9 : t;
-  let leafTempC = tempC - 2;
+    // Dynamic stage mapper based on continuous timeline ranges
+    function determineGrowthStage(day) {
+        if (day <= 7) return 'Germination';
+        if (day <= 21) return 'Seedling';
+        if (day <= 56) return 'Vegetative Stage';
+        if (day <= 110) return 'Flowering Cycle';
+        return 'Harvest Window';
+    }
 
-  let svpAir = 0.61078 * Math.exp((17.27 * tempC) / (tempC + 237.3));
-  let svpLeaf = 0.61078 * Math.exp((17.27 * leafTempC) / (leafTempC + 237.3));
-  let avpAir = svpAir * (rh / 100);
-  let vpd = svpLeaf - avpAir;
+    // VPD Calculation Engine with Offset Mechanics
+    function calculateVPD() {
+        const airTemp = parseFloat(airTempInput.value) || 0;
+        const rh = parseFloat(roomRhInput.value) || 0;
+        const selectedUnit = document.querySelector('input[name="temp-unit"]:checked').value;
 
-  if (vpd < 0) vpd = 0;
+        let tempC = airTemp;
+        if (selectedUnit === 'F') {
+            tempC = (airTemp - 32) * 5 / 9;
+        }
 
-  const display = document.getElementById('vpdDisplay');
-  display.innerText = vpd.toFixed(2) + " kPa";
+        // Apply specific -2° Leaf-to-Air Offset Target
+        const leafTempC = tempC - 2;
+        const leafTempF = (leafTempC * 9 / 5) + 32;
 
-  updateVisualOutputs(vpd, current);
-}
+        // Render leaf value feedback
+        if (selectedUnit === 'F') {
+            leafTempDisplay.textContent = `${leafTempF.toFixed(1)}°F`;
+        } else {
+            leafTempDisplay.textContent = `${leafTempC.toFixed(1)}°C`;
+        }
 
-function addNewNutrientItem() {
-  const inputEl = document.getElementById('newNutrientInput');
-  const name = inputEl.value.trim();
-  if(!name) return;
+        // Tetens Equation parameters for saturated vapor pressures (SVP)
+        const svpAir = 0.61078 * Math.exp((17.27 * tempC) / (tempC + 237.3));
+        const svpLeaf = 0.61078 * Math.exp((17.27 * leafTempC) / (leafTempC + 237.3));
 
-  const id = "custom_nut_" + Date.now();
-  const shelf = document.getElementById('shelfGrid');
-  
-  const wrapper = document.createElement('label');
-  wrapper.className = "checkbox-label";
-  wrapper.innerHTML = `<input type="checkbox" id="${id}" checked onchange="runNutrientAudit()"> ${name}`;
-  
-  shelf.appendChild(wrapper);
-  inputEl.value = '';
-  runNutrientAudit();
-}
+        // Actual vapor pressure calculation of room atmosphere
+        const avpAir = svpAir * (rh / 100);
 
-function runNutrientAudit() {
-  const current = dataStorage[activeTent];
-  const waterSrc = document.getElementById('waterSource').value;
-  const rawPPM = parseInt(document.getElementById('rawPPM').value) || 0;
-  const mascotTxt = document.getElementById('mascotSpeech');
-  
-  current.water = waterSrc;
-  current.ppm = rawPPM;
+        // Vapor Pressure Deficit calculation (Target Leaf SVP - Real Air AVP)
+        let vpd = svpLeaf - avpAir;
+        if (vpd < 0) vpd = 0;
 
-  let alerts =;
-  let rezColor = '#99CCFF'; 
+        vpdDisplay.textContent = `${vpd.toFixed(2)} kPa`;
+    }
 
-  if (waterSrc === "Tap" && rawPPM > 180) {
-    alerts.push("⚠️ RAW TAP WATER IS ABOVE 180 PPM! Base fluid recipes scaled back 15% automatically.");
-    document.getElementById('rezStatusText').innerText = "RESTRICTED DOSAGE MATRIX MODE ACTIVE";
-    rezColor = '#FFB300'; 
-  } else {
-    document.getElementById('rezStatusText').innerText = "REZ OK";
-  }
+    // Split Feed Logic Validation
+    function checkDeficiencyAlarms() {
+        // Warning triggers when either independent channel registers unchecked state
+        if (!calCheck.checked || !magCheck.checked) {
+            roWarning.classList.remove('hidden');
+        } else {
+            roWarning.classList.add('hidden');
+        }
+    }
 
-  if (waterSrc === "RO" && (!document.getElementById('nut_cal').checked || !document.getElementById('nut_mag').checked)) {
-    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Calcium AND Magnesium checks checked.");
-  }
-  if (current.stage === "LateFlower" && document.getElementById('nut_silica') && document.getElementById('nut_silica').checked) {
-    alerts.push("❌ SILICA FLAG WARNING: Clear Silica shelf entries before late-season bloom cycles.");
-  }
+    // Build Inventory Components dynamically
+    function renderAdditives(additivesArray) {
+        inventoryGrid.innerHTML = '';
+        additivesArray.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'inventory-item';
+            li.innerHTML = `
+                <span>${item}</span>
+                <button class="delete-btn" data-index="${index}">✕</button>
+            `;
+            inventoryGrid.appendChild(li);
+        });
+    }
 
-  const frame = document.getElementById('mascotFrame');
-  if (alerts.length > 0) {
-    mascotTxt.innerText = alerts.join(" | ");
-    if(frame) frame.className = "brand-mascot-wrapper crisis";
-  } else {
-    mascotTxt.innerText = `"System running clean for space: [${activeTent.toUpperCase()}]. Recipe variables verified."`;
-    if(frame) frame.className = "brand-mascot-wrapper optimal";
-  }
+    // Compile view layout tracking directly from current tent states
+    function loadActiveTentView(tentId) {
+        currentTent = tentId;
+        const state = getTentState(tentId);
 
-  renderReservoir(rezColor);
-  saveToMemory();
-}
+        // Map component elements
+        ageSlider.value = state.age;
+        ageText.textContent = `Day ${state.age}`;
+        stageText.textContent = determineGrowthStage(state.age);
 
-function updateVisualOutputs(vpd, state) {
-  const frame = document.getElementById('mascotFrame');
-  let fogColor = '#66FF33';
+        airTempInput.value = state.airTemp;
+        roomRhInput.value = state.rh;
 
-  if (vpd < 0.4 || vpd > 2.0) {
-    if(frame) frame.className = "brand-mascot-wrapper crisis";
-    fogColor = '#FF3333';
-  } else if (vpd < 0.8 || vpd > 1.6) {
-    if(frame && frame.className !== "brand-mascot-wrapper crisis") frame.className = "brand-mascot-wrapper warning";
-    fogColor = '#FFB300';
-  } else {
-    if(frame && frame.className !== "brand-mascot-wrapper crisis") frame.className = "brand-mascot-wrapper optimal";
-  }
+        tempUnitRadios.forEach(radio => {
+            radio.checked = (radio.value === state.unit);
+        });
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    p.update();
-    p.draw(fogColor);
-  });
-}
+        calCheck.checked = state.cal;
+        magCheck.checked = state.mag;
 
-function renderReservoir(color) {
-  if (!rezCanvas) return;
-  const rezCtx = rezCanvas.getContext('2d');
-  rezCanvas.width = rezCanvas.parentElement.clientWidth;
-  rezCanvas.height = 150;
+        renderAdditives(state.additives);
+        calculateVPD();
+        checkDeficiencyAlarms();
+    }
 
-  rezCtx.clearRect(0, 0, rezCanvas.width, rezCanvas.height);
-  rezCtx.fillStyle = color;
-  rezCtx.fillRect(0, 50, rezCanvas.width, 100);
+    // Extract current interface settings to save back to memory ledger
+    function updateCurrentTentStore() {
+        const additives = [];
+        inventoryGrid.querySelectorAll('.inventory-item span').forEach(el => {
+            additives.push(el.textContent);
+        });
 
-  bubbles.forEach(b => {
-    b.update();
-    b.draw(rezCtx);
-  });
-}
+        const state = {
+            age: parseInt(ageSlider.value),
+            airTemp: parseFloat(airTempInput.value) || 0,
+            rh: parseFloat(roomRhInput.value) || 0,
+            unit: document.querySelector('input[name="temp-unit"]:checked').value,
+            cal: calCheck.checked,
+            mag: magCheck.checked,
+            additives: additives
+        };
+        saveTentState(currentTent, state);
+    }
 
-function switchTent(val) {
-  activeTent = val;
-  const current = dataStorage[activeTent];
-  document.getElementById('tempSlider').value = current.temp;
-  document.getElementById('rhSlider').value = current.rh;
-  document.getElementById('stageSelect').value = current.stage;
-  document.getElementById('ageSlider').value = current.age;
-  document.getElementById('ageDisplay').innerText = current.age; 
-  document.getElementById('waterSource').value = current.water;
-  document.getElementById('rawPPM').value = current.ppm;
-  
-  calculateVPD();
-  runNutrientAudit();
-  renderHistoryTable();
-}
+    // Event Loop Hook Listeners
+    tentButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            tentButtons.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            loadActiveTentView(e.target.getAttribute('data-tent'));
+        });
+    });
 
-function updateStage() {
-  dataStorage[activeTent].stage = document.getElementById('stageSelect').value;
-  runNutrientAudit();
-}
+    ageSlider.addEventListener('input', (e) => {
+        const val = e.target.value;
+        ageText.textContent = `Day ${val}`;
+        stageText.textContent = determineGrowthStage(parseInt(val));
+        updateCurrentTentStore();
+    });
 
-function updateAge() {
-  let val = document.getElementById('ageSlider').value;
-  dataStorage[activeTent].age = val;
-  document.getElementById('ageDisplay').innerText = val;
-  saveToMemory();
-}
+    [airTempInput, roomRhInput].forEach(input => {
+        input.addEventListener('input', () => {
+            calculateVPD();
+            updateCurrentTentStore();
+        });
+    });
 
-function logDailyMetrics() {
-  const current = dataStorage[activeTent];
-  const vpdStr = document.getElementById('vpdDisplay').innerText;
-  const entry = {
-    date: new Date().toLocaleDateString(),
-    stage: current.stage,
-    age: current.age,
-    climate: `${current.temp}° / ${current.rh}%`,
-    vpd: vpdStr,
-    status: document.getElementById('rezStatusText').innerText
-  };
-  current.history.unshift(entry);
-  saveToMemory();
-  renderHistoryTable();
-}
+    tempUnitRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            calculateVPD();
+            updateCurrentTentStore();
+        });
+    });
 
-function renderHistoryTable() {
-  const tbody = document.querySelector('#historyTable tbody');
-  if(!tbody) return;
-  tbody.innerHTML = '';
-  dataStorage[activeTent].history.forEach(h => {
-    let row = `<tr><td>${h.date}</td><td>${h.stage}</td><td>Day ${h.age}</td><td>${h.climate}</td><td>${h.vpd}</td><td>${h.status}</td></tr>`;
-    tbody.innerHTML += row;
-  });
-}
+    [calCheck, magCheck].forEach(box => {
+        box.addEventListener('change', () => {
+            checkDeficiencyAlarms();
+            updateCurrentTentStore();
+        });
+    });
 
-function toggleUnits() {
-  isFahrenheit = !isFahrenheit;
-  const btn = document.getElementById('unitToggle');
-  const slider = document.getElementById('tempSlider');
-  if (isFahrenheit) {
-    btn.innerText = "SCALE: Fahrenheit (°F)";
-    slider.min = 50; slider.max = 100; slider.value = 75;
-  } else {
-    btn.innerText = "SCALE: Celsius (°C)";
-    slider.min = 10; slider.max = 38; slider.value = 24;
-  }
-  calculateVPD();
-}
+    // Append New Additives Terminal Command Execution
+    injectBtn.addEventListener('click', () => {
+        const text = additiveInput.value.trim();
+        if (text) {
+            const state = getTentState(currentTent);
+            state.additives.push(text);
+            saveTentState(currentTent, state);
+            renderAdditives(state.additives);
+            additiveInput.value = '';
+        }
+    });
 
-function askAI() {
-  const prompt = document.getElementById('aiInput').value;
-  if(!prompt) return;
-  document.getElementById('mascotSpeech').innerText = `"[AI Terminal Parsing: '${prompt}'] ... Looking up decentralized organic data archives for you right now."`;
-  document.getElementById('aiInput').value = '';
-}
+    additiveInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') injectBtn.click();
+    });
 
-function saveToMemory() {
-  localStorage.setItem('hoodieghost_master_db', JSON.stringify(dataStorage));
-}
+    // Delete Additive Handler via event delegation matrix
+    inventoryGrid.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+            const idx = parseInt(e.target.getAttribute('data-index'));
+            const state = getTentState(currentTent);
+            state.additives.splice(idx, 1);
+            saveTentState(currentTent, state);
+            renderAdditives(state.additives);
+        }
+    });
 
-function appLoop() {
-  calculateVPD();
-  requestAnimationFrame(appLoop);
-}
+    // Atmospheric Floating Background Fog Canvas Animation Loop
+    const canvas = document.getElementById('fog-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
 
-window.addEventListener('load', () => {
-  resizeCanvas();
-  switchTent('tent1');
-  appLoop();
-});
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class FogParticle {
+        constructor() {
+            this.reset();
+            this.y = Math.random() * canvas.height; // Spread initially across height
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + Math.random() * 100;
+            this.radius = Math.random() * 80 + 40;
+            this.vx = Math.random() * 0.4 - 0.2;
+            this.vy = -(Math.random() * 0.5 + 0.1);
+            this.alpha = Math.random() * 0.15 + 0.05;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.y < -this.radius || this.x < -this.radius || this.x > canvas.width + this.radius) {
+                this.reset();
+            }
+        }
+        draw() {
+            ctx.beginPath();
+            let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+            gradient.addColorStop(0, `rgba(102, 255, 51, ${this.alpha})`); // Subtle Toxic Neon Hue blend
+            gradient.addColorStop(0.4, `rgba(29, 31, 33, ${this.alpha * 0.5})`);
+            gradient.addColorStop(1, 'rgba(20, 22, 23, 0)');
+            ctx.fillStyle = gradient;
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    // Populate initial background atmosphere context
