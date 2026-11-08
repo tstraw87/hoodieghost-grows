@@ -1,17 +1,16 @@
 let isFahrenheit = true;
 let activeTent = "tent1";
 
-// Safe Master Data Array Model
 let dataStorage = JSON.parse(localStorage.getItem('hoodieghost_master_db')) || {
-  tent1: { name: "Tent 1", temp: 75, rh: 60, stage: "Vegetative", age: 18, water: "RO", ppm: 0, history: [] },
-  tent2: { name: "Tent 2", temp: 78, rh: 50, stage: "EarlyFlower", age: 45, water: "Tap", ppm: 210, history: [] },
-  tent3: { name: "Tent 3", temp: 72, rh: 65, stage: "Seedling", age: 8, water: "RO", ppm: 0, history: [] }
+  tent1: { name: "Tent 1", temp: 75, rh: 60, stage: "Vegetative", age: 18, water: "RO", ppm: 0, history: },
+  tent2: { name: "Tent 2", temp: 78, rh: 50, stage: "EarlyFlower", age: 45, water: "Tap", ppm: 210, history: },
+  tent3: { name: "Tent 3", temp: 72, rh: 65, stage: "Seedling", age: 8, water: "RO", ppm: 0, history: }
 };
 
-// --- SUBSYSTEM 1: REALISTIC BACKGROUND FOG CANVAS ENGINE ---
+// --- ATMOSPHERIC FOG COMPONENT CANVAS ENGINE ---
 const canvas = document.getElementById('fogCanvas');
 const ctx = canvas.getContext('2d');
-let particles = [];
+let particles =;
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -24,9 +23,9 @@ class Particle {
   constructor() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 100 + 60;
-    this.speedX = Math.random() * 0.4 - 0.2;
-    this.speedY = Math.random() * 0.2 - 0.1;
+    this.size = Math.random() * 120 + 70;
+    this.speedX = Math.random() * 0.3 - 0.15;
+    this.speedY = Math.random() * 0.15 - 0.07;
   }
   update() {
     this.x += this.speedX;
@@ -36,46 +35,44 @@ class Particle {
   }
   draw(colorHex) {
     ctx.fillStyle = colorHex;
-    ctx.globalAlpha = 0.02;
+    ctx.globalAlpha = 0.025;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
   }
 }
-for(let i=0; i<40; i++) particles.push(new Particle());
+for(let i=0; i<35; i++) particles.push(new Particle());
 
-// --- SUBSYSTEM 2: LIQUID RESERVOIR RENDERING LOOPS ---
+// --- BUBBLING FLUID STORAGE UNIT LOOPS ---
 const rezCanvas = document.getElementById('rezCanvas');
 const rezCtx = rezCanvas ? rezCanvas.getContext('2d') : null;
-let bubbles = [];
+let bubbles =;
 
 class Bubble {
   constructor() {
-    this.x = Math.random() * 300;
-    this.y = 140;
-    this.speed = Math.random() * 1 + 0.5;
-    this.radius = Math.random() * 3 + 1;
+    this.x = Math.random() * 400;
+    this.y = 150;
+    this.speed = Math.random() * 1.2 + 0.6;
+    this.radius = Math.random() * 3.5 + 1;
   }
   update() {
     this.y -= this.speed;
-    if (this.y < 40) {
-      this.y = 140;
-      this.x = Math.random() * (rezCanvas ? rezCanvas.width : 300);
+    if (this.y < 50) {
+      this.y = 150;
+      this.x = Math.random() * (rezCanvas ? rezCanvas.width : 400);
     }
   }
   draw() {
     if (!rezCtx) return;
-    rezCtx.strokeStyle = "rgba(255,255,255,0.4)";
-    rezCtx.lineWidth = 1;
+    rezCtx.strokeStyle = "rgba(255,255,255,0.35)";
+    rezCtx.lineWidth = 1.5;
     rezCtx.beginPath();
-    ctx.globalAlpha = 1.0;
     rezCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     rezCtx.stroke();
   }
 }
-for(let i=0; i<15; i++) bubbles.push(new Bubble());
+for(let i=0; i<20; i++) bubbles.push(new Bubble());
 
-// --- SUBSYSTEM 3: DYNAMIC ENVIRONMENT CALCULATOR ---
 function calculateVPD() {
   const current = dataStorage[activeTent];
   let t = parseFloat(document.getElementById('tempSlider').value);
@@ -87,7 +84,7 @@ function calculateVPD() {
   document.getElementById('rhVal').innerText = rh;
 
   let tempC = isFahrenheit ? (t - 32) * 5/9 : t;
-  let leafTempC = tempC - 2; // Hard-coded -2° offset index
+  let leafTempC = tempC - 2;
 
   let svpAir = 0.61078 * Math.exp((17.27 * tempC) / (tempC + 237.3));
   let svpLeaf = 0.61078 * Math.exp((17.27 * leafTempC) / (leafTempC + 237.3));
@@ -102,7 +99,25 @@ function calculateVPD() {
   updateVisualOutputs(vpd, current);
 }
 
-// --- SUBSYSTEM 4: HARVEST WINDOW DEFICIENCY AUDITING MATRIX ---
+// --- DYNAMIC INGREDIENT CONSOLE UTILITIES ---
+function addNewNutrientItem() {
+  const inputEl = document.getElementById('newNutrientInput');
+  const name = inputEl.value.trim();
+  if(!name) return;
+
+  const id = "custom_nut_" + Date.now();
+  const shelf = document.getElementById('shelfGrid');
+  
+  // Build and inject custom nutrient element template
+  const wrapper = document.createElement('label');
+  wrapper.className = "checkbox-label";
+  wrapper.innerHTML = `<input type="checkbox" id="${id}" checked onchange="runNutrientAudit()"> ${name}`;
+  
+  shelf.appendChild(wrapper);
+  inputEl.value = '';
+  runNutrientAudit();
+}
+
 function runNutrientAudit() {
   const current = dataStorage[activeTent];
   const waterSrc = document.getElementById('waterSource').value;
@@ -112,29 +127,30 @@ function runNutrientAudit() {
   current.water = waterSrc;
   current.ppm = rawPPM;
 
-  let alerts = [];
-  let rezColor = '#99CCFF'; // Default Blue
+  let alerts =;
+  let rezColor = '#99CCFF'; // Stable Blue
 
   if (waterSrc === "Tap" && rawPPM > 180) {
     alerts.push("⚠️ RAW TAP WATER IS ABOVE 180 PPM! Base volumes restricted by 15% to safeguard root zones.");
     document.getElementById('rezStatusText').innerText = "RESTRICTED DOSAGE MATRIX MODE ACTIVE";
-    rezColor = '#FFB300'; // Warning Amber
+    rezColor = '#FFB300'; // Amber Warning
   } else {
     document.getElementById('rezStatusText').innerText = "REZ OK";
   }
 
-  if (current.stage === "LateFlower" && document.getElementById('nut_silica').checked) {
-    alerts.push("❌ SILICA FLAG WARNING: Do not leave Silica active during Late Flower.");
+  // Auditing split Calcium/Magnesium configurations
+  if (waterSrc === "RO" && (!document.getElementById('nut_cal').checked || !document.getElementById('nut_mag').checked)) {
+    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Pure Calcium AND Pure Magnesium checks.");
   }
-  if (waterSrc === "RO" && !document.getElementById('nut_cal').checked) {
-    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setup missing Cal-Mag.");
+  if (current.stage === "LateFlower" && document.getElementById('nut_silica') && document.getElementById('nut_silica').checked) {
+    alerts.push("❌ SILICA FLAG WARNING: Do not leave Silica active during Late Flower.");
   }
 
   if (alerts.length > 0) {
     mascotTxt.innerText = alerts.join(" | ");
     document.getElementById('mascotSkull').className = "skull-wizard crisis";
   } else {
-    mascotTxt.innerText = `"System operational for space: [${activeTent.toUpperCase()}]. Data validation looks safe."`;
+    mascotTxt.innerText = `"System operational for space: [${activeTent.toUpperCase()}]. Variables verified safe."`;
     document.getElementById('mascotSkull').className = "skull-wizard optimal";
   }
 
@@ -142,21 +158,18 @@ function runNutrientAudit() {
   saveToMemory();
 }
 
-// --- RENDERING INTEGRATION LOOP ---
 function updateVisualOutputs(vpd, state) {
   const skull = document.getElementById('mascotSkull');
-  let fogColor = '#66FF33'; // Toxic Neon green
+  let fogColor = '#66FF33';
 
   if (vpd < 0.4 || vpd > 2.0) {
     skull.className = "skull-wizard crisis";
-    fogColor = '#FF3333'; // Crimson
+    fogColor = '#FF3333';
   } else if (vpd < 0.8 || vpd > 1.6) {
-    skull.className = "skull-wizard warning";
-    fogColor = '#FFB300'; // Amber
+    if(skull.className !== "skull-wizard crisis") skull.className = "skull-wizard warning";
+    fogColor = '#FFB300';
   } else {
-    if(document.getElementById('mascotSkull').className !== "skull-wizard crisis") {
-      skull.className = "skull-wizard optimal";
-    }
+    if(skull.className !== "skull-wizard crisis") skull.className = "skull-wizard optimal";
   }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -169,11 +182,11 @@ function updateVisualOutputs(vpd, state) {
 function renderReservoir(color) {
   if (!rezCanvas || !rezCtx) return;
   rezCanvas.width = rezCanvas.parentElement.clientWidth;
-  rezCanvas.height = 140;
+  rezCanvas.height = 150;
 
   rezCtx.clearRect(0, 0, rezCanvas.width, rezCanvas.height);
   rezCtx.fillStyle = color;
-  rezCtx.fillRect(0, 50, rezCanvas.width, 90);
+  rezCtx.fillRect(0, 50, rezCanvas.width, 100);
 
   bubbles.forEach(b => {
     b.update();
@@ -181,7 +194,6 @@ function renderReservoir(color) {
   });
 }
 
-// --- WORKSPACE & TIMELINE ROUTERS ---
 function switchTent(val) {
   activeTent = val;
   const current = dataStorage[activeTent];
@@ -260,7 +272,6 @@ function saveToMemory() {
   localStorage.setItem('hoodieghost_master_db', JSON.stringify(dataStorage));
 }
 
-// Master Execution Core
 function appLoop() {
   calculateVPD();
   requestAnimationFrame(appLoop);

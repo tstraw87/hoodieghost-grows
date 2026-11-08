@@ -1,7 +1,7 @@
-/* Custom Variable Token Configuration Layout Sheet */
 :root {
   --bg-charcoal: #1A1D20;
-  --panel-slate: #2C302E;
+  --panel-slate: #1F2224;
+  --inner-dark: #121415;
   --toxic-neon-green: #66FF33;
   --electric-storm-blue: #99CCFF;
   --warning-amber: #FFB300;
@@ -22,7 +22,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Background Atmosphere System Layout Fixes */
 #fogCanvas {
   position: fixed;
   top: 0;
@@ -35,7 +34,7 @@ body {
 }
 
 .app-container {
-  padding: 24px;
+  padding: 20px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -44,205 +43,278 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 3px solid var(--toxic-neon-green);
-  padding-bottom: 16px;
-  margin-bottom: 24px;
+  border-bottom: 4px dashed var(--toxic-neon-green);
+  padding-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-/* Dripping Streetwear Typography Layout Fixes */
 .hoodieghost-brand-header {
   font-family: 'Creepster', cursive !important;
-  font-size: 3rem !important;
+  font-size: 3.2rem !important;
   color: var(--toxic-neon-green) !important;
-  text-shadow: 0 0 12px rgba(102, 255, 51, 0.6), 3px 3px 0px #000000 !important;
-  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(102, 255, 51, 0.7), 4px 4px 0px #000000 !important;
+  letter-spacing: 3px;
 }
 
-/* Grid Framework Constraints */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 24px;
+.profile-manager {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.panel {
-  background-color: var(--panel-slate) !important;
-  border: 2px solid #3A3F3D !important;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 6px 6px 0px #000000;
+.profile-manager label {
+  color: var(--toxic-neon-green);
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(102,255,51,0.3);
 }
 
-.timeline-section {
-  grid-column: span 3;
-}
-
-/* Custom Component Layout UI Rules */
+/* Custom Streetwear UI Element Styling overrides */
 select, input[type="number"], input[type="text"] {
-  background: #111111;
+  background: var(--inner-dark);
   border: 2px solid var(--electric-storm-blue);
   color: #ffffff;
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.8), 3px 3px 0px #000;
   outline: none;
+  transition: border-color 0.2s ease;
 }
 
 select:focus, input:focus {
   border-color: var(--toxic-neon-green);
 }
 
-.input-group {
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 25px;
+}
+
+.panel {
+  background-color: var(--panel-slate) !important;
+  border: 3px solid #2A2E31 !important;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.timeline-section {
+  grid-column: span 3;
+}
+
+h2 {
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 8px;
   margin-bottom: 16px;
+  color: var(--electric-storm-blue);
+}
+
+.input-group {
+  margin-bottom: 20px;
 }
 
 .input-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-weight: bold;
+  color: #AAA;
+}
+
+.blue-neon-text {
   color: var(--electric-storm-blue);
+  text-shadow: 0 0 8px rgba(153,204,255,0.6);
+}
+
+.green-neon-text {
+  color: var(--toxic-neon-green);
+  text-shadow: 0 0 8px rgba(102,255,51,0.6);
 }
 
 input[type="range"] {
   width: 100%;
   accent-color: var(--toxic-neon-green);
+  background: #111;
+  height: 8px;
+  border-radius: 4px;
 }
 
 .vpd-readout-card {
-  background: #111111;
-  padding: 20px;
-  border-radius: 8px;
+  background: var(--inner-dark);
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
-  border-left: 5px solid var(--toxic-neon-green);
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-}
-
-.vpd-readout-card h3 {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #888888;
-  margin-bottom: 8px;
+  border-left: 6px solid var(--toxic-neon-green);
+  border-right: 2px solid #222;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
 }
 
 #vpdDisplay {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 900;
   color: var(--toxic-neon-green);
-  text-shadow: 0 0 8px rgba(102, 255, 51, 0.4);
+  text-shadow: 0 0 12px rgba(102, 255, 51, 0.6);
 }
 
-/* Character Sprite Container Elements */
+/* Mascot UI Container */
 .mascot-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #111111;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  border-bottom: 3px solid var(--electric-storm-blue);
+  background: var(--inner-dark);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #222;
+  border-bottom: 4px solid var(--electric-storm-blue);
 }
 
 .skull-wizard {
-  font-size: 5rem;
-  margin-bottom: 12px;
+  font-size: 5.5rem;
+  margin-bottom: 15px;
   transition: transform 0.1s ease;
 }
 
 .skull-wizard.crisis {
   animation: shake 0.15s infinite;
-  text-shadow: 0 0 25px var(--crisis-crimson);
+  text-shadow: 0 0 30px var(--crisis-crimson);
 }
 
 .speech-bubble {
-  background: #222222;
-  border: 1px solid #444;
-  padding: 12px;
-  border-radius: 6px;
+  background: #151719;
+  border-left: 4px solid var(--toxic-neon-green);
+  padding: 14px;
+  border-radius: 8px;
   font-size: 0.95rem;
-  line-height: 1.4;
-  color: #ddd;
+  line-height: 1.5;
+  color: #EEE;
+  box-shadow: 3px 3px 0px #000;
 }
 
-/* Liquid Canvas Animation Layout Fixes */
+/* Reservoir UI Module */
 .canvas-container {
   position: relative;
   width: 100%;
-  height: 140px;
-  background: #111111;
-  margin: 16px 0;
-  border-radius: 8px;
-  border: 1px solid #333;
+  height: 150px;
+  background: var(--inner-dark);
+  margin: 20px 0;
+  border-radius: 12px;
+  border: 3px solid #222;
   overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
 }
 
 #rezCanvas {
-  width: 100% !important;
-  height: 100% !important;
+  width: 100%;
+  height: 100%;
   display: block;
 }
 
 #rezStatusText {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 15px;
+  left: 15px;
   font-weight: bold;
   font-size: 0.85rem;
-  background: rgba(0,0,0,0.7);
-  padding: 4px 8px;
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #FFF;
+  padding: 6px 12px;
+  border-radius: 6px;
   border-left: 3px solid var(--toxic-neon-green);
+  box-shadow: 2px 2px 0px #000;
 }
 
+/* Inventory List Grid */
 .shelf-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 15px 0;
+  background: var(--inner-dark);
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  max-height: 180px;
+  overflow-y: auto;
 }
 
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: bold;
 }
 
 .checkbox-label input {
   accent-color: var(--toxic-neon-green);
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
-/* Buttons Utility Layouts */
+/* Add missing nutrient terminal container */
+.add-nutrient-terminal {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.add-nutrient-terminal input {
+  flex: 1;
+}
+
+/* Streetwear Buttons */
+.street-btn-sm {
+  background: var(--inner-dark);
+  color: var(--electric-storm-blue);
+  border: 2px solid var(--electric-storm-blue);
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px #000;
+  transition: all 0.1s ease;
+}
+
+.street-btn-sm:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000;
+}
+
 .ghost-btn-log {
   background: var(--toxic-neon-green);
   color: #000000;
-  font-weight: bold;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   border: none;
-  padding: 12px 24px;
+  padding: 15px 30px;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 3px 3px 0px #000000;
+  box-shadow: 4px 4px 0px #000000;
   transition: all 0.1s ease;
 }
 
 .ghost-btn-log:active {
-  transform: translate(2px, 2px);
+  transform: translate(3px, 3px);
   box-shadow: 1px 1px 0px #000000;
 }
 
-/* Sequential Logging Table Styles */
+/* Sequential Logs Table Ledger */
 .ledger-box {
-  margin-top: 20px;
-  max-height: 250px;
+  margin-top: 25px;
+  max-height: 300px;
   overflow-y: auto;
-  background: #111111;
-  border-radius: 8px;
-  border: 1px solid #333;
+  background: var(--inner-dark);
+  border-radius: 12px;
+  border: 3px solid #222;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
 }
 
 table {
@@ -251,26 +323,55 @@ table {
 }
 
 th {
-  background: #1A1D20;
+  background: #161819;
   color: var(--electric-storm-blue);
   font-weight: bold;
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 2px solid #333;
+  border-bottom: 3px solid #222;
 }
 
 th, td {
-  padding: 12px 16px;
+  padding: 14px 18px;
   text-align: left;
+  font-weight: bold;
 }
 
 tr:nth-child(even) {
-  background: #151719;
+  background: #141617;
 }
 
 tr:hover {
-  background: #1d2023;
+  background: #1A1D1E;
+}
+
+/* Form layouts components updates */
+.stage-timeline-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  background: var(--inner-dark);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #222;
+}
+
+.input-group-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-group-row label {
+  font-weight: bold;
+  color: var(--electric-storm-blue);
+}
+
+.slider-timeline {
+  flex: 1;
+  min-width: 200px;
 }
 
 @keyframes shake {
@@ -278,10 +379,9 @@ tr:hover {
   10% { transform: translate(-1px, -2px) rotate(-1deg); }
   20% { transform: translate(-3px, 0px) rotate(1deg); }
   30% { transform: translate(0px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .dashboard-grid { grid-template-columns: 1fr; }
   .timeline-section { grid-column: span 1; }
 }
