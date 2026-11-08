@@ -6,7 +6,7 @@
     <title>HoodieGhost Grows Dashboard</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -26,26 +26,34 @@
             <button class="tent-btn" data-tent="tent3">Tent 3</button>
         </nav>
 
+        <!-- New Grow Action Center Control Bar -->
+        <div class="action-bar-panel">
+            <button id="new-grow-btn" class="action-trigger-btn">☣️ INITIALIZE NEW GROW TERMINAL</button>
+        </div>
+
         <main class="grid-container">
+            <!-- Timeline & Calendar Log Subsystem -->
             <section class="panel-card timeline-panel">
-                <h2 class="panel-heading">Plant Timeline</h2>
+                <h2 class="panel-heading">Plant Timeline & Log Calendar</h2>
                 <div class="slider-container">
                     <input type="range" id="age-slider" min="1" max="120" value="1">
                     <div class="age-display">
                         <span id="age-text">Day 1</span> - <span id="stage-text">Germination</span>
                     </div>
                 </div>
+                <div class="calendar-subsystem">
+                    <label for="log-date-picker">Grow Event Target Date</label>
+                    <input type="date" id="log-date-picker">
+                    <textarea id="daily-log-notes" placeholder="Type structural notes, training adjustments, or observations for this date..."></textarea>
+                </div>
             </section>
 
+            <!-- Calculation Core (VPD Engine) -->
             <section class="panel-card vpd-panel">
                 <h2 class="panel-heading">VPD Engine</h2>
                 <div class="unit-selector">
-                    <label>
-                        <input type="radio" name="temp-unit" value="F" checked> °F
-                    </label>
-                    <label>
-                        <input type="radio" name="temp-unit" value="C"> °C
-                    </label>
+                    <label><input type="radio" name="temp-unit" value="F" checked> °F</label>
+                    <label><input type="radio" name="temp-unit" value="C"> °C</label>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
@@ -63,8 +71,24 @@
                 </div>
             </section>
 
+            <!-- Split Shelf Feeds & Bubbling Reservoir Asset Container -->
             <section class="panel-card feeds-panel">
-                <h2 class="panel-heading">Split Shelf Feeds & Reservoir Layout</h2>
+                <h2 class="panel-heading">Feeds & Bubbling Reservoir Container</h2>
+                
+                <!-- Bubbling Reservoir Graphical Asset Structure -->
+                <div class="reservoir-visual-wrapper">
+                    <div class="reservoir-tank">
+                        <div class="liquid-layer" id="reservoir-liquid">
+                            <div class="bubbles-generator"></div>
+                        </div>
+                        <div class="reservoir-label-overlay">RESERVOIR VOLUME: <span id="volume-display">100%</span></div>
+                    </div>
+                    <div class="reservoir-controls">
+                        <label for="reservoir-volume-slider">Adjust Volume Level</label>
+                        <input type="range" id="reservoir-volume-slider" min="0" max="100" value="100">
+                    </div>
+                </div>
+
                 <div class="checkbox-group">
                     <label class="custom-checkbox">
                         <input type="checkbox" id="cal-check">
@@ -82,6 +106,7 @@
                 </div>
             </section>
 
+            <!-- Additive Injection Terminal -->
             <section class="panel-card inventory-panel">
                 <h2 class="panel-heading">Additive Terminal</h2>
                 <div class="terminal-form">
@@ -91,6 +116,18 @@
                 <ul id="inventory-grid" class="inventory-list"></ul>
             </section>
         </main>
+    </div>
+
+    <!-- Modal Prompt Structure for New Grow Reset -->
+    <div id="new-grow-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3 class="modal-title">Initialize New Grow Ledger</h3>
+            <p>This action reset records, timeline values, logs, and reservoir configurations for the active tent. Are you ready?</p>
+            <div class="modal-actions">
+                <button id="confirm-reset-btn" class="confirm-btn">Confirm Reset</button>
+                <button id="cancel-reset-btn" class="cancel-btn">Abort</button>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
