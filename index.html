@@ -4,35 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HoodieGhost Grows Dashboard</title>
-    <!-- Google Fonts Lookup -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Local Lowcase Filename Mappings -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <canvas id="fog-canvas"></canvas>
 
     <div class="dashboard-wrapper">
-        <!-- Header & Mascot Frame -->
         <header class="main-header">
             <div class="mascot-frame">
-                <img src="logo.png" alt="HoodieGhost Logo" id="mascot-img" onerror="this.style.display='none';">
+                <img src="logo.png" alt="HoodieGhost Logo" id="mascot-img" onerror="this.style.visibility='hidden';">
             </div>
             <h1 class="dripping-title">HOODIEGHOST GROWS</h1>
         </header>
 
-        <!-- Workspace Tent Navigation Controls -->
         <nav class="tent-nav">
             <button class="tent-btn active" data-tent="tent1">Tent 1</button>
             <button class="tent-btn" data-tent="tent2">Tent 2</button>
             <button class="tent-btn" data-tent="tent3">Tent 3</button>
         </nav>
 
-        <!-- Main Workspace Dynamic Content Area -->
         <main class="grid-container">
-            <!-- Timeline Tracking Panel -->
             <section class="panel-card timeline-panel">
                 <h2 class="panel-heading">Plant Timeline</h2>
                 <div class="slider-container">
@@ -43,7 +37,6 @@
                 </div>
             </section>
 
-            <!-- Calculation Core (VPD Subsystem) -->
             <section class="panel-card vpd-panel">
                 <h2 class="panel-heading">VPD Engine</h2>
                 <div class="unit-selector">
@@ -70,19 +63,18 @@
                 </div>
             </section>
 
-            <!-- Split Shelf Feeds Panel -->
             <section class="panel-card feeds-panel">
-                <h2 class="panel-heading">Split Shelf Feeds</h2>
+                <h2 class="panel-heading">Split Shelf Feeds & Reservoir Layout</h2>
                 <div class="checkbox-group">
                     <label class="custom-checkbox">
                         <input type="checkbox" id="cal-check">
                         <span class="checkmark"></span>
-                        Independent Pure Calcium
+                        Independent Pure Calcium Channel
                     </label>
                     <label class="custom-checkbox">
                         <input type="checkbox" id="mag-check">
                         <span class="checkmark"></span>
-                        Independent Pure Magnesium
+                        Independent Pure Magnesium Channel
                     </label>
                 </div>
                 <div id="ro-warning" class="warning-banner hidden">
@@ -90,21 +82,17 @@
                 </div>
             </section>
 
-            <!-- Additive Injection Terminal -->
             <section class="panel-card inventory-panel">
                 <h2 class="panel-heading">Additive Terminal</h2>
                 <div class="terminal-form">
                     <input type="text" id="additive-input" placeholder="Type missing booster brand..." autocomplete="off">
                     <button id="inject-btn">Inject</button>
                 </div>
-                <ul id="inventory-grid" class="inventory-list">
-                    <!-- Dynamic Rows Populate Here -->
-                </ul>
+                <ul id="inventory-grid" class="inventory-list"></ul>
             </section>
         </main>
     </div>
 
-    <!-- Core Interactive Hook Script -->
     <script src="app.js"></script>
 </body>
 </html>
