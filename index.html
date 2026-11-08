@@ -1,1 +1,153 @@
-<script src="https://github.io"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>HoodieGhost Grows Master Console</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Creepster&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="./logo.png">
+</head>
+<body>
+  <canvas id="fogCanvas"></canvas>
+
+  <div class="app-container">
+    <header class="main-header">
+      <h1 class="hoodieghost-brand-header">HOODIEGHOST GROWS</h1>
+      <div class="profile-manager">
+        <label>⚡ WORKSPACE:</label>
+        <select id="tentSelect" onchange="switchTent(this.value)">
+          <option value="tent1">Tent 1 (Veg Vault)</option>
+          <option value="tent2">Tent 2 (Bloom Boom)</option>
+          <option value="tent3">Tent 3 (Pheno Hunt)</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="dashboard-grid">
+      <section class="panel slate-panel mascot-section">
+        <div class="mascot-box">
+          <div id="mascotFrame" class="brand-mascot-wrapper optimal">
+            <img src="./logo.png" alt="Mascot Graphic" class="brand-mascot-img">
+          </div>
+          <div class="speech-bubble">
+            <p id="mascotSpeech">"Console initialized. Change parameters to run automated safety audits."</p>
+          </div>
+        </div>
+        
+        <div class="ai-terminal">
+          <h3>⚡ ASK HOODIEGHOST TERMINAL</h3>
+          <div class="terminal-input-row">
+            <input type="text" id="aiInput" placeholder="Ask about crop steering...">
+            <button onclick="askAI()">SEND</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel slate-panel metrics-section">
+        <h2>🔥 CLIMATE TUNING MATRIX</h2>
+        <div class="toggle-container">
+          <button id="unitToggle" class="street-btn-sm" onclick="toggleUnits()">SCALE: Fahrenheit (°F)</button>
+        </div>
+
+        <div class="inputs-grid">
+          <div class="input-group">
+            <label>Air Temp: <span id="tempVal" class="blue-neon-text">75</span>°</label>
+            <input type="range" id="tempSlider" min="50" max="100" value="75" oninput="calculateVPD()">
+          </div>
+          <div class="input-group">
+            <label>Humidity (RH%): <span id="rhVal" class="blue-neon-text">60</span>%</label>
+            <input type="range" id="rhSlider" min="20" max="95" value="60" oninput="calculateVPD()">
+          </div>
+        </div>
+
+        <div class="vpd-readout-card">
+          <h3>LIVE VPD (With -2° Leaf Offset)</h3>
+          <div id="vpdDisplay" class="optimal-neon">1.15 kPa</div>
+        </div>
+      </section>
+
+      <section class="panel slate-panel reservoir-section">
+        <h2>🧪 REZ & NUTRIENT MATRIX</h2>
+        <div class="water-source-row">
+          <div class="src-select-box">
+            <label>SOURCE WATER:</label>
+            <select id="waterSource" onchange="runNutrientAudit()">
+              <option value="RO">Pure RO Water</option>
+              <option value="Tap">Tap Water</option>
+            </select>
+          </div>
+          <div class="ppm-input">
+            <label>Raw PPM:</label>
+            <input type="number" id="rawPPM" value="0" oninput="runNutrientAudit()">
+          </div>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="rezCanvas"></canvas>
+          <div id="rezStatusText">REZ OK</div>
+        </div>
+
+        <h3>🛠️ INVENTORY SHELF MANAGEMENT</h3>
+        <div id="shelfGrid" class="shelf-grid">
+          <label class="checkbox-label"><input type="checkbox" id="nut_cal" checked onchange="runNutrientAudit()"> Independent Pure Calcium</label>
+          <label class="checkbox-label"><input type="checkbox" id="nut_mag" checked onchange="runNutrientAudit()"> Pure Magnesium</label>
+          <label class="checkbox-label"><input type="checkbox" id="nut_silica" checked onchange="runNutrientAudit()"> Armor Silica</label>
+          <label class="checkbox-label"><input type="checkbox" id="nut_pk" onchange="runNutrientAudit()"> PK Bloom Booster</label>
+        </div>
+
+        <div class="add-nutrient-terminal">
+          <input type="text" id="newNutrientInput" placeholder="Type missing brand booster name...">
+          <button class="street-btn-sm" onclick="addNewNutrientItem()">ADD TO SHELF</button>
+        </div>
+      </section>
+
+      <section class="panel slate-panel timeline-section">
+        <h2>📅 LIFECYCLE SELECTION LOGS</h2>
+        <div class="stage-timeline-row">
+          <div class="input-group-row">
+            <label>GROWTH PHASE:</label>
+            <select id="stageSelect" onchange="updateStage()">
+              <option value="Germination">Germination (Day 1-7)</option>
+              <option value="Seedling">Seedling (Day 7-14)</option>
+              <option value="Vegetative" selected>Vegetative</option>
+              <option value="EarlyFlower">Early Flower</option>
+              <option value="LateFlower">Late Flower</option>
+              <option value="Harvest">Flush & Harvest</option>
+            </select>
+          </div>
+          
+          <div class="slider-timeline">
+            <label>Plant Age: <span id="ageDisplay" class="green-neon-text">18</span> Days from Seed</label>
+            <input type="range" id="ageSlider" min="1" max="120" value="18" oninput="updateAge()">
+          </div>
+          <button class="ghost-btn-log" onclick="logDailyMetrics()">LOG CURRENT DATA ENTRY</button>
+        </div>
+
+        <div class="ledger-box">
+          <table id="historyTable">
+            <thead>
+              <tr>
+                <th>Date Stamp</th>
+                <th>Stage</th>
+                <th>Age</th>
+                <th>Temp/RH</th>
+                <th>VPD kPa</th>
+                <th>Status Flags</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
