@@ -7,7 +7,7 @@ let dataStorage = JSON.parse(localStorage.getItem('hoodieghost_master_db')) || {
   tent3: { name: "Tent 3", temp: 72, rh: 65, stage: "Seedling", age: 8, water: "RO", ppm: 0, history: }
 };
 
-// --- ATMOSPHERIC FOG COMPONENT CANVAS ENGINE ---
+// --- BACKGROUND CANVAS ENGINE ---
 const canvas = document.getElementById('fogCanvas');
 const ctx = canvas.getContext('2d');
 let particles =;
@@ -23,9 +23,9 @@ class Particle {
   constructor() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 120 + 70;
-    this.speedX = Math.random() * 0.3 - 0.15;
-    this.speedY = Math.random() * 0.15 - 0.07;
+    this.size = Math.random() * 120 + 80;
+    this.speedX = Math.random() * 0.4 - 0.2;
+    this.speedY = Math.random() * 0.2 - 0.1;
   }
   update() {
     this.x += this.speedX;
@@ -35,7 +35,7 @@ class Particle {
   }
   draw(colorHex) {
     ctx.fillStyle = colorHex;
-    ctx.globalAlpha = 0.025;
+    ctx.globalAlpha = 0.03;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
@@ -43,7 +43,7 @@ class Particle {
 }
 for(let i=0; i<35; i++) particles.push(new Particle());
 
-// --- BUBBLING FLUID STORAGE UNIT LOOPS ---
+// --- RESERVOIR ANIMATION ENGINE ---
 const rezCanvas = document.getElementById('rezCanvas');
 const rezCtx = rezCanvas ? rezCanvas.getContext('2d') : null;
 let bubbles =;
@@ -52,26 +52,26 @@ class Bubble {
   constructor() {
     this.x = Math.random() * 400;
     this.y = 150;
-    this.speed = Math.random() * 1.2 + 0.6;
-    this.radius = Math.random() * 3.5 + 1;
+    this.speed = Math.random() * 1.5 + 0.5;
+    this.radius = Math.random() * 4 + 1;
   }
   update() {
     this.y -= this.speed;
-    if (this.y < 50) {
+    if (this.y < 40) {
       this.y = 150;
       this.x = Math.random() * (rezCanvas ? rezCanvas.width : 400);
     }
   }
   draw() {
     if (!rezCtx) return;
-    rezCtx.strokeStyle = "rgba(255,255,255,0.35)";
+    rezCtx.strokeStyle = "rgba(255,255,255,0.4)";
     rezCtx.lineWidth = 1.5;
     rezCtx.beginPath();
     rezCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     rezCtx.stroke();
   }
 }
-for(let i=0; i<20; i++) bubbles.push(new Bubble());
+for(let i=0; i<25; i++) bubbles.push(new Bubble());
 
 function calculateVPD() {
   const current = dataStorage[activeTent];
@@ -99,7 +99,6 @@ function calculateVPD() {
   updateVisualOutputs(vpd, current);
 }
 
-// --- DYNAMIC INGREDIENT CONSOLE UTILITIES ---
 function addNewNutrientItem() {
   const inputEl = document.getElementById('newNutrientInput');
   const name = inputEl.value.trim();
@@ -108,7 +107,6 @@ function addNewNutrientItem() {
   const id = "custom_nut_" + Date.now();
   const shelf = document.getElementById('shelfGrid');
   
-  // Build and inject custom nutrient element template
   const wrapper = document.createElement('label');
   wrapper.className = "checkbox-label";
   wrapper.innerHTML = `<input type="checkbox" id="${id}" checked onchange="runNutrientAudit()"> ${name}`;
@@ -128,30 +126,30 @@ function runNutrientAudit() {
   current.ppm = rawPPM;
 
   let alerts =;
-  let rezColor = '#99CCFF'; // Stable Blue
+  let rezColor = '#99CCFF'; 
 
   if (waterSrc === "Tap" && rawPPM > 180) {
-    alerts.push("⚠️ RAW TAP WATER IS ABOVE 180 PPM! Base volumes restricted by 15% to safeguard root zones.");
+    alerts.push("⚠️ RAW TAP WATER IS ABOVE 180 PPM! Base fluid recipes scaled back 15% automatically.");
     document.getElementById('rezStatusText').innerText = "RESTRICTED DOSAGE MATRIX MODE ACTIVE";
-    rezColor = '#FFB300'; // Amber Warning
+    rezColor = '#FFB300'; 
   } else {
     document.getElementById('rezStatusText').innerText = "REZ OK";
   }
 
-  // Auditing split Calcium/Magnesium configurations
   if (waterSrc === "RO" && (!document.getElementById('nut_cal').checked || !document.getElementById('nut_mag').checked)) {
-    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Pure Calcium AND Pure Magnesium checks.");
+    alerts.push("❌ WATER BASE CRISIS: Reverse Osmosis setups require isolated Calcium AND Magnesium checks checked.");
   }
   if (current.stage === "LateFlower" && document.getElementById('nut_silica') && document.getElementById('nut_silica').checked) {
-    alerts.push("❌ SILICA FLAG WARNING: Do not leave Silica active during Late Flower.");
+    alerts.push("❌ SILICA FLAG WARNING: Clear Silica shelf entries before late-season bloom cycles.");
   }
 
+  const frame = document.getElementById('mascotFrame');
   if (alerts.length > 0) {
     mascotTxt.innerText = alerts.join(" | ");
-    document.getElementById('mascotSkull').className = "skull-wizard crisis";
+    if(frame) frame.className = "brand-mascot-wrapper crisis";
   } else {
-    mascotTxt.innerText = `"System operational for space: [${activeTent.toUpperCase()}]. Variables verified safe."`;
-    document.getElementById('mascotSkull').className = "skull-wizard optimal";
+    mascotTxt.innerText = `"System running clean for space: [${activeTent.toUpperCase()}]. Recipe variables verified."`;
+    if(frame) frame.className = "brand-mascot-wrapper optimal";
   }
 
   renderReservoir(rezColor);
@@ -159,17 +157,17 @@ function runNutrientAudit() {
 }
 
 function updateVisualOutputs(vpd, state) {
-  const skull = document.getElementById('mascotSkull');
+  const frame = document.getElementById('mascotFrame');
   let fogColor = '#66FF33';
 
   if (vpd < 0.4 || vpd > 2.0) {
-    skull.className = "skull-wizard crisis";
+    if(frame) frame.className = "brand-mascot-wrapper crisis";
     fogColor = '#FF3333';
   } else if (vpd < 0.8 || vpd > 1.6) {
-    if(skull.className !== "skull-wizard crisis") skull.className = "skull-wizard warning";
+    if(frame && frame.className !== "brand-mascot-wrapper crisis") frame.className = "brand-mascot-wrapper warning";
     fogColor = '#FFB300';
   } else {
-    if(skull.className !== "skull-wizard crisis") skull.className = "skull-wizard optimal";
+    if(frame && frame.className !== "brand-mascot-wrapper crisis") frame.className = "brand-mascot-wrapper optimal";
   }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);

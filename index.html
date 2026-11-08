@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>HoodieGhost Grows Master Console</title>
+  <!-- FIXED GOOGLE FONTS CDN LINKS -->
   <link rel="preconnect" href="https://googleapis.com">
   <link rel="preconnect" href="https://gstatic.com" crossorigin>
-  <link href="https://googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <link href="https://googleapis.com/css2?family=Creepster&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -30,10 +31,12 @@
     </header>
 
     <main class="dashboard-grid">
-      <!-- Mascot Column -->
+      <!-- Mascot Column: NOW USING YOUR OFFICIAL GRAPHIC ARTWORK -->
       <section class="panel slate-panel mascot-section">
         <div class="mascot-box">
-          <div id="mascotSkull" class="skull-wizard optimal">💀</div>
+          <div id="mascotFrame" class="brand-mascot-wrapper optimal">
+            <img src="./logo.png" alt="HoodieGhost Grows Logo" class="brand-mascot-img">
+          </div>
           <div class="speech-bubble">
             <p id="mascotSpeech">"Console initialized. Change your canopy parameters to activate automated safety audits."</p>
           </div>
@@ -72,7 +75,7 @@
         </div>
       </section>
 
-      <!-- Reservoir and Custom Ingredient Add Matrix -->
+      <!-- Reservoir Matrix with Separate Inputs & Custom Add Terminal -->
       <section class="panel slate-panel reservoir-section">
         <h2>🧪 REZ & NUTRIENT MATRIX</h2>
         <div class="water-source-row">
@@ -95,7 +98,7 @@
         </div>
 
         <h3>🛠️ INVENTORY SHELF MANAGEMENT</h3>
-        <!-- Split Cal & Mag lanes -->
+        <!-- SPLIT INDEPENDENT CALCIUM AND MAGNESIUM LANES -->
         <div id="shelfGrid" class="shelf-grid">
           <label class="checkbox-label"><input type="checkbox" id="nut_cal" checked onchange="runNutrientAudit()"> Independent Pure Calcium</label>
           <label class="checkbox-label"><input type="checkbox" id="nut_mag" checked onchange="runNutrientAudit()"> Pure Magnesium</label>
@@ -103,14 +106,14 @@
           <label class="checkbox-label"><input type="checkbox" id="nut_pk" onchange="runNutrientAudit()"> PK Bloom Booster</label>
         </div>
 
-        <!-- Custom Ingredient Injection Console -->
+        <!-- Dynamic Missing Product Injection Console -->
         <div class="add-nutrient-terminal">
-          <input type="text" id="newNutrientInput" placeholder="Add missing nutrient product...">
-          <button class="street-btn-sm" onclick="addNewNutrientItem()">ADD TO APPARATUS</button>
+          <input type="text" id="newNutrientInput" placeholder="Type missing additive name...">
+          <button class="street-btn-sm" onclick="addNewNutrientItem()">ADD TO SHELF</button>
         </div>
       </section>
 
-      <!-- Interactive Data Logger and Sequential Timeline -->
+      <!-- Interactive Data Logger and Timeline Dashboard -->
       <section class="panel slate-panel timeline-section">
         <h2>📅 LIFECYCLE SELECTION LOGS</h2>
         <div class="stage-timeline-row">
