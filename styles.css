@@ -1,0 +1,156 @@
+:root {
+  --bg-charcoal: #1A1D20;
+  --panel-slate: #2C302E;
+  --toxic-neon-green: #66FF33;
+  --electric-storm-blue: #99CCFF;
+  --warning-amber: #FFB300;
+  --crisis-crimson: #FF3333;
+}
+
+@import url('https://googleapis.com');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-charcoal);
+  color: #FFFFFF;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#fogCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.app-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid var(--toxic-neon-green);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.hoodieghost-brand-header {
+  font-family: 'Creepster', cursive;
+  font-size: 2.5rem;
+  color: var(--toxic-neon-green);
+  text-shadow: 0 0 10px rgba(102, 255, 51, 0.5), 3px 3px 0px #000;
+}
+
+select, input[type="number"], input[type="text"] {
+  background: #111;
+  border: 1px solid var(--electric-storm-blue);
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.panel {
+  background-color: var(--panel-slate);
+  border: 2px solid #3A3F3D;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 5px 5px 0px #000;
+}
+
+.timeline-section {
+  grid-column: span 3;
+}
+
+.skull-wizard {
+  font-size: 4rem;
+  text-align: center;
+  transition: transform 0.1s ease;
+}
+
+.skull-wizard.crisis {
+  animation: shake 0.15s infinite;
+  text-shadow: 0 0 20px var(--crisis-crimson);
+}
+
+.vpd-readout-card {
+  background: #111;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 15px;
+  text-align: center;
+  border-left: 4px solid var(--toxic-neon-green);
+}
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  background: #111;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+
+#rezCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+#rezStatusText {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-weight: bold;
+}
+
+.ledger-box {
+  margin-top: 15px;
+  max-height: 180px;
+  overflow-y: auto;
+  background: #111;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #222;
+}
+
+@keyframes shake {
+  0% { transform: translate(2px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(0px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .timeline-section { grid-column: span 1; }
+}
