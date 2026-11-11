@@ -333,36 +333,69 @@ function initGrowRoom3D(){
  }catch(err){console.warn('3D greenhouse unavailable',err);canvas.style.display='none'}
 }
 function plantRecords3D(){
- const normal=(t().plants||[]).map((p,index)=>({record:p,index,source:'PLANT'}));
- const pro=(t().proPlants||[]).map((p,index)=>({record:p,index,source:'GROW INTELLIGENCE'}));
+ const normal=(t().plants||[]).map((p,index)=>({record:p,index,source:'PLANT',stage:p.stage||t().stage||'Seedling'}));
+ const pro=(t().proPlants||[]).map((p,index)=>({record:p,index,source:'GROW INTELLIGENCE',stage:p.stage||t().stage||'Seedling'}));
  return normal.concat(pro).slice(0,12);
+}
+function stageModel(stage){
+ const s=String(stage||'').toLowerCase();
+ if(s.includes('seed /')||s.includes('germ'))return {scale:.34,leaves:3,height:.55,bloom:0,label:'GERMINATION'};
+ if(s.includes('seedling'))return {scale:.56,leaves:7,height:.82,bloom:0,label:'SEEDLING'};
+ if(s.includes('vegetative'))return {scale:.88,leaves:16,height:1.25,bloom:0,label:'VEGETATIVE'};
+ if(s.includes('early flower'))return {scale:1.02,leaves:20,height:1.48,bloom:.25,label:'EARLY FLOWER'};
+ if(s.includes('mid flower'))return {scale:1.08,leaves:22,height:1.58,bloom:.7,label:'MID FLOWER'};
+ if(s.includes('late flower'))return {scale:1.04,leaves:20,height:1.52,bloom:1,label:'LATE FLOWER'};
+ if(s.includes('harvest'))return {scale:.96,leaves:16,height:1.42,bloom:.9,label:'HARVEST'};
+ return {scale:.85,leaves:14,height:1.2,bloom:0,label:'GROWING'};
+}
+function makeLeaf(T,material){
+ const shape=new T.Shape();
+ shape.moveTo(0,0);shape.quadraticCurveTo(.16,.10,.31,.34);shape.quadraticCurveTo(.34,.43,.25,.47);shape.quadraticCurveTo(.12,.42,0,.27);shape.quadraticCurveTo(-.12,.42,-.25,.47);shape.quadraticCurveTo(-.34,.43,-.31,.34);shape.quadraticCurveTo(-.16,.10,0,0);
+ const mesh=new T.Mesh(new T.ShapeGeometry(shape,8),material);mesh.rotation.x=-Math.PI/2;mesh.castShadow=true;mesh.userData.plantPick=true;return mesh;
 }
 function sync3DPlants(){
  if(!room3D)return;
  const T=room3D.THREE,room=room3D.room,records=plantRecords3D();
  roomPlants3D.forEach(p=>{room.remove(p);p.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material.dispose()}})});roomPlants3D=[];
  records.forEach((entry,i)=>{
-  const p=entry.record,plant=new T.Group(),x=((i%4)-1.5)*1.42,z=Math.floor(i/4)*1.38-.45;
-  plant.position.set(x,0,z);plant.userData.plantRecord=entry;
-  const potMat=new T.MeshStandardMaterial({color:0x4b554b,metalness:.18,roughness:.68});
-  const pot=new T.Mesh(new T.CylinderGeometry(.31,.24,.48,24),potMat);pot.position.y=.24;pot.castShadow=true;pot.userData.plantPick=true;plant.add(pot);
-  const rim=new T.Mesh(new T.TorusGeometry(.285,.035,8,24),new T.MeshStandardMaterial({color:0x89968a,metalness:.55,roughness:.3}));rim.rotation.x=Math.PI/2;rim.position.y=.46;rim.userData.plantPick=true;plant.add(rim);
-  const soil=new T.Mesh(new T.CylinderGeometry(.26,.26,.045,20),new T.MeshStandardMaterial({color:0x30251a,roughness:1}));soil.position.y=.49;soil.userData.plantPick=true;plant.add(soil);
-  const stem=new T.Mesh(new T.CylinderGeometry(.025,.052,1.3,10),new T.MeshStandardMaterial({color:0x4b8a42,roughness:.8}));stem.position.y=1.12;stem.userData.plantPick=true;plant.add(stem);
-  const leafColors=[0x347b3b,0x4d9845,0x68ad50,0x83c45d];
-  for(let j=0;j<16;j++){
-   const angle=j*2.399,level=.72+(j%4)*.2,radius=.22+(j%3)*.09,leafGroup=new T.Group();
-   leafGroup.position.set(Math.cos(angle)*radius,level,Math.sin(angle)*radius);leafGroup.rotation.y=-angle;leafGroup.rotation.z=(j%2?-.32:.32);
-   const leaf=new T.Mesh(new T.SphereGeometry(1,12,8),new T.MeshStandardMaterial({color:leafColors[j%4],roughness:.78,side:T.DoubleSide}));leaf.scale.set(.34,.055,.14);leaf.userData.plantPick=true;leafGroup.add(leaf);plant.add(leafGroup);
+  const p=entry.record,model=stageModel(entry.stage),plant=new T.Group(),x=((i%4)-1.5)*1.42,z=Math.floor(i/4)*1.38-.45;
+  plant.position.set(x,0,z);plant.scale.setScalar(model.scale);plant.userData.plantRecord=entry;plant.userData.stageLabel=model.label;
+  const potMat=new T.MeshStandardMaterial({color:0x39483d,metalness:.28,roughness:.52});
+  const pot=new T.Mesh(new T.CylinderGeometry(.31,.24,.48,32),potMat);pot.position.y=.24;pot.castShadow=true;pot.userData.plantPick=true;plant.add(pot);
+  const rim=new T.Mesh(new T.TorusGeometry(.285,.035,10,32),new T.MeshStandardMaterial({color:0x9aaa9c,metalness:.65,roughness:.25}));rim.rotation.x=Math.PI/2;rim.position.y=.46;rim.userData.plantPick=true;plant.add(rim);
+  const soil=new T.Mesh(new T.CylinderGeometry(.26,.26,.045,24),new T.MeshStandardMaterial({color:0x30251a,roughness:1}));soil.position.y=.49;soil.userData.plantPick=true;plant.add(soil);
+  const stemMat=new T.MeshStandardMaterial({color:0x477b3c,roughness:.82});
+  const stem=new T.Mesh(new T.CylinderGeometry(.018,.05,model.height,12),stemMat);stem.position.y=.49+model.height/2;stem.castShadow=true;stem.userData.plantPick=true;plant.add(stem);
+  const leafPalette=[0x286b35,0x347d3c,0x4c9147,0x68a951,0x7dbb5e];
+  for(let j=0;j<model.leaves;j++){
+   const angle=j*2.399,level=.58+(j%5)*(.11+model.scale*.025),radius=.16+(j%4)*.075;
+   const branch=new T.Group();branch.position.set(Math.cos(angle)*radius,.49+level,Math.sin(angle)*radius);branch.rotation.y=-angle;branch.rotation.z=(j%2?-.24:.24);
+   const leafMat=new T.MeshStandardMaterial({color:leafPalette[j%leafPalette.length],roughness:.72,side:T.DoubleSide});
+   const leaf=makeLeaf(T,leafMat);leaf.scale.setScalar(.68+(j%3)*.12);leaf.rotation.z=(j%2?-.18:.18);branch.add(leaf);
+   const vein=new T.Mesh(new T.CylinderGeometry(.006,.003,.29,6),new T.MeshStandardMaterial({color:0xa4c982,roughness:.8}));vein.rotation.z=Math.PI/2;vein.position.set(.015,.025,.01);branch.add(vein);
+   plant.add(branch);
   }
-  const tagCanvas=document.createElement('canvas');tagCanvas.width=320;tagCanvas.height=72;const ctx=tagCanvas.getContext('2d');
-  ctx.fillStyle='#0a120c';ctx.fillRect(0,0,320,72);ctx.strokeStyle='#76ff43';ctx.lineWidth=3;ctx.strokeRect(2,2,316,68);
-  ctx.fillStyle='#caffad';ctx.font='bold 25px Arial';ctx.textAlign='center';ctx.fillText(String(p.name||'PLANT').slice(0,20),160,46);
-  const tex=new T.CanvasTexture(tagCanvas),tag=new T.Mesh(new T.PlaneGeometry(1.05,.24),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));
-  tag.position.set(0,.67,.43);tag.userData.plantPick=true;plant.add(tag);
-  plant.userData.plantName=p.name||'Plant';room.add(plant);roomPlants3D.push(plant);
+  if(model.bloom>0){
+   const bloomMat=new T.MeshStandardMaterial({color:0x9cbf72,roughness:.8});
+   const budMat=new T.MeshStandardMaterial({color:0xc4d99a,roughness:.76});
+   for(let b=0;b<Math.round(3+model.bloom*7);b++){
+    const a=b*2.4,yy=.49+model.height*(.58+(b%3)*.12),rr=.12+(b%2)*.1;
+    const bud=new T.Group();bud.position.set(Math.cos(a)*rr,yy,Math.sin(a)*rr);
+    const core=new T.Mesh(new T.IcosahedronGeometry(.105*model.bloom,2),bloomMat);core.userData.plantPick=true;bud.add(core);
+    for(let k=0;k<5;k++){const petal=new T.Mesh(new T.SphereGeometry(.045*model.bloom,8,6),budMat);const aa=k*Math.PI*2/5;petal.position.set(Math.cos(aa)*.09*model.bloom,.035,Math.sin(aa)*.09*model.bloom);bud.add(petal)}
+    plant.add(bud);
+   }
+  }
+  const tagCanvas=document.createElement('canvas');tagCanvas.width=360;tagCanvas.height=88;const ctx=tagCanvas.getContext('2d');
+  ctx.fillStyle='#09120c';ctx.fillRect(0,0,360,88);ctx.strokeStyle='#76ff43';ctx.lineWidth=3;ctx.strokeRect(2,2,356,84);
+  ctx.fillStyle='#d8f8c9';ctx.font='bold 25px Arial';ctx.textAlign='center';ctx.fillText(String(p.name||'PLANT').slice(0,22),180,36);
+  ctx.fillStyle='#82bd70';ctx.font='bold 15px Arial';ctx.fillText(model.label,180,65);
+  const tex=new T.CanvasTexture(tagCanvas),tag=new T.Mesh(new T.PlaneGeometry(1.2,.29),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));
+  tag.position.set(0,.7,.47);tag.userData.plantPick=true;plant.add(tag);
+  room.add(plant);roomPlants3D.push(plant);
  });
- setText('scenePlantCount',String((t().plants||[]).length+(t().proPlants||[]).length).padStart(2,'0')+' PLANTS');
+ const total=(t().plants||[]).length+(t().proPlants||[]).length;
+ setText('scenePlantCount',String(total).padStart(2,'0')+' PLANTS');
  if(selectedPlant3D){const still=records.some(e=>e.source===selectedPlant3D.source&&e.index===selectedPlant3D.index);if(!still)closePlantInspector()}
 }
 function pick3DPlant(event){
@@ -383,10 +416,11 @@ function showPlantInspector(entry){
  $('inspectorKicker').textContent=entry.source+' · TENT 0'+(activeTent+1);
  $('inspectorName').textContent=p.name||'Unnamed plant';
  $('inspectorStrain').textContent=p.strain||'Strain not specified';
- $('inspectorStage').textContent=p.stage||t().stage||'Not set';
+ $('inspectorStage').textContent=entry.stage||p.stage||t().stage||'Not set';
  $('inspectorAge').textContent=days?'Day '+days:'Not set';
  $('inspectorDate').textContent=started||'Not set';
  $('inspectorGroup').textContent=entry.source==='PLANT'?'Plant list':'Grow intelligence';
+ $('inspectorKicker').textContent=entry.source+' · '+stageModel(entry.stage).label+' · TENT 0'+(activeTent+1);
  $('plantInspector').classList.add('open');
  roomPlants3D.forEach(g=>g.scale.setScalar(g.userData.plantRecord===entry?1.1:1));
 }
