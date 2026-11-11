@@ -92,6 +92,23 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 @media(max-width:900px){.scene{min-height:460px}}
 @media(max-width:600px){.scene{min-height:410px}.scenefoot{gap:8px;flex-wrap:wrap}.scenehead h1{font-size:32px}}
 
+
+/* SELECTABLE 3D PLANT INSPECTOR */
+.plant-inspector{position:absolute;z-index:8;right:18px;top:105px;width:min(300px,calc(100% - 36px));padding:16px;background:linear-gradient(145deg,#1b2b20f5,#09110cf5);border:1px solid #76ff4380;border-radius:13px;box-shadow:0 18px 48px #000b,inset 0 1px #ffffff16;backdrop-filter:blur(16px);display:none}
+.plant-inspector.open{display:block;animation:inspectorIn .2s ease-out}
+@keyframes inspectorIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.plant-inspector-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.plant-inspector h3{font:800 23px 'Barlow Condensed';margin:3px 0 2px;color:#f5f7f3}
+.plant-inspector .close{border:1px solid #536858;background:#111b14;color:#dce9dc;border-radius:7px;width:30px;height:30px;font-size:18px;line-height:1}
+.plant-inspector-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:13px}
+.plant-inspector-stat{background:#07100a99;border:1px solid #344438;border-radius:7px;padding:9px}
+.plant-inspector-stat small{display:block;color:#91a394;font:9px 'DM Mono';letter-spacing:.8px;text-transform:uppercase}
+.plant-inspector-stat b{display:block;color:#caffad;font-size:13px;margin-top:5px;overflow-wrap:anywhere}
+.plant-inspector .plant-note{color:#9cad9f;font-size:10px;line-height:1.5;margin:12px 0 0}
+.plant-selected-ring{color:#76ff43}
+.viewhint{left:18px;right:auto;bottom:44px}
+@media(max-width:600px){.plant-inspector{top:auto;bottom:62px;right:10px;width:min(270px,calc(100% - 20px));padding:12px}.plant-inspector h3{font-size:20px}.plant-inspector-grid{gap:5px}.plant-inspector-stat{padding:7px}.viewhint{left:10px;bottom:12px}}
+
 </style>
 </head>
 <body>
@@ -110,6 +127,16 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
    <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● SIMULATED ROOM</div></div>
    <div class="tent-art" id="tent3dWrap" aria-label="Interactive three-dimensional grow tent"><canvas id="greenhouse3d"></canvas><div class="viewhint">DRAG TO ROTATE · SCROLL TO ZOOM</div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
+   <aside class="plant-inspector" id="plantInspector" aria-live="polite">
+    <div class="plant-inspector-head"><div><div class="eyebrow" id="inspectorKicker">PLANT PROFILE</div><h3 id="inspectorName">Plant</h3><div class="age" id="inspectorStrain">Select a plant to inspect</div></div><button class="close" id="closePlantInspector" aria-label="Close plant details">×</button></div>
+    <div class="plant-inspector-grid">
+     <div class="plant-inspector-stat"><small>Growth stage</small><b id="inspectorStage">Not set</b></div>
+     <div class="plant-inspector-stat"><small>Plant age</small><b id="inspectorAge">Not set</b></div>
+     <div class="plant-inspector-stat"><small>Start date</small><b id="inspectorDate">Not set</b></div>
+     <div class="plant-inspector-stat"><small>Plant group</small><b id="inspectorGroup">Standard</b></div>
+    </div>
+    <p class="plant-note">Plant details are read from this tent's saved records. Edit the plant in Plants & timeline.</p>
+   </aside>
   </div>
   <aside class="sidepanel">
    <div class="panel"><div class="paneltitle"><strong>GROW STATUS</strong><span class="eyebrow" id="overviewType">PHOTOPERIOD</span></div><div class="stage" id="overviewStage">Not started</div><div class="age" id="overviewAge">Set a start date to begin the timeline</div><div class="growgrid" style="margin-top:14px"><div class="growstat"><label>Plant count</label><b id="overviewCount">0</b><small>in this tent</small></div><div class="growstat"><label>Grow day</label><b id="overviewDay">—</b><small>from start date</small></div></div></div>
@@ -233,7 +260,7 @@ $('entryDate').value=new Date().toISOString().slice(0,10);render();
 
 
 /* Interactive Three.js grow room. The existing dashboard remains the source of truth. */
-let room3D=null, roomPlants3D=[], roomFans3D=[];
+let room3D=null, roomPlants3D=[], roomFans3D=[], selectedPlant3D=null;
 function initGrowRoom3D(){
  const canvas=$('greenhouse3d'),wrap=$('tent3dWrap');
  if(!canvas||!window.THREE||room3D)return;
@@ -293,8 +320,11 @@ function initGrowRoom3D(){
   room3D.resize=resize;new ResizeObserver(resize).observe(wrap);resize();
   wrap.addEventListener('pointerdown',e=>{room3D.drag=true;room3D.moved=false;room3D.lastX=e.clientX;room3D.lastY=e.clientY;wrap.setPointerCapture(e.pointerId)});
   wrap.addEventListener('pointermove',e=>{if(!room3D?.drag)return;const dx=e.clientX-room3D.lastX,dy=e.clientY-room3D.lastY;if(Math.abs(dx)+Math.abs(dy)>3)room3D.moved=true;room3D.lastX=e.clientX;room3D.lastY=e.clientY;room3D.rotY+=dx*.007;room3D.rotX=Math.max(-.28,Math.min(.28,room3D.rotX+dy*.003));room3D.orbit.rotation.y=room3D.rotY;room3D.orbit.rotation.x=room3D.rotX});
-  wrap.addEventListener('pointerup',()=>{if(room3D)room3D.drag=false});
+  wrap.addEventListener('pointerup',e=>{if(!room3D)return;const wasMoved=room3D.moved;room3D.drag=false;if(!wasMoved)pick3DPlant(e)});
   wrap.addEventListener('pointercancel',()=>{if(room3D)room3D.drag=false});
+  const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
+  room3D.raycaster=raycaster;room3D.pointer=pointer;
+  $('closePlantInspector').addEventListener('click',closePlantInspector);
   wrap.addEventListener('wheel',e=>{e.preventDefault();room3D.zoom=Math.max(8,Math.min(15,room3D.zoom+e.deltaY*.012));camera.position.setLength(room3D.zoom)},{passive:false});
   sync3DPlants();
   const clock=new THREE.Clock();
@@ -302,39 +332,69 @@ function initGrowRoom3D(){
   animate();
  }catch(err){console.warn('3D greenhouse unavailable',err);canvas.style.display='none'}
 }
+function plantRecords3D(){
+ const normal=(t().plants||[]).map((p,index)=>({record:p,index,source:'PLANT'}));
+ const pro=(t().proPlants||[]).map((p,index)=>({record:p,index,source:'GROW INTELLIGENCE'}));
+ return normal.concat(pro).slice(0,12);
+}
 function sync3DPlants(){
  if(!room3D)return;
- const T=room3D.THREE,room=room3D.room;
- roomPlants3D.forEach(p=>{room.remove(p);p.traverse(o=>{if(o.geometry)o.geometry.dispose()})});roomPlants3D=[];
- const entries=(t().plants||[]).map(p=>p.name).concat((t().proPlants||[]).map(p=>p.name));
- const count=Math.min(entries.length,12);
- for(let i=0;i<count;i++){
-  const plant=new T.Group(),x=((i%4)-1.5)*1.42,z=Math.floor(i/4)*1.38-.45;
-  plant.position.set(x,0,z);
+ const T=room3D.THREE,room=room3D.room,records=plantRecords3D();
+ roomPlants3D.forEach(p=>{room.remove(p);p.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material.dispose()}})});roomPlants3D=[];
+ records.forEach((entry,i)=>{
+  const p=entry.record,plant=new T.Group(),x=((i%4)-1.5)*1.42,z=Math.floor(i/4)*1.38-.45;
+  plant.position.set(x,0,z);plant.userData.plantRecord=entry;
   const potMat=new T.MeshStandardMaterial({color:0x4b554b,metalness:.18,roughness:.68});
-  const pot=new T.Mesh(new T.CylinderGeometry(.31,.24,.48,24),potMat);pot.position.y=.24;pot.castShadow=true;plant.add(pot);
-  const rim=new T.Mesh(new T.TorusGeometry(.285,.035,8,24),new T.MeshStandardMaterial({color:0x89968a,metalness:.55,roughness:.3}));rim.rotation.x=Math.PI/2;rim.position.y=.46;plant.add(rim);
-  const soil=new T.Mesh(new T.CylinderGeometry(.26,.26,.045,20),new T.MeshStandardMaterial({color:0x30251a,roughness:1}));soil.position.y=.49;plant.add(soil);
-  const stemMat=new T.MeshStandardMaterial({color:0x4b8a42,roughness:.8});
-  const stem=new T.Mesh(new T.CylinderGeometry(.025,.052,1.3,10),stemMat);stem.position.y=1.12;plant.add(stem);
+  const pot=new T.Mesh(new T.CylinderGeometry(.31,.24,.48,24),potMat);pot.position.y=.24;pot.castShadow=true;pot.userData.plantPick=true;plant.add(pot);
+  const rim=new T.Mesh(new T.TorusGeometry(.285,.035,8,24),new T.MeshStandardMaterial({color:0x89968a,metalness:.55,roughness:.3}));rim.rotation.x=Math.PI/2;rim.position.y=.46;rim.userData.plantPick=true;plant.add(rim);
+  const soil=new T.Mesh(new T.CylinderGeometry(.26,.26,.045,20),new T.MeshStandardMaterial({color:0x30251a,roughness:1}));soil.position.y=.49;soil.userData.plantPick=true;plant.add(soil);
+  const stem=new T.Mesh(new T.CylinderGeometry(.025,.052,1.3,10),new T.MeshStandardMaterial({color:0x4b8a42,roughness:.8}));stem.position.y=1.12;stem.userData.plantPick=true;plant.add(stem);
   const leafColors=[0x347b3b,0x4d9845,0x68ad50,0x83c45d];
   for(let j=0;j<16;j++){
-   const angle=j*2.399,level=.72+(j%4)*.2,radius=.22+(j%3)*.09;
-   const leafGroup=new T.Group();leafGroup.position.set(Math.cos(angle)*radius,level,Math.sin(angle)*radius);leafGroup.rotation.y=-angle;leafGroup.rotation.z=(j%2?-.32:.32);
-   const leaf=new T.Mesh(new T.SphereGeometry(1,12,8),new T.MeshStandardMaterial({color:leafColors[j%4],roughness:.78,side:T.DoubleSide}));
-   leaf.scale.set(.34,.055,.14);leafGroup.add(leaf);
-   const vein=new T.Mesh(new T.CylinderGeometry(.006,.003,.27,5),new T.MeshStandardMaterial({color:0xa3d77b,roughness:.8}));vein.rotation.z=Math.PI/2;vein.position.x=.02;leafGroup.add(vein);
-   plant.add(leafGroup);
+   const angle=j*2.399,level=.72+(j%4)*.2,radius=.22+(j%3)*.09,leafGroup=new T.Group();
+   leafGroup.position.set(Math.cos(angle)*radius,level,Math.sin(angle)*radius);leafGroup.rotation.y=-angle;leafGroup.rotation.z=(j%2?-.32:.32);
+   const leaf=new T.Mesh(new T.SphereGeometry(1,12,8),new T.MeshStandardMaterial({color:leafColors[j%4],roughness:.78,side:T.DoubleSide}));leaf.scale.set(.34,.055,.14);leaf.userData.plantPick=true;leafGroup.add(leaf);plant.add(leafGroup);
   }
   const tagCanvas=document.createElement('canvas');tagCanvas.width=320;tagCanvas.height=72;const ctx=tagCanvas.getContext('2d');
   ctx.fillStyle='#0a120c';ctx.fillRect(0,0,320,72);ctx.strokeStyle='#76ff43';ctx.lineWidth=3;ctx.strokeRect(2,2,316,68);
-  ctx.fillStyle='#caffad';ctx.font='bold 25px Arial';ctx.textAlign='center';ctx.fillText(String(entries[i]||'PLANT').slice(0,20),160,46);
-  const tex=new T.CanvasTexture(tagCanvas);const tag=new T.Mesh(new T.PlaneGeometry(1.05,.24),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));tag.position.set(0,.67,.43);plant.add(tag);
-  plant.userData.plantName=entries[i]||'Plant';room.add(plant);roomPlants3D.push(plant);
- }
- setText('scenePlantCount',String(entries.length).padStart(2,'0')+' PLANTS');
+  ctx.fillStyle='#caffad';ctx.font='bold 25px Arial';ctx.textAlign='center';ctx.fillText(String(p.name||'PLANT').slice(0,20),160,46);
+  const tex=new T.CanvasTexture(tagCanvas),tag=new T.Mesh(new T.PlaneGeometry(1.05,.24),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));
+  tag.position.set(0,.67,.43);tag.userData.plantPick=true;plant.add(tag);
+  plant.userData.plantName=p.name||'Plant';room.add(plant);roomPlants3D.push(plant);
+ });
+ setText('scenePlantCount',String((t().plants||[]).length+(t().proPlants||[]).length).padStart(2,'0')+' PLANTS');
+ if(selectedPlant3D){const still=records.some(e=>e.source===selectedPlant3D.source&&e.index===selectedPlant3D.index);if(!still)closePlantInspector()}
 }
-
+function pick3DPlant(event){
+ if(!room3D||!roomPlants3D.length)return;
+ const rect=room3D.wrap.getBoundingClientRect();
+ room3D.pointer.x=((event.clientX-rect.left)/rect.width)*2-1;
+ room3D.pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;
+ room3D.raycaster.setFromCamera(room3D.pointer,room3D.camera);
+ const hits=room3D.raycaster.intersectObjects(roomPlants3D,true);
+ const hit=hits.find(h=>{let o=h.object;while(o&&o!==room3D.room){if(o.userData.plantPick)return true;o=o.parent}return false});
+ if(!hit){closePlantInspector();return}
+ let node=hit.object;while(node&&node.parent!==room3D.room)node=node.parent;
+ if(node?.userData?.plantRecord)showPlantInspector(node.userData.plantRecord);
+}
+function showPlantInspector(entry){
+ const p=entry.record,started=p.date||t().startDate||'',days=started?Math.max(1,Math.floor((new Date().setHours(0,0,0,0)-new Date(started+'T00:00:00'))/86400000)+1):null;
+ selectedPlant3D={source:entry.source,index:entry.index};
+ $('inspectorKicker').textContent=entry.source+' · TENT 0'+(activeTent+1);
+ $('inspectorName').textContent=p.name||'Unnamed plant';
+ $('inspectorStrain').textContent=p.strain||'Strain not specified';
+ $('inspectorStage').textContent=p.stage||t().stage||'Not set';
+ $('inspectorAge').textContent=days?'Day '+days:'Not set';
+ $('inspectorDate').textContent=started||'Not set';
+ $('inspectorGroup').textContent=entry.source==='PLANT'?'Plant list':'Grow intelligence';
+ $('plantInspector').classList.add('open');
+ roomPlants3D.forEach(g=>g.scale.setScalar(g.userData.plantRecord===entry?1.1:1));
+}
+function closePlantInspector(){
+ selectedPlant3D=null;
+ const panel=$('plantInspector');if(panel)panel.classList.remove('open');
+ roomPlants3D.forEach(g=>g.scale.setScalar(1));
+}
 
 /* Grow Intelligence extension */
 const proStages=['Seed / Germination','Seedling','Vegetative','Early Flower','Mid Flower','Late Flower','Harvest'];
