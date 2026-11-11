@@ -291,8 +291,8 @@ function initGrowRoom3D(){
   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x101a12,.035);
-  const camera=new THREE.PerspectiveCamera(34,1,.1,100);
-  const orbit=new THREE.Group();scene.add(orbit);orbit.add(camera);camera.position.set(0,0,11.6);
+  const camera=new THREE.PerspectiveCamera(42,1,.1,100);
+  const orbit=new THREE.Group();scene.add(orbit);orbit.add(camera);camera.position.set(0,2.25,13.4);camera.lookAt(0,2.25,0);
   const hemi=new THREE.HemisphereLight(0xd9ffe0,0x101810,2.25);scene.add(hemi);
   const keyLight=new THREE.DirectionalLight(0xe8ffdf,3.1);keyLight.position.set(-5,9,7);keyLight.castShadow=true;keyLight.shadow.mapSize.set(1024,1024);scene.add(keyLight);
   const rimLight=new THREE.DirectionalLight(0x75ff9b,1.1);rimLight.position.set(6,4,-5);scene.add(rimLight);
@@ -333,7 +333,7 @@ function initGrowRoom3D(){
    for(let b=0;b<7;b++){const blade=new THREE.Mesh(new THREE.ShapeGeometry((()=>{const sh=new THREE.Shape();sh.moveTo(0,0);sh.quadraticCurveTo(.18,.32,.08,.67);sh.quadraticCurveTo(-.02,.55,-.12,.12);sh.closePath();return sh})()),fanMat);blade.position.set(0,0,.035);blade.rotation.z=b*Math.PI*2/7;rotor.add(blade)}
    const hub=new THREE.Mesh(new THREE.CylinderGeometry(.14,.14,.13,20),black);hub.rotation.x=Math.PI/2;rotor.add(hub);fan.add(rotor);room.add(fan);roomFans3D.push(rotor);
   });
-  room3D={THREE,renderer,scene,camera,orbit,room,glow,wrap,drag:false,lastX:0,lastY:0,rotY:-.32,rotX:0,zoom:11.6};
+  room3D={THREE,renderer,scene,camera,orbit,room,glow,wrap,drag:false,lastX:0,lastY:0,rotY:-.32,rotX:0,zoom:13.4};
   orbit.rotation.y=room3D.rotY;
   const resize=()=>{if(!room3D)return;const w=wrap.clientWidth,h=wrap.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};
   room3D.resize=resize;new ResizeObserver(resize).observe(wrap);resize();
@@ -344,7 +344,7 @@ function initGrowRoom3D(){
   const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
   room3D.raycaster=raycaster;room3D.pointer=pointer;
   $('closePlantInspector').addEventListener('click',closePlantInspector);
-  wrap.addEventListener('wheel',e=>{e.preventDefault();room3D.zoom=Math.max(8,Math.min(15,room3D.zoom+e.deltaY*.012));camera.position.setLength(room3D.zoom)},{passive:false});
+  wrap.addEventListener('wheel',e=>{e.preventDefault();room3D.zoom=Math.max(8,Math.min(15,room3D.zoom+e.deltaY*.012));camera.position.set(0,2.25,room3D.zoom)},{passive:false});
   sync3DPlants();
   const clock=new THREE.Clock();
   const animate=()=>{requestAnimationFrame(animate);const tm=clock.getElapsedTime();roomFans3D.forEach((f,i)=>f.rotation.z=tm*(i?7:-8));if(room3D){room3D.glow.intensity=32+Math.sin(tm*1.4)*3;roomPlants3D.forEach((p,i)=>{p.rotation.z=Math.sin(tm*1.15+i*.8)*.018;p.rotation.x=Math.cos(tm*1.1+i)*.009})}renderer.render(scene,camera)};
