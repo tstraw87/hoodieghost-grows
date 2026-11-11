@@ -194,6 +194,36 @@ button:not(.tabs button){transition:filter .18s,transform .18s}button:not(.tabs 
  #view-overview>.hero>.scene .scenefoot{font-size:8px;letter-spacing:.04em;padding:9px}
 }
 
+
+/* Full visual-system replacement: industrial greenhouse command console */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--bg:#050605;--surface:#0b0e0b;--surface2:#111611;--line:#273128;--green:#a5ff00;--green2:#d0ff72;--white:#edf2e9;--muted:#788477}
+body{font-family:Inter,system-ui,sans-serif!important;background:#050605!important;color:var(--white)!important;background-image:radial-gradient(ellipse at 50% -15%,#7bbf2630,transparent 48%),linear-gradient(120deg,#050705,#090d09 52%,#030403)!important}
+.shell{max-width:2000px!important;padding:14px 20px 60px!important}
+.topbar{display:flex!important;min-height:92px!important;border-bottom:1px solid #33432b!important;padding:8px 0 18px!important}
+.brand{gap:18px!important}.brand img{width:76px!important;height:76px!important;border-radius:50%!important;border:1px solid #8cce47!important;padding:5px!important;background:#080c08!important;box-shadow:0 0 30px #9cff0030!important}
+.brandname{font-family:'Barlow Condensed',sans-serif!important;font-size:42px!important;font-weight:900!important;letter-spacing:.06em!important;text-transform:uppercase!important}
+.brandname span{color:var(--green)!important}
+.topright{font-family:'IBM Plex Mono',monospace!important;font-size:11px!important;text-transform:uppercase!important;letter-spacing:.12em!important;border:1px solid #34442d!important;border-radius:4px!important;background:#0b110b!important}
+.tabs{position:sticky!important;top:0!important;z-index:40!important;display:flex!important;gap:0!important;padding:10px 0!important;margin:0 0 20px!important;border:0!important;border-bottom:1px solid #33432b!important;border-radius:0!important;background:#060906ed!important;backdrop-filter:blur(18px)!important}
+.tabs button{font-family:'IBM Plex Mono',monospace!important;font-size:11px!important;letter-spacing:.09em!important;text-transform:uppercase!important;border-radius:3px!important;padding:14px 20px!important;background:transparent!important;color:#879184!important;border-bottom:2px solid transparent!important}
+.tabs button.active{background:#a5ff0010!important;color:var(--green)!important;border:0!important;border-bottom:2px solid var(--green)!important;box-shadow:none!important}
+.panel,.metric,.scene,.growstat{border-radius:5px!important;border:1px solid #2b392c!important;background:linear-gradient(145deg,#111711,#080b08)!important;box-shadow:0 10px 32px #0009,inset 0 1px #ffffff08!important}
+.panel{padding:20px!important}.paneltitle strong,.eyebrow,.metric label{font-family:'IBM Plex Mono',monospace!important;text-transform:uppercase!important;letter-spacing:.12em!important;font-size:10px!important;color:#9aab91!important}
+.metric{padding:19px!important;min-height:116px!important}.metric b{font-family:'Barlow Condensed',sans-serif!important;font-size:36px!important;font-weight:700!important;color:#f3f7ee!important}
+.scene{border-radius:5px!important;border-color:#526a3e!important;background:radial-gradient(ellipse at 50% 48%,#263a1d,#0a100b 70%)!important;box-shadow:0 0 0 1px #a5ff0014,inset 0 0 80px #a5ff0010,0 20px 55px #000c!important}
+.scenehead{padding:22px 24px 0!important}.scene h1{font-family:'Barlow Condensed',sans-serif!important;font-size:clamp(36px,4vw,64px)!important;font-weight:900!important;letter-spacing:.015em!important;text-transform:uppercase!important;line-height:.9!important}
+.scene h1 em{color:var(--green)!important}
+.scenefoot,.viewhint{font-family:'IBM Plex Mono',monospace!important;text-transform:uppercase!important;letter-spacing:.12em!important;border-radius:3px!important}
+.sectionhead h2{font-family:'Barlow Condensed',sans-serif!important;font-size:32px!important;text-transform:uppercase!important;letter-spacing:.04em!important}
+button,input,select,textarea{font-family:Inter,system-ui,sans-serif!important}
+input,select,textarea{background:#070b07!important;border:1px solid #34442f!important;border-radius:4px!important;padding:11px 12px!important}
+button{border-radius:4px!important}
+.btn.primary{background:var(--green)!important;color:#081004!important;font-weight:800!important;box-shadow:0 0 20px #a5ff0022!important}
+.notice{border-radius:3px!important;background:#131e12!important;border-left:3px solid var(--green)!important}
+.growstat{border-radius:4px!important}
+@media(max-width:760px){.shell{padding:8px 10px 34px!important}.brand img{width:54px!important;height:54px!important}.brandname{font-size:25px!important}.tabs{overflow-x:auto}.tabs button{padding:12px 13px!important;font-size:9px!important}.scene{min-height:500px!important}.scene h1{font-size:38px!important}.panel{padding:15px!important}}
+
 </style>
 </head>
 <body>
