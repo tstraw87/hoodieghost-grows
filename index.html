@@ -173,6 +173,38 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid #
 .dash-status-row b{color:var(--green)}
 @media(max-width:1120px){.dashboard-layout{grid-template-columns:1fr}.dashboard-left{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-left .stage-panel{grid-column:1/-1}}
 @media(max-width:650px){.dashboard-left{grid-template-columns:1fr}.dashboard-left .stage-panel{grid-column:auto}}
+
+/* Larger, more immersive dashboard sizing */
+.dashboard-layout{grid-template-columns:265px minmax(0,1fr);gap:15px}
+.dashboard-left{gap:14px}
+.dashboard-left>.panel{padding:16px}
+.dashboard-main>.metrics{gap:14px;margin-bottom:15px}
+.dashboard-main .metric{min-height:96px;padding:13px}
+.dashboard-main .ring{width:68px;height:68px}
+.dashboard-main .middle{gap:15px}
+.dashboard-main .hero{min-height:590px}
+.dashboard-main .rightstack{gap:14px}
+.dashboard-main .rightstack>.panel{padding:16px}
+.dashboard-main .lower{gap:14px;margin-top:15px}
+.dashboard-main .lower>.panel{min-height:190px;padding:16px}
+.dashboard-main .chart{height:125px}
+.dashboard-main .paneltitle{margin-bottom:13px}
+@media(max-width:1250px){
+ .dashboard-layout{grid-template-columns:235px minmax(0,1fr)}
+ .dashboard-main .hero{min-height:540px}
+}
+@media(max-width:1120px){
+ .dashboard-layout{grid-template-columns:1fr}
+ .dashboard-left{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .dashboard-left .stage-panel{grid-column:1/-1}
+ .dashboard-main .hero{min-height:560px}
+}
+@media(max-width:650px){
+ .dashboard-left{grid-template-columns:1fr}
+ .dashboard-left .stage-panel{grid-column:auto}
+ .dashboard-main .hero{min-height:430px}
+ .dashboard-main .lower>.panel{min-height:unset}
+}
 </style></head><body><div class="app"><aside class="side"><div class="brand"><img src="hoodieghost-logo.jpg" alt="HOODIEGHOST GROWS logo"></div><nav class="nav" id="nav"><button class="active" data-view="dashboard">⌂　DASHBOARD</button><button data-view="tents">♧　TENTS & PLANTS</button><button data-view="environment">◉　ENVIRONMENT</button><button data-view="nutrients">♢　NUTRIENTS</button><button data-view="reservoir">▤　RESERVOIR</button><button data-view="journal">▣　JOURNAL</button><button data-view="calendar">▦　CALENDAR</button><button data-view="settings">⚙　SETTINGS</button></nav><div class="sidefoot"><span class="live">● LOCAL DATA ACTIVE</span><br>Saved on this device<br><br>GROW WITH INTENT.<br>HARVEST WITH RESPECT.</div></aside><main>
 <header class="top"><div><div class="eyebrow">PERSONAL GROW CONTROL CENTER</div><h1>HOODIEGHOST <span style="color:var(--green)">GROWS</span></h1></div><div class="topright"><select class="select" id="tentSelect" aria-label="Select tent"></select><span class="pill" id="datePill"></span></div><div class="topright"><span class="pill">● <span class="live">SYSTEM ONLINE</span></span><button class="btn small" id="addPlantTop">＋ PLANT</button></div></header>
 <section id="dashboard" class="view"><div class="dashboard-layout"><aside class="dashboard-left">
