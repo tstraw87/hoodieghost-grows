@@ -162,6 +162,38 @@ button:not(.tabs button){transition:filter .18s,transform .18s}button:not(.tabs 
 @media(max-width:760px){.shell{padding:8px 9px 28px}.topbar{align-items:center}.brand img{width:58px;height:58px}.brandname{font-size:22px}.topright{padding:8px;font-size:10px}.tabs{margin-bottom:10px;padding:6px}.tabs button{padding:10px 12px;font-size:12px}.hero{grid-template-columns:1fr}.scene{min-height:510px}.tent-art{inset:102px 0 42px}.sidepanel{display:grid;grid-template-columns:1fr 1fr}.sidepanel .notice{grid-column:1/-1}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{padding:13px}.metric b{font-size:22px}.grid2{grid-template-columns:1fr}}
 @media(max-width:430px){.sidepanel{grid-template-columns:1fr}.sidepanel .notice{grid-column:auto}.scene{min-height:455px}.scenehead{padding:14px 14px 0}.scene h1{font-size:30px}.tentpick button{padding:7px 9px}}
 
+
+/* Reference-led three-zone command dashboard */
+#view-overview{display:grid;grid-template-columns:minmax(205px,.72fr) minmax(420px,1.8fr) minmax(270px,.92fr);grid-template-areas:"rail scene side" "rail scene side" "bottom bottom bottom" "snap snap snap";gap:14px;align-items:stretch}
+#view-overview>.hero{display:contents}
+#view-overview>.hero>.scene{grid-area:scene;min-height:650px;min-width:0}
+#view-overview>.hero>.sidepanel{grid-area:side;min-width:0}
+#view-overview>.metrics{grid-area:rail;display:flex;flex-direction:column;margin:0;gap:10px}
+#view-overview>.metrics .metric{min-height:105px;display:flex;flex-direction:column;justify-content:center}
+#view-overview>.metrics .metric b{font-size:clamp(22px,2vw,30px);margin:7px 0}
+#view-overview>.sectionhead{grid-area:bottom;margin:7px 0 0}
+#view-overview>.grid2{grid-area:snap}
+#view-overview>.hero>.scene .scenehead{display:flex;justify-content:space-between;align-items:flex-start}
+#view-overview>.hero>.scene h1{font-size:clamp(27px,2.7vw,43px);max-width:440px}
+#view-overview>.hero>.scene .tent-art{inset:112px 0 42px}
+#view-overview>.hero>.scene .scenefoot{display:flex;justify-content:space-between;gap:8px;font-size:10px;letter-spacing:.1em}
+#view-overview .sidepanel .panel{flex:0 0 auto}
+#view-overview .sidepanel .notice{margin-top:auto}
+@media(max-width:1100px){
+ #view-overview{grid-template-columns:minmax(170px,.65fr) minmax(360px,1.55fr);grid-template-areas:"rail scene" "side side" "bottom bottom" "snap snap"}
+ #view-overview>.hero>.scene{min-height:580px}
+ #view-overview>.hero>.sidepanel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #view-overview>.hero>.sidepanel .notice{grid-column:1/-1}
+}
+@media(max-width:680px){
+ #view-overview{grid-template-columns:1fr;grid-template-areas:"scene" "side" "rail" "bottom" "snap";gap:10px}
+ #view-overview>.hero>.scene{min-height:480px}
+ #view-overview>.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #view-overview>.hero>.sidepanel{display:flex}
+ #view-overview>.hero>.scene .scenehead{padding:14px}
+ #view-overview>.hero>.scene .scenefoot{font-size:8px;letter-spacing:.04em;padding:9px}
+}
+
 </style>
 </head>
 <body>
