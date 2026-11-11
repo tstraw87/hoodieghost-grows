@@ -109,6 +109,24 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 .viewhint{left:18px;right:auto;bottom:44px}
 @media(max-width:600px){.plant-inspector{top:auto;bottom:62px;right:10px;width:min(270px,calc(100% - 20px));padding:12px}.plant-inspector h3{font-size:20px}.plant-inspector-grid{gap:5px}.plant-inspector-stat{padding:7px}.viewhint{left:10px;bottom:12px}}
 
+
+/* Safari-safe greenhouse fallback while WebGL/Three.js is unavailable */
+#tentFallback{position:absolute;inset:0;z-index:1;display:none;overflow:hidden;background:radial-gradient(ellipse at 50% 72%,#76ff4320,transparent 55%),linear-gradient(145deg,#26382b,#0a100c)}
+#tentFallback .fb-tent{position:absolute;left:9%;right:9%;top:18%;bottom:13%;border:5px solid #829487;border-bottom-width:8px;transform:perspective(900px) rotateY(-7deg);background:repeating-linear-gradient(90deg,#ffffff08 0 1px,transparent 1px 48px),linear-gradient(135deg,#26392b,#101812 75%);box-shadow:inset 0 0 45px #000b,0 22px 38px #0009}
+#tentFallback .fb-roof{position:absolute;left:7%;right:7%;top:10%;height:13%;border:4px solid #a0afa2;background:linear-gradient(#7c8c7e,#27362b);clip-path:polygon(8% 0,92% 0,100% 100%,0 100%);box-shadow:0 0 22px #0009}
+#tentFallback .fb-led{position:absolute;left:29%;right:29%;top:28%;height:9px;border-radius:10px;background:#f2ffdb;box-shadow:0 0 15px 7px #caff91,0 0 60px 22px #9dff5b66;animation:pulse 3s ease-in-out infinite alternate}
+#tentFallback .fb-fan{position:absolute;top:39%;width:43px;height:43px;border:3px solid #9cac9e;border-radius:50%;background:#111a15}
+#tentFallback .fb-fan:before,#tentFallback .fb-fan:after{content:"";position:absolute;background:#a6b6a7;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:8px}
+#tentFallback .fb-fan:before{width:5px;height:31px;animation:spin 2s linear infinite}
+#tentFallback .fb-fan:after{width:31px;height:5px;animation:spin 2s linear infinite}
+#tentFallback .fb-fan.left{left:14%}#tentFallback .fb-fan.right{right:14%}
+#tentFallback .fb-plants{position:absolute;left:17%;right:17%;bottom:7%;height:53%;display:flex;align-items:flex-end;justify-content:space-around;gap:3%}
+#tentFallback .fb-plant{position:relative;width:18%;height:var(--h);min-height:50px;transform-origin:bottom;animation:sway 4s ease-in-out infinite alternate}
+#tentFallback .fb-plant:before{content:"";position:absolute;bottom:13%;left:48%;height:80%;width:5px;border-radius:6px;background:linear-gradient(#9acb64,#386a39)}
+#tentFallback .fb-plant:after{content:"";position:absolute;bottom:0;left:15%;width:70%;height:25%;background:linear-gradient(90deg,#25342a,#788a78,#25342a);clip-path:polygon(8% 0,92% 0,78% 100%,22% 100%)}
+#tentFallback .fb-leaves{position:absolute;left:0;right:0;top:10%;height:70%;background:radial-gradient(ellipse at 50% 48%,#79b94d 0 9%,transparent 10%),radial-gradient(ellipse at 22% 55%,#4c9147 0 20%,transparent 21%),radial-gradient(ellipse at 78% 55%,#4c9147 0 20%,transparent 21%),radial-gradient(ellipse at 34% 22%,#68a951 0 19%,transparent 20%),radial-gradient(ellipse at 66% 22%,#68a951 0 19%,transparent 20%)}
+#tentFallback .fb-label{position:absolute;left:18px;bottom:12px;color:#b4ff8d;font:10px 'DM Mono';letter-spacing:1.4px}
+@media(max-width:600px){#tentFallback .fb-tent{left:6%;right:6%}#tentFallback .fb-plant{width:22%}}
 </style>
 </head>
 <body>
@@ -125,7 +143,7 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
  <div class="hero">
   <div class="scene">
    <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● SIMULATED ROOM</div></div>
-   <div class="tent-art" id="tent3dWrap" aria-label="Interactive three-dimensional grow tent"><canvas id="greenhouse3d"></canvas><div class="viewhint">DRAG TO ROTATE · SCROLL TO ZOOM</div></div>
+   <div class="tent-art" id="tent3dWrap" aria-label="Interactive three-dimensional grow tent"><canvas id="greenhouse3d"></canvas><div id="tentFallback" aria-label="Greenhouse visual fallback"><div class="fb-roof"></div><div class="fb-tent"><div class="fb-led"></div><div class="fb-fan left"></div><div class="fb-fan right"></div><div class="fb-plants"><div class="fb-plant" style="--h:62%"><i class="fb-leaves"></i></div><div class="fb-plant" style="--h:82%"><i class="fb-leaves"></i></div><div class="fb-plant" style="--h:70%"><i class="fb-leaves"></i></div></div></div><div class="fb-label">HOODIEGHOST GROW SPACE · VISUAL MODE</div></div><div class="viewhint">DRAG TO ROTATE · SCROLL TO ZOOM</div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
    <aside class="plant-inspector" id="plantInspector" aria-live="polite">
     <div class="plant-inspector-head"><div><div class="eyebrow" id="inspectorKicker">PLANT PROFILE</div><h3 id="inspectorName">Plant</h3><div class="age" id="inspectorStrain">Select a plant to inspect</div></div><button class="close" id="closePlantInspector" aria-label="Close plant details">×</button></div>
@@ -263,7 +281,8 @@ $('entryDate').value=new Date().toISOString().slice(0,10);render();
 let room3D=null, roomPlants3D=[], roomFans3D=[], selectedPlant3D=null;
 function initGrowRoom3D(){
  const canvas=$('greenhouse3d'),wrap=$('tent3dWrap');
- if(!canvas||!window.THREE||room3D)return;
+ if(!canvas||room3D)return;
+ if(!window.THREE){canvas.style.display='none';$('tentFallback').style.display='block';return;}
  const THREE=window.THREE;
  try{
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
@@ -330,7 +349,7 @@ function initGrowRoom3D(){
   const clock=new THREE.Clock();
   const animate=()=>{requestAnimationFrame(animate);const tm=clock.getElapsedTime();roomFans3D.forEach((f,i)=>f.rotation.z=tm*(i?7:-8));if(room3D){room3D.glow.intensity=32+Math.sin(tm*1.4)*3;roomPlants3D.forEach((p,i)=>{p.rotation.z=Math.sin(tm*1.15+i*.8)*.018;p.rotation.x=Math.cos(tm*1.1+i)*.009})}renderer.render(scene,camera)};
   animate();
- }catch(err){console.warn('3D greenhouse unavailable',err);canvas.style.display='none'}
+ }catch(err){console.warn('3D greenhouse unavailable',err);canvas.style.display='none';const fallback=$('tentFallback');if(fallback)fallback.style.display='block'}
 }
 function plantRecords3D(){
  const normal=(t().plants||[]).map((p,index)=>({record:p,index,source:'PLANT',stage:p.stage||t().stage||'Seedling'}));
@@ -462,6 +481,7 @@ const oldShowView=showView;showView=function(name){oldShowView(name);if(name==='
 const oldTentRender=render;render=function(){oldTentRender();proRender();sync3DPlants()};
 proRender();
 initGrowRoom3D();
+if(!window.THREE){const lib=document.querySelector('script[src*="three.min.js"]');if(lib)lib.addEventListener('load',()=>{const fb=$('tentFallback');if(fb)fb.style.display='none';$('greenhouse3d').style.display='block';initGrowRoom3D()},{once:true})}
 
 </script>
 </body></html>
