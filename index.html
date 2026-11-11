@@ -351,7 +351,7 @@ function stageModel(stage){
 function makeLeaf(T,material){
  const shape=new T.Shape();
  shape.moveTo(0,0);shape.quadraticCurveTo(.16,.10,.31,.34);shape.quadraticCurveTo(.34,.43,.25,.47);shape.quadraticCurveTo(.12,.42,0,.27);shape.quadraticCurveTo(-.12,.42,-.25,.47);shape.quadraticCurveTo(-.34,.43,-.31,.34);shape.quadraticCurveTo(-.16,.10,0,0);
- const mesh=new T.Mesh(new T.ShapeGeometry(shape,8),material);mesh.rotation.x=-Math.PI/2;mesh.castShadow=true;mesh.userData.plantPick=true;return mesh;
+ const mesh=new T.Mesh(new T.ShapeGeometry(shape,8),material);mesh.castShadow=true;mesh.userData.plantPick=true;return mesh;
 }
 function sync3DPlants(){
  if(!room3D)return;
