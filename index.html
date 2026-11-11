@@ -224,6 +224,64 @@ button{border-radius:4px!important}
 .growstat{border-radius:4px!important}
 @media(max-width:760px){.shell{padding:8px 10px 34px!important}.brand img{width:54px!important;height:54px!important}.brandname{font-size:25px!important}.tabs{overflow-x:auto}.tabs button{padding:12px 13px!important;font-size:9px!important}.scene{min-height:500px!important}.scene h1{font-size:38px!important}.panel{padding:15px!important}}
 
+
+/* HOODIEGHOST visual rebuild — dashboard composition */
+:root{--green:#8cff00;--green2:#c4ff63;--bg:#030603;--surface:#080d08;--surface2:#101810;--line:#35501c;--muted:#9aa88e;--red:#ff4545;--amber:#ffd21a}
+body{background:radial-gradient(ellipse at 56% 34%,#14200c 0,transparent 46%),#020402;color:#f4f7ef;font-family:Inter,Arial,sans-serif}
+.shell{max-width:none;margin:0 0 0 218px;padding:12px 16px 28px}
+.topbar{height:74px;padding:5px 12px 10px;border:1px solid #30451c;border-radius:12px;background:linear-gradient(100deg,#0d150b,#030603 65%);box-shadow:0 0 18px #8cff0020;position:relative}
+.brand img{width:64px;height:64px;border:1px solid #78b92b;background:#020402;box-shadow:0 0 16px #8cff0040}
+.brandname{font-size:30px;letter-spacing:1.5px;text-shadow:0 0 12px #8cff0060}
+.eyebrow{color:#a6c47c}
+.topright{padding:12px 16px;border:1px solid #476a20;border-radius:8px;background:#070d06}
+.tabs{position:fixed;z-index:20;left:0;top:0;bottom:0;width:202px;padding:18px 12px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;background:linear-gradient(180deg,#0b1209,#020402 85%);border-right:1px solid #39541c;box-shadow:8px 0 30px #000}
+.tabs:before{content:"HOODIEGHOST\\A GROWS";white-space:pre;display:block;text-align:center;font:900 25px/.9 'Barlow Condensed',sans-serif;color:var(--green);text-shadow:0 0 12px #8cff00;padding:12px 0 24px}
+.tabs button{width:100%;text-align:left;border:1px solid #25371b;border-radius:7px;background:linear-gradient(180deg,#111a0e,#060a05);color:#d7e4cd;padding:13px 12px;font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.7px;text-transform:uppercase}
+.tabs button:before{content:"◆";color:#8cff00;margin-right:12px}
+.tabs button.active,.tabs button:hover{background:linear-gradient(90deg,#8cff00,#3b6d00);color:#061000;border-color:#c4ff63;box-shadow:0 0 17px #8cff0060}
+main{padding-top:12px}
+#view-overview{display:grid;grid-template-columns:minmax(0,1fr) 275px;grid-template-areas:"metrics metrics" "scene side" "bottom side" "lineup lineup";gap:12px;align-items:start}
+#view-overview>.metrics{grid-area:metrics;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
+.metric{background:radial-gradient(ellipse at 50% 0,#1c3210,#070b06 72%);border:1px solid #5a8725;border-radius:12px;min-height:100px;padding:15px 18px;box-shadow:inset 0 0 18px #8cff0014,0 0 12px #8cff0014;position:relative}
+.metric:before{content:"";position:absolute;left:12px;right:12px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.metric label{font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:1px;color:#b7d78c;text-transform:uppercase}
+.metric b{display:block;font:800 clamp(23px,2.3vw,34px) 'Barlow Condensed',sans-serif;color:#fff;margin:6px 0;text-shadow:0 0 12px #8cff0040}
+.metric small{color:#91a481;font:10px 'DM Mono',monospace}
+#view-overview>.hero{display:contents}
+#view-overview .scene{grid-area:scene;min-height:570px;height:clamp(520px,62vh,760px);border:1px solid #75a82a;border-radius:10px;background:radial-gradient(ellipse at 50% 45%,#253c18,#081007 68%,#020402);box-shadow:0 0 25px #8cff0030,inset 0 0 70px #000;overflow:hidden}
+.scene:before{background:linear-gradient(180deg,#02040220,#02040200 30%,#02040266),repeating-linear-gradient(90deg,transparent 0 7.9%,#b7ff0010 8%)}
+.scenehead{top:14px;left:16px;right:16px}
+.scenehead h1{font-size:clamp(22px,3vw,38px);text-shadow:0 2px 12px #000}
+.scenehead .status{background:#061006dd;border-color:#5f9825;color:#baff72}
+.tentpick button{background:#081006dd;border-color:#527c24;color:#d9efc3}
+.tentpick button.active{background:var(--green);color:#061000}
+.tent-art{width:94%;height:75%;bottom:35px;max-width:1000px;filter:drop-shadow(0 0 24px #8cff0030)}
+#greenhouse3d{width:100%;height:100%;display:block}
+#tentFallback{inset:0}
+.viewhint{color:#c1e79a}
+.scenefoot{background:#030603c9;border-top:1px solid #527c24;color:#b5d38d}
+#view-overview>.hero>.sidepanel,.sidepanel{grid-area:side;display:flex;flex-direction:column;gap:10px}
+.panel,.sidepanel .panel{background:linear-gradient(145deg,#10180d,#050805 72%);border:1px solid #405e21;border-radius:9px;box-shadow:inset 0 0 20px #8cff000b,0 0 12px #8cff0012;padding:14px}
+.paneltitle{border-bottom:1px solid #30471c;padding-bottom:9px;margin-bottom:11px}
+.paneltitle strong,.sectionhead h2{font:800 19px 'Barlow Condensed',sans-serif;letter-spacing:.8px;color:#c4ff63}
+.paneltitle .eyebrow{font-size:9px}
+.stage{font:800 28px 'Barlow Condensed',sans-serif;color:var(--green);text-shadow:0 0 12px #8cff0040}
+.growstat{background:#0a1008;border:1px solid #354e20;border-radius:6px;padding:10px}
+.growstat b{color:#c4ff63}
+.notice{background:#11190b!important;border:1px solid #536f25!important;border-left:3px solid var(--green)!important;border-radius:5px!important}
+#view-overview>.sectionhead{grid-area:lineup}
+#view-overview>.grid2{grid-area:bottom;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sectionhead{margin:0 0 10px}
+.sectionhead h2{font-size:24px}
+.btn{border:1px solid #547b28;background:#0c1409;color:#d9f3c2;border-radius:6px}
+.btn.primary{background:linear-gradient(90deg,#a0ff00,#4c8500);color:#071000;border-color:#c8ff77;box-shadow:0 0 12px #8cff0040}
+input,select,textarea{background:#050905!important;border:1px solid #405b28!important;color:#f2f8eb!important;border-radius:5px!important}
+table th{color:#c4ff63}
+.footer{border-color:#39551f;color:#9cb681}
+.plant-inspector{background:#050a04ee;border:1px solid #8cff00}
+@media(max-width:900px){.shell{margin-left:174px;padding:8px}.tabs{width:164px;padding:10px 8px}.tabs:before{font-size:21px}.tabs button{font-size:11px;padding:11px 8px}.topbar{height:auto}.brandname{font-size:23px}#view-overview{grid-template-columns:minmax(0,1fr) 230px}.scene{min-height:480px!important;height:55vh!important}}
+@media(max-width:650px){.shell{margin:0;padding:8px}.tabs{position:sticky;top:0;width:auto;height:auto;bottom:auto;flex-direction:row;padding:7px;overflow-x:auto;border:1px solid #39551f;border-radius:8px}.tabs:before{display:none}.tabs button{min-width:max-content;width:auto;padding:10px}.topbar{margin-bottom:8px}.topright{display:none}#view-overview{display:flex;flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%}#view-overview .scene{width:100%;height:470px!important;min-height:470px!important}.sidepanel,#view-overview>.grid2{width:100%}#view-overview>.grid2{grid-template-columns:1fr}.scenehead h1{font-size:25px}.tent-art{height:65%;width:98%}}
+
 </style>
 </head>
 <body>
@@ -608,5 +666,20 @@ proRender();
 initGrowRoom3D();
 if(!window.THREE){const lib=document.querySelector('script[src*="three.min.js"]');if(lib)lib.addEventListener('load',()=>{const fb=$('tentFallback');if(fb)fb.style.display='none';$('greenhouse3d').style.display='block';initGrowRoom3D()},{once:true})}
 
+</script>
+<script>
+/* Dashboard layout polish: use the existing live controls and saved data */
+(function(){
+ const ov=document.getElementById('view-overview');
+ const hero=ov&&ov.querySelector('.hero');
+ const metrics=ov&&ov.querySelector('.metrics');
+ const section=ov&&ov.querySelector('.sectionhead');
+ const grid=ov&&ov.querySelector('.grid2');
+ if(hero&&metrics){ov.insertBefore(metrics,hero)}
+ if(hero&&section&&grid){ov.appendChild(section);ov.appendChild(grid)}
+ const scene=hero&&hero.querySelector('.scene');
+ const side=hero&&hero.querySelector('.sidepanel');
+ if(scene&&side){hero.insertBefore(scene,side)}
+})();
 </script>
 </body></html>
