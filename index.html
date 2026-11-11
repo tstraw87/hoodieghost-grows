@@ -380,9 +380,19 @@ function stageModel(stage){
  return {scale:1.62,leaves:18,height:1.58,bloom:0,label:'GROWING'};
 }
 function makeLeaf(T,material){
- const shape=new T.Shape();
- shape.moveTo(0,0);shape.quadraticCurveTo(.16,.10,.31,.34);shape.quadraticCurveTo(.34,.43,.25,.47);shape.quadraticCurveTo(.12,.42,0,.27);shape.quadraticCurveTo(-.12,.42,-.25,.47);shape.quadraticCurveTo(-.34,.43,-.31,.34);shape.quadraticCurveTo(-.16,.10,0,0);
- const mesh=new T.Mesh(new T.ShapeGeometry(shape,8),material);mesh.castShadow=true;mesh.userData.plantPick=true;return mesh;
+ // Sculpted, gently serrated leaf silhouette with a raised central midrib.
+ const shape=new T.Shape(),left=[],right=[],steps=9;
+ for(let i=0;i<=steps;i++){const t=i/steps,y=.045+t*.43,w=Math.sin(Math.PI*t)*(.22+.035*Math.sin(t*Math.PI*5));right.push([w,y])}
+ for(let i=steps;i>=0;i--){const t=i/steps,y=.045+t*.43,w=Math.sin(Math.PI*t)*(.22+.035*Math.sin(t*Math.PI*5));left.push([-w,y])}
+ shape.moveTo(0,0);right.forEach((p,i)=>{const n=right[Math.min(i+1,steps)];shape.quadraticCurveTo(p[0]+.025,p[1]-.018,n[0],n[1])});
+ left.forEach((p,i)=>{const n=left[Math.min(i+1,steps)];shape.quadraticCurveTo(p[0]-.025,p[1]-.018,n[0],n[1])});
+ shape.closePath();
+ const mesh=new T.Mesh(new T.ShapeGeometry(shape,12),material);mesh.castShadow=true;mesh.receiveShadow=true;mesh.userData.plantPick=true;
+ const ridgeMat=new T.MeshStandardMaterial({color:0xa4c982,roughness:.78});
+ const points=[new T.Vector3(0,.025,.012),new T.Vector3(0,.18,.026),new T.Vector3(0,.34,.018),new T.Vector3(0,.47,0)];
+ const ridge=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(points),12,.008,5,false),ridgeMat);ridge.userData.plantPick=true;mesh.add(ridge);
+ for(let side of [-1,1])for(let k=1;k<=3;k++){const y=.12+k*.075,w=Math.sin(Math.PI*((y-.045)/.43))*.19;const vein=new T.Mesh(new T.CylinderGeometry(.0025,.004,.13,5),ridgeMat);vein.position.set(side*w*.42,y+.025,.012);vein.rotation.z=side*.58;mesh.add(vein)}
+ return mesh;
 }
 function sync3DPlants(){
  if(!room3D)return;
