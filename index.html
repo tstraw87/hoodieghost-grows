@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#141617" name="theme-color"/>
-<title>HOODIEGHOST GROWS // GROWSPACE DASHBOARD</title>
+<title>HOODIEGHOST GROWS // HAUNTED GREENHOUSE DASHBOARD</title>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
@@ -218,6 +218,39 @@ button,input,select{font:inherit}
 @media(max-width:800px){.app-frame{display:block}.sidebar{position:relative;height:auto;padding:9px 12px;border-right:0;border-bottom:1px solid #233224;display:block}.brand-lockup{display:flex;align-items:center;gap:10px;text-align:left;padding:0 0 9px;border:0}.brand-lockup img{width:48px;height:48px;border-radius:9px}.brand-word{font-size:19px;margin:0}.brand-word b{font-size:17px}.brand-lockup small{display:none}.sidebar-label,.sidebar-bottom{display:none}.side-links{display:flex;overflow-x:auto;gap:4px;padding:7px 0 0}.side-links a{flex:0 0 auto;padding:7px 9px;font-size:14px}.side-links a span{font-size:8px}.workspace{padding:12px}.topbar{align-items:flex-start}.topbar-right{gap:5px}.date-chip{padding:7px}.live-chip{display:none}.metric-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.metric-tile strong{font-size:18px}.main-columns{grid-template-columns:1fr}.right-column{grid-template-columns:repeat(2,minmax(0,1fr))}.right-column #reservoir-panel,.right-column #grow-calendar{grid-column:auto}.right-column #vpd-panel{grid-column:1/-1}.right-column #plant-stage{grid-column:1/-1}.right-column #mineral-panel{grid-column:1/-1}.hero-scene{min-height:250px}.bottom-center-grid{grid-template-columns:1fr 1fr}.bottom-center-grid #logs-panel{grid-column:2;grid-row:1 / span 2}}
 @media(max-width:540px){.workspace{padding:10px}.topbar h1{font-size:25px}.eyebrow{font-size:8px}.status{font-size:8px}.date-chip strong{font-size:10px}.tent-switch-row{display:block}.tent-switch-row .switch-label{margin:0 0 6px}.tent-btn{font-size:14px;padding:9px 4px}.metric-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-tile:last-child{grid-column:1/-1}.main-columns,.lower-grid,.bottom-center-grid,.right-column{grid-template-columns:1fr}.bottom-center-grid #logs-panel,.bottom-center-grid #nutrient-panel,.bottom-center-grid #additives-panel{grid-column:1;grid-row:auto}.right-column #vpd-panel,.right-column #plant-stage,.right-column #mineral-panel{grid-column:1}.hero-scene{aspect-ratio:1.25/1;min-height:235px}.hero-copy{bottom:20px}.hero-copy p{font-size:10px}.hero-badges{gap:4px}.hero-badges span{font-size:7px;padding:5px 7px}.redesigned-panel{padding:12px}.app-footer{font-size:12px}}
 @media(prefers-reduced-motion:no-preference){.metric-tile,.redesigned-panel,.alerts-card,.trend-card,.status-card{transition:border-color .2s,box-shadow .2s}.metric-tile:hover,.redesigned-panel:hover,.alerts-card:hover,.trend-card:hover,.status-card:hover{border-color:#527d40;box-shadow:0 0 18px #6fff2412}}
+
+.grow-age-display{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;background:radial-gradient(ellipse at 15% 50%,#28451b 0,#101a11 48%,#090f0b 100%);border:1px solid #456b34;border-radius:9px;box-shadow:inset 0 0 22px #72ff2412}
+.age-caption{display:block;color:#93a78b;font-size:8px;letter-spacing:.18em;margin-bottom:5px}
+.grow-age-display strong{display:block;font-family:'Creepster',Impact,cursive;font-size:clamp(28px,3vw,40px);font-weight:400;letter-spacing:.08em;color:#b7ff72;text-shadow:0 0 16px #8cff2866}
+.age-pulse{width:13px;height:13px;border-radius:50%;background:#8cff28;box-shadow:0 0 0 0 #8cff2866;animation:agePulse 2s infinite}
+@keyframes agePulse{0%{box-shadow:0 0 0 0 #8cff2866;opacity:1}70%{box-shadow:0 0 0 13px #8cff2800;opacity:.8}100%{box-shadow:0 0 0 0 #8cff2800;opacity:1}}
+@media(prefers-reduced-motion:no-preference){
+ .hero-scene>img{animation:greenhouseDrift 26s ease-in-out infinite alternate;transform-origin:center}
+ .hero-scene:after{content:"";position:absolute;inset:-30% -60%;pointer-events:none;background:linear-gradient(110deg,transparent 42%,#b8ff5a0c 49%,#d8ff9b20 50%,transparent 57%);animation:ghostSweep 11s ease-in-out infinite;mix-blend-mode:screen}
+ .hero-copy h2{animation:neonBreath 4s ease-in-out infinite alternate}
+ .metric-tile{animation:panelGlow 5s ease-in-out infinite alternate}
+ .metric-tile:nth-child(2){animation-delay:.7s}.metric-tile:nth-child(3){animation-delay:1.4s}.metric-tile:nth-child(4){animation-delay:2.1s}.metric-tile:nth-child(5){animation-delay:2.8s}
+ .water{overflow:hidden;transition:height .35s ease}
+ .water:before{animation:waterRipple 4s ease-in-out infinite alternate}
+ .feed-line,.runoff-line{stroke-dasharray:900;stroke-dashoffset:900;animation:chartDraw 2.4s ease forwards}
+ .runoff-line{animation-delay:.35s}
+ .live-chip i{animation:liveBlink 1.8s ease-in-out infinite}
+ .alert-item.danger{animation:dangerGlow 2s ease-in-out infinite alternate}
+ .alert-item.warning{animation:warningGlow 3s ease-in-out infinite alternate}
+ .tent-btn.active{animation:activeTentGlow 3.5s ease-in-out infinite alternate}
+}
+@keyframes greenhouseDrift{from{transform:scale(1)}to{transform:scale(1.055)}}
+@keyframes ghostSweep{0%,65%{transform:translateX(-45%);opacity:0}78%{opacity:1}100%{transform:translateX(45%);opacity:0}}
+@keyframes neonBreath{from{text-shadow:0 0 8px #73ff5570}to{text-shadow:0 0 22px #73ff55d0,0 0 38px #73ff5540}}
+@keyframes panelGlow{from{box-shadow:0 0 0 #72ff2400}to{box-shadow:0 0 15px #72ff2414}}
+@keyframes waterRipple{from{transform:translateX(-3%) scaleY(.8)}to{transform:translateX(3%) scaleY(1.2)}}
+@keyframes chartDraw{to{stroke-dashoffset:0}}
+@keyframes liveBlink{50%{opacity:.35;box-shadow:0 0 2px #8cff28}}
+@keyframes dangerGlow{to{box-shadow:0 0 16px #ff474733}}
+@keyframes warningGlow{to{box-shadow:0 0 13px #ffb52e22}}
+@keyframes activeTentGlow{to{box-shadow:0 0 19px #68ff2535,inset 0 0 0 1px #70ff2650}}
+@media(max-width:540px){.grow-age-display strong{font-size:32px}.hero-scene>img{object-position:center}.metric-tile{min-height:84px}}
+
 </style>
 <meta content="HOODIEGHOST GROWS personal growspace dashboard, calendar, nutrient calculator and feed/runoff journal." name="description"/></head>
 <body>
@@ -338,12 +371,12 @@ button,input,select{font:inherit}
 <div class="readouts"><div class="readout"><span>FEED RECORDS</span><strong id="feedCount">0</strong></div><div class="readout"><span>RUNOFF RECORDS</span><strong id="runoffCount">0</strong></div></div>
 </article>
 <article class="panel redesigned-panel" id="plant-stage">
-<h2>PLANT AGE TIMELINE</h2>
-<div class="row"><label for="age">Current plant day</label><output id="ageOut">Day 1</output></div>
-<input id="age" max="120" min="1" type="range" value="1"/>
-<div class="row sub"><span>DAY 1</span><span>DAY 120</span></div>
-<div class="metric" id="ageMetric">01 <span style="font-size:12px;color:#9aa1a4">/ 120 DAYS</span></div>
-<div class="sub">Timeline is stored independently for each tent.</div>
+<h2>GROW AGE TRACKER</h2>
+<div class="grow-age-display"><div><span class="age-caption">CURRENT GROW AGE</span><strong id="ageMetric">DAY 1</strong></div><span class="age-pulse" aria-hidden="true"></span></div>
+<label for="growStartDate" style="display:block;margin-top:13px">Grow start date</label>
+<input id="growStartDate" type="date"/>
+<div class="row" style="margin-top:10px"><span class="sub">Age updates automatically each day.</span><button class="action" id="ageTodayBtn" type="button">SET START TODAY</button></div>
+<div class="sub" id="ageOut" style="margin-top:8px">Day 1 · Started today</div>
 </article>
 <article class="panel redesigned-panel" id="vpd-panel">
 <div class="row">
@@ -380,7 +413,7 @@ button,input,select{font:inherit}
 (() => {
   const KEY = 'hoodieghost-grow-dashboard-v2';
   const defaults = () => ({
-    age:1, unitC:false, temp:78, humidity:60, volume:50,
+    age:1, growStartDate:new Date().toISOString().slice(0,10), unitC:false, temp:78, humidity:60, volume:50,
     reservoirCapacity:5, volumeUnit:'gal', waterSource:'RO',
     sourcePpm:0, nutrientPpm:0,
     baseFormat:'1', baseRates:{}, calcAdditives:[], dailyLogs:{}, ppmMode:'source-adjusted-v2',
@@ -395,6 +428,19 @@ button,input,select{font:inherit}
   } catch (_) { all = {}; }
 
   const $ = id => document.getElementById(id);
+  function growDay(){
+    const start = new Date((data.growStartDate || localDate()) + 'T12:00:00');
+    const today = new Date(localDate() + 'T12:00:00');
+    const days = Math.floor((today-start)/86400000)+1;
+    return Math.max(1, days);
+  }
+  function renderGrowAge(){
+    const day=growDay();
+    $('growStartDate').value=data.growStartDate || localDate();
+    $('ageMetric').textContent='DAY '+day;
+    $('ageOut').textContent=day===1?'Day 1 · Started today':`Day ${day} · ${data.growStartDate}`;
+    const heroDay=$('heroDay'); if(heroDay) heroDay.textContent='DAY '+day;
+  }
   const getData = () => {
     const d = all[active];
     if (!d || typeof d !== 'object') return defaults();
@@ -416,9 +462,8 @@ button,input,select{font:inherit}
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', String(on));
     });
-    $('age').value = data.age;
-    $('ageOut').textContent = 'Day ' + data.age;
-    $('ageMetric').innerHTML = String(data.age).padStart(2,'0') + ' <span style="font-size:12px;color:#9aa1a4">/ 120 DAYS</span>';
+    if(!data.growStartDate){ const d=new Date(); d.setDate(d.getDate()-(Math.max(1,Number(data.age)||1)-1)); data.growStartDate=localDate(d); }
+    renderGrowAge();
     $('unitToggle').checked = data.unitC;
     $('tempUnit').textContent = data.unitC ? '°C' : '°F';
     $('temp').value = data.temp;
@@ -517,7 +562,8 @@ button,input,select{font:inherit}
   document.querySelectorAll('.tent-btn').forEach(button => button.addEventListener('click', () => {
     save(); active = Number(button.dataset.tent); data = getData(); render();
   }));
-  $('age').addEventListener('input', e => { data.age = Number(e.target.value); $('ageOut').textContent='Day '+data.age; $('ageMetric').innerHTML=String(data.age).padStart(2,'0')+' <span style="font-size:12px;color:#9aa1a4">/ 120 DAYS</span>'; save(); });
+  $('growStartDate').addEventListener('change', e => { data.growStartDate=e.target.value || localDate(); save(); renderGrowAge(); });
+  $('ageTodayBtn').addEventListener('click', () => { data.growStartDate=localDate(); save(); renderGrowAge(); });
   $('unitToggle').addEventListener('change', e => {
     const oldC = data.unitC; const nextC = e.target.checked;
     if (oldC !== nextC) data.temp = nextC ? (Number(data.temp)-32)*5/9 : Number(data.temp)*9/5+32;
@@ -587,7 +633,7 @@ button,input,select{font:inherit}
   const c=$('unitToggle')?.checked,t=Number($('temp')?.value),rh=Number($('humidity')?.value),vpdText=$('vpd')?.textContent||'—',vpd=parseFloat(vpdText),unit=c?'°C':'°F',temp=Number.isFinite(t)?t.toFixed(1)+unit:'—',humidity=Number.isFinite(rh)?rh.toFixed(0)+'%':'—',vol=Number($('volume')?.value),fill=Number.isFinite(vol)?vol.toFixed(0)+'%':'—',source=Number($('sourcePpm')?.value)||0,final=Number($('nutrientPpm')?.value)||0;
   $('topTemp').textContent=temp;$('topHumidity').textContent=humidity;$('topVpd').textContent=vpdText;$('topReservoir').textContent=fill;$('topPpm').textContent=String(Math.max(0,final-source));
   $('statusTemp').textContent=temp;$('statusHumidity').textContent=humidity;$('statusVpd').textContent=vpdText;$('statusWater').textContent=fill;
-  $('heroTent').textContent=$('activeLabel').textContent;$('heroDay').textContent='DAY '+($('age')?.value||'1');
+  $('heroTent').textContent=$('activeLabel').textContent;$('heroDay').textContent=$('ageMetric')?.textContent||'DAY 1';
   $('todayStamp').textContent=new Date().toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'});
   const alerts=[];
   if(Number.isFinite(t)&&(c?t>=29.5:t>=85))alerts.push(['danger','HIGH TEMPERATURE',temp+' ambient reading. Compare with your stage target.']);
@@ -612,11 +658,12 @@ button,input,select{font:inherit}
   target.innerHTML=`<svg viewBox="0 0 520 180" role="img" aria-label="Feed and runoff PPM from logged records"><g class="chart-grid"><path d="M36 20H510 M36 60H510 M36 100H510 M36 140H510"/><path d="M36 20V140 M154 20V140 M272 20V140 M390 20V140 M510 20V140"/></g><polyline class="feed-line" points="${pts(feed)}"/><polyline class="runoff-line" points="${pts(run)}"/><text x="40" y="164">RECENT LOGGED PPM · ${dates.length} DATES</text></svg>`;
  }
  function refresh(){updateDecor();renderCalendar();renderTrend()}
- document.addEventListener('input',e=>{if(['temp','humidity','volume','capacity','sourcePpm','nutrientPpm','age'].includes(e.target.id))setTimeout(refresh,0)});
+ document.addEventListener('input',e=>{if(['temp','humidity','volume','capacity','sourcePpm','nutrientPpm','growStartDate'].includes(e.target.id))setTimeout(refresh,0)});
  document.addEventListener('change',e=>{if(['unitToggle','volumeUnit','waterSource','calcium','magnesium','logDate'].includes(e.target.id))setTimeout(refresh,0)});
  document.querySelectorAll('.tent-btn').forEach(b=>b.addEventListener('click',()=>setTimeout(refresh,30)));
  ['saveFeedBtn','saveRunoffBtn'].forEach(id=>$(id)?.addEventListener('click',()=>setTimeout(refresh,60)));
- ['todayBtn','prevDayBtn','nextDayBtn'].forEach(id=>$(id)?.addEventListener('click',()=>setTimeout(refresh,0)));
+ ['todayBtn','prevDayBtn','nextDayBtn','ageTodayBtn'].forEach(id=>$(id)?.addEventListener('click',()=>setTimeout(refresh,0)));
+ $('growStartDate')?.addEventListener('change',()=>setTimeout(refresh,0));
  $('calendarPrev')?.addEventListener('click',()=>{const d=new Date(($('logDate').value||new Date().toISOString().slice(0,10))+'T12:00:00');d.setMonth(d.getMonth()-1);$('logDate').value=d.toISOString().slice(0,10);refresh()});
  $('calendarNext')?.addEventListener('click',()=>{const d=new Date(($('logDate').value||new Date().toISOString().slice(0,10))+'T12:00:00');d.setMonth(d.getMonth()+1);$('logDate').value=d.toISOString().slice(0,10);refresh()});
  refresh();
