@@ -297,9 +297,20 @@ function initGrowRoom3D(){
   const keyLight=new THREE.DirectionalLight(0xe8ffdf,3.1);keyLight.position.set(-5,9,7);keyLight.castShadow=true;keyLight.shadow.mapSize.set(1024,1024);scene.add(keyLight);
   const rimLight=new THREE.DirectionalLight(0x75ff9b,1.1);rimLight.position.set(6,4,-5);scene.add(rimLight);
   const mat=(color,metalness=0,roughness=.65,extra={})=>new THREE.MeshStandardMaterial({color,metalness,roughness,...extra});
-  const steel=mat(0x89978d,.82,.25),black=mat(0x111713,.45,.48),fabric=mat(0x26392b,.18,.8),floorMat=mat(0x303c33,.28,.48),trim=mat(0xb1beb2,.78,.24);
+  // Procedural materials keep the greenhouse self-contained.
+  const makeSurface=(base,accent)=>{
+   const c=document.createElement('canvas');c.width=512;c.height=512;const g=c.getContext('2d');
+   g.fillStyle=base;g.fillRect(0,0,512,512);
+   for(let i=0;i<1900;i++){const x=Math.random()*512,y=Math.random()*512,a=.018+Math.random()*.07;g.fillStyle='rgba(220,240,220,'+a+')';g.fillRect(x,y,1+Math.random()*2,1+Math.random()*13)}
+   for(let x=0;x<=512;x+=64){g.fillStyle='rgba(0,0,0,.13)';g.fillRect(x,0,2,512);g.fillStyle='rgba(210,235,210,.12)';g.fillRect(x+3,0,1,512)}
+   g.strokeStyle=accent;g.globalAlpha=.2;g.lineWidth=2;for(let y=28;y<512;y+=64){g.beginPath();g.moveTo(0,y);g.lineTo(512,y);g.stroke()}g.globalAlpha=1;
+   const tex=new THREE.CanvasTexture(c);tex.wrapS=tex.wrapT=THREE.RepeatWrapping;tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=renderer.capabilities.getMaxAnisotropy();return tex;
+  };
+  const foilMap=makeSurface('#69766c','#dce9dc'),floorMap=makeSurface('#303a32','#87988a');
+  const steel=mat(0x89978d,.82,.25),black=mat(0x111713,.45,.48),fabric=new THREE.MeshStandardMaterial({color:0xffffff,map:foilMap,metalness:.48,roughness:.38}),floorMat=new THREE.MeshStandardMaterial({color:0xffffff,map:floorMap,metalness:.22,roughness:.72}),trim=mat(0xb1beb2,.78,.24);
   const room=new THREE.Group();orbit.add(room);
   const floor=new THREE.Mesh(new THREE.BoxGeometry(6.9,.18,5.25),floorMat);floor.position.y=-.12;floor.receiveShadow=true;room.add(floor);
+  const floorEdge=new THREE.Mesh(new THREE.BoxGeometry(7.02,.08,5.36),mat(0x66756a,.72,.32));floorEdge.position.y=-.205;room.add(floorEdge);
   const back=new THREE.Mesh(new THREE.BoxGeometry(6.9,5.35,.12),fabric);back.position.set(0,2.52,-2.55);back.receiveShadow=true;room.add(back);
   const leftWall=new THREE.Mesh(new THREE.BoxGeometry(.12,5.35,5.05),black);leftWall.position.set(-3.38,2.52,0);room.add(leftWall);
   const rightWall=leftWall.clone();rightWall.position.x=3.38;room.add(rightWall);
@@ -320,7 +331,8 @@ function initGrowRoom3D(){
    const housing=new THREE.Mesh(new THREE.BoxGeometry(.72,.13,1.45),black);housing.castShadow=true;bar.add(housing);
    const diode=new THREE.Mesh(new THREE.BoxGeometry(.59,.025,1.29),mat(0xeaffd8,.1,.2,{emissive:0xcaff9a,emissiveIntensity:1.7}));diode.position.y=-.075;bar.add(diode);
   }
-  const glow=new THREE.PointLight(0xbaff82,34,10);glow.position.set(0,4.35,0);room.add(glow);
+  const glow=new THREE.PointLight(0xbaff82,27,12);glow.position.set(0,4.35,0);room.add(glow);
+  const fillGlow=new THREE.PointLight(0x8affaa,8,9);fillGlow.position.set(0,2.5,2.1);room.add(fillGlow);
   // Ventilation duct, carbon filter and fans
   const ductMat=mat(0x626f65,.72,.38);
   const duct=new THREE.Mesh(new THREE.CylinderGeometry(.24,.24,2.4,20),ductMat);duct.rotation.z=Math.PI/2;duct.position.set(0,4.45,-1.9);room.add(duct);
