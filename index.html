@@ -205,6 +205,59 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid #
  .dashboard-main .hero{min-height:430px}
  .dashboard-main .lower>.panel{min-height:unset}
 }
+
+/* HOODIEGHOST visual redesign — cohesive surfaces across every view */
+:root{--bg:#080d09;--panel:#121a14;--panel2:#0d150f;--line:#314635;--green:#70ff42;--green-soft:#c5ff9f;--radius:13px}
+body{background:radial-gradient(ellipse at 72% 0%,#1d321e 0,transparent 38%),radial-gradient(ellipse at 5% 45%,#101c12 0,transparent 40%),#070b08}
+.app{grid-template-columns:224px minmax(0,1fr)}
+.side{padding:20px 15px;background:linear-gradient(180deg,#0b120d 0%,#080e0a 100%);border-right:1px solid #304532;box-shadow:8px 0 30px #0004}
+.brand{height:178px;border-color:#436b3b;border-radius:18px;background:radial-gradient(circle at 50% 42%,#27462a,#0b120d 72%);box-shadow:0 0 35px #66ff3318,inset 0 1px #ffffff12}
+.nav{gap:7px}
+.nav button{min-height:42px;padding:11px 13px;border-radius:10px;font-size:10px;letter-spacing:.09em}
+.nav button.active{background:linear-gradient(100deg,#203b22,#101b13);box-shadow:inset 3px 0 var(--green),0 4px 16px #0003}
+main{padding:24px clamp(15px,2.2vw,34px) 34px}
+.top{margin-bottom:20px;padding-bottom:18px;border-color:#304432}
+.eyebrow{font-size:9px;letter-spacing:.25em}
+.top h1{font-size:clamp(32px,3.3vw,48px);letter-spacing:.075em}
+.panel{padding:16px;border:1px solid #304534;border-radius:14px;background:linear-gradient(145deg,#17221a 0%,#101811 58%,#0c130e 100%);box-shadow:0 12px 30px #0005,inset 0 1px #ffffff0b}
+.paneltitle{margin-bottom:14px}
+.paneltitle h3{font-size:17px;letter-spacing:.12em}
+.btn{border-radius:8px;text-transform:uppercase}
+.pill,input,select,textarea{border-color:#3a513e;background:#09120c}
+.metric{border-color:#345239;background:linear-gradient(145deg,#17251a,#0c140e)}
+.metriclabel{font-size:9px;letter-spacing:.15em}
+.metricval{font-size:9px}
+.dashboard-layout{grid-template-columns:250px minmax(0,1fr);gap:16px}
+.dashboard-left{gap:14px}
+.dashboard-left>.panel{padding:16px}
+.dashboard-main>.metrics{gap:12px;margin-bottom:15px}
+.dashboard-main .metric{min-height:98px;padding:12px}
+.dashboard-main .ring{width:68px;height:68px}
+.dashboard-main .middle{gap:15px}
+.dashboard-main .hero{min-height:610px;border-radius:17px;border-color:#5a884a;box-shadow:0 0 36px #66ff3320,inset 0 0 50px #66ff3312}
+.dashboard-main .hero>img{filter:brightness(.82) saturate(1.18) contrast(1.08)}
+.dashboard-main .rightstack{gap:14px}
+.dashboard-main .rightstack>.panel{padding:16px}
+.dashboard-main .lower{gap:14px;margin-top:15px}
+.dashboard-main .lower>.panel{min-height:205px;padding:16px}
+.dash-tent-buttons button{padding:11px 4px;border-radius:8px;font-size:10px;letter-spacing:.08em}
+.dash-plant-name{font-size:27px}
+.dash-age{font-size:34px;text-shadow:0 0 16px #66ff3340}
+.dash-status-row{padding:10px 2px}
+.alert{border-radius:9px;padding:11px}
+.stage-line{padding:8px 2px}
+.chart{height:128px}
+.entry{border-color:#344a37;border-radius:10px;background:#0b140e;padding:11px}
+.tabs button{border-radius:9px;padding:10px 14px}
+.table td,.table th{padding:10px;border-color:#304333}
+.formrow{gap:9px;margin:10px 0}
+.formrow input,.formrow select{border-radius:8px}
+.notice{font-size:10px;line-height:1.65}
+.foot{padding:22px;color:#91a18f;letter-spacing:.28em}
+@media(max-width:1250px){.app{grid-template-columns:190px minmax(0,1fr)}.dashboard-layout{grid-template-columns:225px minmax(0,1fr)}.dashboard-main .hero{min-height:560px}}
+@media(max-width:1120px){.dashboard-layout{grid-template-columns:1fr}.dashboard-left{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-left .stage-panel{grid-column:1/-1}.dashboard-main .hero{min-height:560px}}
+@media(max-width:850px){.app{grid-template-columns:160px minmax(0,1fr)}.side{padding:13px 9px}.brand{height:128px}main{padding:15px 12px}.dashboard-main .hero{min-height:500px}}
+@media(max-width:650px){.app{display:block;padding-bottom:70px}.side{display:none}main{padding:13px 11px 24px}.top h1{font-size:31px}.dashboard-left{grid-template-columns:1fr}.dashboard-left .stage-panel{grid-column:auto}.dashboard-main .hero{min-height:450px}.dashboard-main .lower>.panel{min-height:unset}.panel{padding:13px}.paneltitle h3{font-size:16px}}
 </style></head><body><div class="app"><aside class="side"><div class="brand"><img src="hoodieghost-logo.jpg" alt="HOODIEGHOST GROWS logo"></div><nav class="nav" id="nav"><button class="active" data-view="dashboard">⌂　DASHBOARD</button><button data-view="tents">♧　TENTS & PLANTS</button><button data-view="environment">◉　ENVIRONMENT</button><button data-view="nutrients">♢　NUTRIENTS</button><button data-view="reservoir">▤　RESERVOIR</button><button data-view="journal">▣　JOURNAL</button><button data-view="calendar">▦　CALENDAR</button><button data-view="settings">⚙　SETTINGS</button></nav><div class="sidefoot"><span class="live">● LOCAL DATA ACTIVE</span><br>Saved on this device<br><br>GROW WITH INTENT.<br>HARVEST WITH RESPECT.</div></aside><main>
 <header class="top"><div><div class="eyebrow">PERSONAL GROW CONTROL CENTER</div><h1>HOODIEGHOST <span style="color:var(--green)">GROWS</span></h1></div><div class="topright"><select class="select" id="tentSelect" aria-label="Select tent"></select><span class="pill" id="datePill"></span></div><div class="topright"><span class="pill">● <span class="live">SYSTEM ONLINE</span></span><button class="btn small" id="addPlantTop">＋ PLANT</button></div></header>
 <section id="dashboard" class="view"><div class="dashboard-layout"><aside class="dashboard-left">
