@@ -406,11 +406,17 @@ function sync3DPlants(){
   const rim=new T.Mesh(new T.TorusGeometry(.35,.04,10,32),new T.MeshStandardMaterial({color:0x9aaa9c,metalness:.65,roughness:.25}));rim.rotation.x=Math.PI/2;rim.position.y=.54;rim.userData.plantPick=true;plant.add(rim);
   const soil=new T.Mesh(new T.CylinderGeometry(.32,.32,.05,24),new T.MeshStandardMaterial({color:0x30251a,roughness:1}));soil.position.y=.57;soil.userData.plantPick=true;plant.add(soil);
   const stemMat=new T.MeshStandardMaterial({color:0x477b3c,roughness:.82});
-  const stem=new T.Mesh(new T.CylinderGeometry(.025,.065,model.height,12),stemMat);stem.position.y=.57+model.height/2;stem.castShadow=true;stem.userData.plantPick=true;plant.add(stem);
+  const stemCurve=new T.CatmullRomCurve3([new T.Vector3(0,.57,0),new T.Vector3(.018,.57+model.height*.28,0),new T.Vector3(-.025,.57+model.height*.68,.012),new T.Vector3(0,.57+model.height,0)]);
+  const stem=new T.Mesh(new T.TubeGeometry(stemCurve,24,.043,8,false),stemMat);stem.castShadow=true;stem.userData.plantPick=true;plant.add(stem);
   const leafPalette=[0x286b35,0x347d3c,0x4c9147,0x68a951,0x7dbb5e];
   for(let j=0;j<model.leaves;j++){
    const angle=j*2.399,level=.62+(j%5)*(.14+model.scale*.025),radius=.22+(j%4)*.105;
    const branch=new T.Group();branch.position.set(Math.cos(angle)*radius,.57+level,Math.sin(angle)*radius);branch.rotation.y=-angle;branch.rotation.z=(j%2?-.24:.24);
+   // Tapered curved petiole visibly connects each leaf cluster to the main stalk.
+   const baseY=.57+Math.max(.08,level-.2),base=new T.Vector3(0,baseY,0),tip=new T.Vector3(branch.position.x,branch.position.y,branch.position.z);
+   const curve=new T.CatmullRomCurve3([base,new T.Vector3(tip.x*.38,baseY+.1,tip.z*.38),new T.Vector3(tip.x*.78,tip.y-.04,tip.z*.78),tip]);
+   const petiole=new T.Mesh(new T.TubeGeometry(curve,10,.026,6,false),stemMat);petiole.castShadow=true;petiole.userData.plantPick=true;plant.add(petiole);
+   const joint=new T.Mesh(new T.SphereGeometry(.045,8,6),stemMat);joint.position.copy(tip);joint.userData.plantPick=true;plant.add(joint);
    const leafMat=new T.MeshStandardMaterial({color:leafPalette[j%leafPalette.length],roughness:.72,side:T.DoubleSide});
    const leaf=makeLeaf(T,leafMat);leaf.scale.setScalar(1.18+(j%3)*.16);leaf.rotation.z=(j%2?-.18:.18);branch.add(leaf);
    const vein=new T.Mesh(new T.CylinderGeometry(.006,.003,.29,6),new T.MeshStandardMaterial({color:0xa4c982,roughness:.8}));vein.rotation.z=Math.PI/2;vein.position.set(.015,.025,.01);branch.add(vein);
