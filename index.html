@@ -69,6 +69,29 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 .scenehead .tentpick button.active{background:var(--green)}
 @media(max-width:600px){.viewhint{right:10px;bottom:42px;font-size:8px}}
 
+
+/* PRO 3D GREENHOUSE FINISH */
+:root{--bg:#090d0a;--surface:#141a16;--surface2:#1b241e;--line:#344438;--green:#76ff43;--green2:#b4ff8d}
+.shell{padding-top:20px}
+.topbar{padding-bottom:18px}
+.brandname{font-size:29px;letter-spacing:2px}
+.scene{min-height:520px;border-radius:18px;background:radial-gradient(ellipse at 50% 78%,#83ff5424,transparent 42%),linear-gradient(145deg,#344a39 0%,#1b2a20 48%,#090f0b 100%);box-shadow:inset 0 0 100px #000d,0 28px 65px #0008}
+.scene:before{background:linear-gradient(0deg,#050806aa,transparent 55%),radial-gradient(ellipse at 50% 100%,#76ff4310,transparent 55%);z-index:2}
+.scenehead h1{font-size:clamp(32px,4.4vw,50px);text-shadow:0 5px 25px #000b}
+.scenehead .status{backdrop-filter:blur(12px);background:#071009bb;border-color:#76ff4366}
+.tentpick button{backdrop-filter:blur(10px);border-color:#ffffff2b}
+#tent3dWrap{inset:12px 0 0!important}
+.viewhint{background:#071009d9;border-color:#76ff4370;box-shadow:0 5px 20px #0008;backdrop-filter:blur(10px)}
+.scenefoot{background:linear-gradient(90deg,#071009c9,#07100988);border:1px solid #ffffff18;border-radius:8px;padding:9px 12px;backdrop-filter:blur(10px)}
+.panel{border-radius:15px}
+.metric{border-radius:12px}
+.metric b,.growstat b{letter-spacing:.4px}
+.tabs button{border-radius:9px}
+.tabs button.active{color:#081006}
+.btn.primary{box-shadow:0 0 20px #76ff4326}
+@media(max-width:900px){.scene{min-height:460px}}
+@media(max-width:600px){.scene{min-height:410px}.scenefoot{gap:8px;flex-wrap:wrap}.scenehead h1{font-size:32px}}
+
 </style>
 </head>
 <body>
@@ -216,64 +239,102 @@ function initGrowRoom3D(){
  if(!canvas||!window.THREE||room3D)return;
  const THREE=window.THREE;
  try{
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
   renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  const scene=new THREE.Scene();scene.fog=new THREE.Fog(0x111b14,8,19);
-  const camera=new THREE.PerspectiveCamera(36,1,.1,100);camera.position.set(6.2,4.2,8.8);
-  const orbit=new THREE.Group();scene.add(orbit);orbit.add(camera);camera.position.set(0,0,10.5);
-  const hemi=new THREE.HemisphereLight(0xc9f3d0,0x172019,2.1);scene.add(hemi);
-  const keyLight=new THREE.DirectionalLight(0xe0ffd0,2.4);keyLight.position.set(-4,8,6);keyLight.castShadow=true;scene.add(keyLight);
-  const ledLight=new THREE.PointLight(0xb8ff7c,35,9);ledLight.position.set(0,3.25,0);scene.add(ledLight);
-  const mat=(color,metalness=0,roughness=.65)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
-  const dark=mat(0x202b23,.35),silver=mat(0x8c9d90,.72,.3),fabric=mat(0x25392b,.12,.82),floorMat=mat(0x344438,.2,.55),green=mat(0x63b84d),leafMats=[mat(0x397a3e),mat(0x5caa4e),mat(0x80c65b)],potMat=mat(0x555e51,.2,.75);
+  const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x101a12,.035);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);
+  const orbit=new THREE.Group();scene.add(orbit);orbit.add(camera);camera.position.set(0,0,11.6);
+  const hemi=new THREE.HemisphereLight(0xd9ffe0,0x101810,2.25);scene.add(hemi);
+  const keyLight=new THREE.DirectionalLight(0xe8ffdf,3.1);keyLight.position.set(-5,9,7);keyLight.castShadow=true;keyLight.shadow.mapSize.set(1024,1024);scene.add(keyLight);
+  const rimLight=new THREE.DirectionalLight(0x75ff9b,1.1);rimLight.position.set(6,4,-5);scene.add(rimLight);
+  const mat=(color,metalness=0,roughness=.65,extra={})=>new THREE.MeshStandardMaterial({color,metalness,roughness,...extra});
+  const steel=mat(0x89978d,.82,.25),black=mat(0x111713,.45,.48),fabric=mat(0x26392b,.18,.8),floorMat=mat(0x303c33,.28,.48),trim=mat(0xb1beb2,.78,.24);
   const room=new THREE.Group();orbit.add(room);
-  const floor=new THREE.Mesh(new THREE.BoxGeometry(6.5,.18,5),floorMat);floor.position.y=-.1;floor.receiveShadow=true;room.add(floor);
-  const back=new THREE.Mesh(new THREE.BoxGeometry(6.5,5.2,.16),fabric);back.position.set(0,2.5,-2.4);back.receiveShadow=true;room.add(back);
-  const sideL=new THREE.Mesh(new THREE.BoxGeometry(.14,5.2,4.8),dark);sideL.position.set(-3.2,2.5,0);room.add(sideL);
-  const sideR=sideL.clone();sideR.position.x=3.2;room.add(sideR);
-  const roof=new THREE.Mesh(new THREE.BoxGeometry(6.5,.16,5),silver);roof.position.y=5.1;room.add(roof);
-  const frameMat=mat(0xa8b5aa,.7,.28);
-  [[-3.15,0,-2.35],[3.15,0,-2.35],[-3.15,0,2.35],[3.15,0,2.35]].forEach(([x,y,z])=>{let p=new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,5.1,10),frameMat);p.position.set(x,2.5,z);room.add(p)});
-  const frontTop=new THREE.Mesh(new THREE.BoxGeometry(6.35,.09,.09),frameMat);frontTop.position.set(0,5,2.35);room.add(frontTop);
+  const floor=new THREE.Mesh(new THREE.BoxGeometry(6.9,.18,5.25),floorMat);floor.position.y=-.12;floor.receiveShadow=true;room.add(floor);
+  const back=new THREE.Mesh(new THREE.BoxGeometry(6.9,5.35,.12),fabric);back.position.set(0,2.52,-2.55);back.receiveShadow=true;room.add(back);
+  const leftWall=new THREE.Mesh(new THREE.BoxGeometry(.12,5.35,5.05),black);leftWall.position.set(-3.38,2.52,0);room.add(leftWall);
+  const rightWall=leftWall.clone();rightWall.position.x=3.38;room.add(rightWall);
+  const roof=new THREE.Mesh(new THREE.BoxGeometry(6.9,.14,5.25),steel);roof.position.y=5.18;room.add(roof);
+  // Aluminum frame and front opening
+  const bar=(a,b,r=.045,material=trim)=>{const d=new THREE.Vector3().subVectors(b,a),m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),10),material);m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());m.castShadow=true;room.add(m);return m};
+  [[-3.3,0,-2.48],[3.3,0,-2.48],[-3.3,0,2.48],[3.3,0,2.48]].forEach(([x,y,z])=>bar(new THREE.Vector3(x,0,z),new THREE.Vector3(x,5.12,z),.055));
+  bar(new THREE.Vector3(-3.3,5.12,2.48),new THREE.Vector3(3.3,5.12,2.48),.06);
+  bar(new THREE.Vector3(-3.3,0,2.48),new THREE.Vector3(3.3,0,2.48),.05);
+  // Reflective inner wall seams and floor grid
+  for(let x=-3;x<=3;x+=.5){const line=new THREE.Mesh(new THREE.BoxGeometry(.012,.012,4.9),mat(0x78907a,.2,.8,{transparent:true,opacity:.24}));line.position.set(x,.0,0);room.add(line)}
+  const grid=new THREE.GridHelper(6.65,26,0x8ca18e,0x506253);grid.position.y=-.018;room.add(grid);
+  // Roof cross rails and LED grow bars
+  for(let z of [-1.75,1.7]){const rail=new THREE.Mesh(new THREE.BoxGeometry(6.5,.07,.07),steel);rail.position.set(0,4.95,z);room.add(rail)}
   const ledGroup=new THREE.Group();room.add(ledGroup);
-  for(let i=0;i<3;i++){let panel=new THREE.Mesh(new THREE.BoxGeometry(1.35,.1,.8),mat(0xeaffd4,.15,.2));panel.position.set((i-1)*1.55,4.75,-.25);ledGroup.add(panel)}
-  const glow=new THREE.PointLight(0xc5ff8b,26,8);glow.position.set(0,4.45,0);room.add(glow);
-  const fanMat=mat(0xa7b4a9,.7,.3);
-  [-2.45,2.45].forEach(x=>{let fan=new THREE.Group();fan.position.set(x,3.75,-2.22);let ring=new THREE.Mesh(new THREE.TorusGeometry(.42,.055,8,28),fanMat);fan.add(ring);let hub=new THREE.Mesh(new THREE.CylinderGeometry(.13,.13,.18,18),dark);hub.rotation.x=Math.PI/2;fan.add(hub);let rotor=new THREE.Group();for(let b=0;b<5;b++){let blade=new THREE.Mesh(new THREE.BoxGeometry(.12,.65,.045),silver);blade.position.y=.32;blade.rotation.z=b*Math.PI*2/5;rotor.add(blade)}fan.add(rotor);room.add(fan);roomFans3D.push(rotor)});
-  const grid=new THREE.GridHelper(6.3,18,0x76917a,0x4b5f4e);grid.position.y=.005;room.add(grid);
-  room3D={THREE,renderer,scene,camera,orbit,room,glow,ledLight,wrap,drag:false,lastX:0,lastY:0,rotY:-.35,rotX:0,zoom:10.5};
+  for(let i=0;i<5;i++){
+   const bar=new THREE.Group();bar.position.set((i-2)*1.18,4.76,-.15);ledGroup.add(bar);
+   const housing=new THREE.Mesh(new THREE.BoxGeometry(.72,.13,1.45),black);housing.castShadow=true;bar.add(housing);
+   const diode=new THREE.Mesh(new THREE.BoxGeometry(.59,.025,1.29),mat(0xeaffd8,.1,.2,{emissive:0xcaff9a,emissiveIntensity:1.7}));diode.position.y=-.075;bar.add(diode);
+  }
+  const glow=new THREE.PointLight(0xbaff82,34,10);glow.position.set(0,4.35,0);room.add(glow);
+  // Ventilation duct, carbon filter and fans
+  const ductMat=mat(0x626f65,.72,.38);
+  const duct=new THREE.Mesh(new THREE.CylinderGeometry(.24,.24,2.4,20),ductMat);duct.rotation.z=Math.PI/2;duct.position.set(0,4.45,-1.9);room.add(duct);
+  const filter=new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.85,24),black);filter.rotation.z=Math.PI/2;filter.position.set(-1.45,4.4,-1.9);room.add(filter);
+  const fanMat=mat(0x9eaca1,.78,.24);
+  [-2.65,2.65].forEach(x=>{
+   const fan=new THREE.Group();fan.position.set(x,3.55,-2.38);
+   const ring=new THREE.Mesh(new THREE.TorusGeometry(.48,.065,10,32),fanMat);fan.add(ring);
+   const rotor=new THREE.Group();
+   for(let b=0;b<7;b++){const blade=new THREE.Mesh(new THREE.ShapeGeometry((()=>{const sh=new THREE.Shape();sh.moveTo(0,0);sh.quadraticCurveTo(.18,.32,.08,.67);sh.quadraticCurveTo(-.02,.55,-.12,.12);sh.closePath();return sh})()),fanMat);blade.position.set(0,0,.035);blade.rotation.z=b*Math.PI*2/7;rotor.add(blade)}
+   const hub=new THREE.Mesh(new THREE.CylinderGeometry(.14,.14,.13,20),black);hub.rotation.x=Math.PI/2;rotor.add(hub);fan.add(rotor);room.add(fan);roomFans3D.push(rotor);
+  });
+  room3D={THREE,renderer,scene,camera,orbit,room,glow,wrap,drag:false,lastX:0,lastY:0,rotY:-.32,rotX:0,zoom:11.6};
   orbit.rotation.y=room3D.rotY;
-  const resize=()=>{if(!room3D)return;let w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(1,h);camera.updateProjectionMatrix()};
+  const resize=()=>{if(!room3D)return;const w=wrap.clientWidth,h=wrap.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};
   room3D.resize=resize;new ResizeObserver(resize).observe(wrap);resize();
-  wrap.addEventListener('pointerdown',e=>{room3D.drag=true;room3D.lastX=e.clientX;room3D.lastY=e.clientY;wrap.setPointerCapture(e.pointerId)});
-  wrap.addEventListener('pointermove',e=>{if(!room3D?.drag)return;let dx=e.clientX-room3D.lastX,dy=e.clientY-room3D.lastY;room3D.lastX=e.clientX;room3D.lastY=e.clientY;room3D.rotY+=dx*.008;room3D.rotX=Math.max(-.35,Math.min(.35,room3D.rotX+dy*.004));room3D.orbit.rotation.y=room3D.rotY;room3D.orbit.rotation.x=room3D.rotX});
-  wrap.addEventListener('pointerup',()=>{if(room3D)room3D.drag=false});wrap.addEventListener('pointercancel',()=>{if(room3D)room3D.drag=false});
-  wrap.addEventListener('wheel',e=>{e.preventDefault();room3D.zoom=Math.max(7,Math.min(15,room3D.zoom+e.deltaY*.012));room3D.camera.position.setLength(room3D.zoom)},{passive:false});
+  wrap.addEventListener('pointerdown',e=>{room3D.drag=true;room3D.moved=false;room3D.lastX=e.clientX;room3D.lastY=e.clientY;wrap.setPointerCapture(e.pointerId)});
+  wrap.addEventListener('pointermove',e=>{if(!room3D?.drag)return;const dx=e.clientX-room3D.lastX,dy=e.clientY-room3D.lastY;if(Math.abs(dx)+Math.abs(dy)>3)room3D.moved=true;room3D.lastX=e.clientX;room3D.lastY=e.clientY;room3D.rotY+=dx*.007;room3D.rotX=Math.max(-.28,Math.min(.28,room3D.rotX+dy*.003));room3D.orbit.rotation.y=room3D.rotY;room3D.orbit.rotation.x=room3D.rotX});
+  wrap.addEventListener('pointerup',()=>{if(room3D)room3D.drag=false});
+  wrap.addEventListener('pointercancel',()=>{if(room3D)room3D.drag=false});
+  wrap.addEventListener('wheel',e=>{e.preventDefault();room3D.zoom=Math.max(8,Math.min(15,room3D.zoom+e.deltaY*.012));camera.position.setLength(room3D.zoom)},{passive:false});
   sync3DPlants();
   const clock=new THREE.Clock();
-  const animate=()=>{requestAnimationFrame(animate);let tm=clock.getElapsedTime();roomFans3D.forEach((f,i)=>f.rotation.z=tm*(i?7:-8));if(room3D){room3D.glow.intensity=24+Math.sin(tm*2)*3;room3D.ledLight.intensity=32+Math.sin(tm*1.4)*4;roomPlants3D.forEach((p,i)=>{p.rotation.z=Math.sin(tm*1.3+i)*.025})}renderer.render(scene,camera)};
+  const animate=()=>{requestAnimationFrame(animate);const tm=clock.getElapsedTime();roomFans3D.forEach((f,i)=>f.rotation.z=tm*(i?7:-8));if(room3D){room3D.glow.intensity=32+Math.sin(tm*1.4)*3;roomPlants3D.forEach((p,i)=>{p.rotation.z=Math.sin(tm*1.15+i*.8)*.018;p.rotation.x=Math.cos(tm*1.1+i)*.009})}renderer.render(scene,camera)};
   animate();
- }catch(err){console.warn('3D greenhouse unavailable; showing the dashboard without the 3D layer.',err);canvas.style.display='none'}
+ }catch(err){console.warn('3D greenhouse unavailable',err);canvas.style.display='none'}
 }
 function sync3DPlants(){
- if(!room3D)return;const T=room3D.THREE,room=room3D.room;
- roomPlants3D.forEach(p=>room.remove(p));roomPlants3D=[];
+ if(!room3D)return;
+ const T=room3D.THREE,room=room3D.room;
+ roomPlants3D.forEach(p=>{room.remove(p);p.traverse(o=>{if(o.geometry)o.geometry.dispose()})});roomPlants3D=[];
  const entries=(t().plants||[]).map(p=>p.name).concat((t().proPlants||[]).map(p=>p.name));
- const count=Math.min(entries.length,12),n=Math.max(1,count);
+ const count=Math.min(entries.length,12);
  for(let i=0;i<count;i++){
-  const plant=new T.Group(),x=((i%4)-1.5)*1.35,z=Math.floor(i/4)*1.25-.55;
+  const plant=new T.Group(),x=((i%4)-1.5)*1.42,z=Math.floor(i/4)*1.38-.45;
   plant.position.set(x,0,z);
-  const pot=new T.Mesh(new T.CylinderGeometry(.29,.22,.48,8),new T.MeshStandardMaterial({color:0x596052,roughness:.8}));pot.position.y=.24;pot.castShadow=true;plant.add(pot);
-  const soil=new T.Mesh(new T.CylinderGeometry(.255,.255,.035,12),new T.MeshStandardMaterial({color:0x33271b}));soil.position.y=.49;plant.add(soil);
-  const stem=new T.Mesh(new T.CylinderGeometry(.035,.055,1.05,7),new T.MeshStandardMaterial({color:0x4e9145}));stem.position.y=1.02;plant.add(stem);
-  for(let j=0;j<9;j++){let leaf=new T.Mesh(new T.SphereGeometry(1,8,6),[0x397a3e,0x5caa4e,0x80c65b][j%3]===0?new T.MeshStandardMaterial({color:0x397a3e}):new T.MeshStandardMaterial({color:[0x397a3e,0x5caa4e,0x80c65b][j%3]}));let a=j*Math.PI*2/6,level=.68+(j%3)*.24;leaf.position.set(Math.cos(a)*(.22+(j%2)*.12),level,Math.sin(a)*(.22+(j%2)*.12));leaf.scale.set(.32,.075,.14);leaf.rotation.y=-a;leaf.rotation.z=(j%2?-.35:.35);plant.add(leaf)}
-  const tagCanvas=document.createElement('canvas');tagCanvas.width=256;tagCanvas.height=64;const ctx=tagCanvas.getContext('2d');ctx.fillStyle='#101811';ctx.fillRect(0,0,256,64);ctx.fillStyle='#aaff83';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText(String(entries[i]||'PLANT').slice(0,18),128,40);const tex=new T.CanvasTexture(tagCanvas);let tag=new T.Mesh(new T.PlaneGeometry(.9,.23),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));tag.position.set(0,.72,.32);plant.add(tag);
-  room.add(plant);roomPlants3D.push(plant);
+  const potMat=new T.MeshStandardMaterial({color:0x4b554b,metalness:.18,roughness:.68});
+  const pot=new T.Mesh(new T.CylinderGeometry(.31,.24,.48,24),potMat);pot.position.y=.24;pot.castShadow=true;plant.add(pot);
+  const rim=new T.Mesh(new T.TorusGeometry(.285,.035,8,24),new T.MeshStandardMaterial({color:0x89968a,metalness:.55,roughness:.3}));rim.rotation.x=Math.PI/2;rim.position.y=.46;plant.add(rim);
+  const soil=new T.Mesh(new T.CylinderGeometry(.26,.26,.045,20),new T.MeshStandardMaterial({color:0x30251a,roughness:1}));soil.position.y=.49;plant.add(soil);
+  const stemMat=new T.MeshStandardMaterial({color:0x4b8a42,roughness:.8});
+  const stem=new T.Mesh(new T.CylinderGeometry(.025,.052,1.3,10),stemMat);stem.position.y=1.12;plant.add(stem);
+  const leafColors=[0x347b3b,0x4d9845,0x68ad50,0x83c45d];
+  for(let j=0;j<16;j++){
+   const angle=j*2.399,level=.72+(j%4)*.2,radius=.22+(j%3)*.09;
+   const leafGroup=new T.Group();leafGroup.position.set(Math.cos(angle)*radius,level,Math.sin(angle)*radius);leafGroup.rotation.y=-angle;leafGroup.rotation.z=(j%2?-.32:.32);
+   const leaf=new T.Mesh(new T.SphereGeometry(1,12,8),new T.MeshStandardMaterial({color:leafColors[j%4],roughness:.78,side:T.DoubleSide}));
+   leaf.scale.set(.34,.055,.14);leafGroup.add(leaf);
+   const vein=new T.Mesh(new T.CylinderGeometry(.006,.003,.27,5),new T.MeshStandardMaterial({color:0xa3d77b,roughness:.8}));vein.rotation.z=Math.PI/2;vein.position.x=.02;leafGroup.add(vein);
+   plant.add(leafGroup);
+  }
+  const tagCanvas=document.createElement('canvas');tagCanvas.width=320;tagCanvas.height=72;const ctx=tagCanvas.getContext('2d');
+  ctx.fillStyle='#0a120c';ctx.fillRect(0,0,320,72);ctx.strokeStyle='#76ff43';ctx.lineWidth=3;ctx.strokeRect(2,2,316,68);
+  ctx.fillStyle='#caffad';ctx.font='bold 25px Arial';ctx.textAlign='center';ctx.fillText(String(entries[i]||'PLANT').slice(0,20),160,46);
+  const tex=new T.CanvasTexture(tagCanvas);const tag=new T.Mesh(new T.PlaneGeometry(1.05,.24),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));tag.position.set(0,.67,.43);plant.add(tag);
+  plant.userData.plantName=entries[i]||'Plant';room.add(plant);roomPlants3D.push(plant);
  }
  setText('scenePlantCount',String(entries.length).padStart(2,'0')+' PLANTS');
 }
+
 
 /* Grow Intelligence extension */
 const proStages=['Seed / Germination','Seedling','Vegetative','Early Flower','Mid Flower','Late Flower','Harvest'];
