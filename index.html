@@ -29,6 +29,19 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;p
 .footer{padding:25px 0 0;color:#647368;font:10px 'DM Mono';display:flex;justify-content:space-between;gap:12px}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.scene{min-height:390px}.sidepanel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.shell{padding:12px 12px 35px}.brand img{width:45px;height:45px}.brandname{font-size:21px}.topbar{align-items:flex-start}.topright .eyebrow{display:none}.tabs{margin-right:-12px}.scene{min-height:350px}.tent-art{width:94%;height:235px;bottom:34px}.plants{height:132px}.plantpot{width:42px;height:29px}.leaf{width:35px;height:14px}.scenehead{left:14px;right:14px}.scenehead h1{font-size:30px}.scenefoot{font-size:8px;left:12px;right:12px}.sidepanel{grid-template-columns:1fr}.grid2,.grid3,.formgrid,.formgrid.three{grid-template-columns:1fr}.metrics{gap:7px}.metric{padding:11px}.metric b{font-size:24px}.sectionhead h2{font-size:26px}.day{min-height:52px;padding:5px;font-size:11px}}
+
+/* DIMENSIONAL GROW ROOM REDESIGN */
+.scene{min-height:470px;isolation:isolate;transform-style:preserve-3d;background:radial-gradient(ellipse at 50% 68%,#8dff5b24,transparent 45%),linear-gradient(145deg,#526457 0%,#26382b 18%,#18231b 50%,#0a100c 100%);box-shadow:inset 0 0 90px #000c,0 25px 70px #0009,0 0 0 1px #71877555}
+.tent-art{width:min(80%,690px);height:315px;perspective:1100px;filter:drop-shadow(0 22px 18px #0009)}
+.tent-back{background:repeating-linear-gradient(90deg,#ffffff09 0 1px,transparent 1px 48px),linear-gradient(145deg,#394b3d 0%,#1c2b20 28%,#111a14 72%);border-color:#a2b1a3;box-shadow:inset 0 0 45px #000d,inset 0 0 0 8px #ffffff08,0 0 22px #a4ff7a18}
+.tent-side{background:linear-gradient(90deg,#a5b2a4 0%,#536457 28%,#27352b 100%);border-color:#b1bdb1;box-shadow:inset 0 0 18px #0009}
+.tent-roof{background:linear-gradient(180deg,#a7b2a8,#4b5b4e 44%,#27332b);box-shadow:0 9px 16px #0008}
+.tent-floor{background:repeating-linear-gradient(90deg,#ffffff0b 0 1px,transparent 1px 30px),linear-gradient(180deg,#59665b,#1a241d);box-shadow:0 12px 22px #000a}
+.led{height:16px}.fan{width:48px;height:48px;box-shadow:0 0 20px #a5ff8c22}
+.scene:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,#ffffff12,transparent 22% 70%,#b4ff8d0b),radial-gradient(ellipse at 50% 100%,#8dff5b12,transparent 55%);mix-blend-mode:screen}
+.pro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pro-field{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px}.pro-field input,.pro-field select{min-width:0}.pro-table{overflow:auto}.pro-table table{min-width:760px}.pro-table input{min-width:76px;padding:7px}.pro-card{background:#0d140f;border:1px solid var(--line);border-radius:9px;padding:12px;margin:8px 0}.pro-badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#1c3220;color:var(--green2);font:10px 'DM Mono'}.pro-alert{border-left:3px solid var(--amber);background:#332918;padding:10px;border-radius:5px;margin:8px 0;font-size:12px}.pro-alert.good{border-color:var(--green);background:#16261a}.pro-chart{width:100%;height:180px;display:block;background:#0b100d;border-radius:8px}
+@media(max-width:700px){.pro-grid{grid-template-columns:1fr}.tent-art{width:94%;height:250px}}
+
 </style>
 </head>
 <body>
@@ -38,7 +51,7 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;p
  <div class="topright"><div><div class="eyebrow">System status</div><div class="live">LOCAL GROW ROOM ONLINE</div></div></div>
 </header>
 <nav class="tabs" aria-label="Main navigation">
- <button class="active" data-view="overview">Grow room</button><button data-view="plants">Plants & timeline</button><button data-view="environment">Environment</button><button data-view="reservoir">Reservoir</button><button data-view="nutrients">Feed lab</button><button data-view="journal">Grow journal</button><button data-view="calendar">Calendar</button><button data-view="settings">Settings & backup</button>
+ <button class="active" data-view="overview">Grow room</button><button data-view="plants">Plants & timeline</button><button data-view="environment">Environment</button><button data-view="reservoir">Reservoir</button><button data-view="nutrients">Feed lab</button><button data-view="journal">Grow journal</button><button data-view="calendar">Calendar</button><button data-view="settings">Settings & backup</button><button data-view="pro">Grow intelligence</button>
 </nav>
 <main>
 <section class="view active" id="view-overview">
@@ -93,6 +106,26 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;p
  <div class="grid2"><div class="panel"><div class="paneltitle"><strong>DATA BACKUP</strong><span class="eyebrow">LOCAL ONLY</span></div><p class="muted">Export a JSON backup to keep your grow records, or import a previous backup. This does not sync between devices.</p><div class="row"><button class="btn primary" id="exportData">Export backup</button><label class="btn" for="importFile">Import backup</label><input id="importFile" type="file" accept="application/json" style="display:none"></div></div><div class="panel"><div class="paneltitle"><strong>REFERENCE OFFSETS</strong><span class="eyebrow">CALCULATION SETTINGS</span></div><label class="field">Default leaf temperature offset (°F)<input id="settingOffset" type="number" value="-2" step=".1"></label><button class="btn" id="saveOffset" style="margin-top:12px">Save offset</button><div class="notice" style="margin-top:13px">The dashboard is manual-entry only. It does not connect to sensors or automatically control equipment.</div></div></div>
  <div class="panel" style="margin-top:13px"><div class="paneltitle"><strong>RESET ALL LOCAL DATA</strong><span class="eyebrow">CAUTION</span></div><p class="muted">This clears all three tent records from this browser.</p><button class="btn danger" id="resetData">Clear all local grow data</button></div>
 </section>
+
+<section class="view" id="view-pro">
+ <div class="sectionhead"><div><h2>GROW INTELLIGENCE</h2><p>Individual plant records, custom stage targets, trends and tent tasks.</p></div><span class="pro-badge">PRO TOOLS</span></div>
+ <div class="pro-grid">
+  <div class="panel"><div class="paneltitle"><strong>ADD INDIVIDUAL PLANT</strong><span class="eyebrow">PLANT-LEVEL TIMELINE</span></div>
+   <div class="formgrid"><label class="field">Plant name<input id="proPlantName" placeholder="Plant name"></label><label class="field">Strain / notes<input id="proPlantStrain" placeholder="Optional"></label><label class="field">Start date<input id="proPlantDate" type="date"></label><label class="field">Stage<select id="proPlantStage"><option>Seed / Germination</option><option>Seedling</option><option>Vegetative</option><option>Early Flower</option><option>Mid Flower</option><option>Late Flower</option><option>Harvest</option></select></label></div>
+   <button class="btn primary" id="proAddPlant" style="margin-top:12px">Add plant to selected tent</button><div id="proPlantList" style="margin-top:12px"></div>
+  </div>
+  <div class="panel"><div class="paneltitle"><strong>STAGE TARGETS & ALERTS</strong><span class="eyebrow">CUSTOM LIMITS</span></div>
+   <div class="notice warn">Set the min/max bands you want to monitor for each stage. The app will compare saved temperature, humidity and VPD readings with your entries. Blank limits are not graded.</div>
+   <div class="pro-table" id="proTargets" style="margin-top:10px"></div><button class="btn primary" id="proSaveTargets" style="margin-top:10px">Save target bands</button><div id="proAlertList" style="margin-top:10px"></div>
+  </div>
+  <div class="panel"><div class="paneltitle"><strong>ENVIRONMENT TREND</strong><span class="eyebrow">VPD HISTORY</span></div><canvas id="proEnvChart" class="pro-chart" width="640" height="180"></canvas><p class="muted">Charts use readings saved in the Environment tab.</p></div>
+  <div class="panel"><div class="paneltitle"><strong>FEED TREND</strong><span class="eyebrow">FEED PPM HISTORY</span></div><canvas id="proFeedChart" class="pro-chart" width="640" height="180"></canvas><p class="muted">Charts use feed records saved in the Reservoir tab.</p></div>
+  <div class="panel"><div class="paneltitle"><strong>GROW TASKS & REMINDERS</strong><span class="eyebrow">SELECTED TENT</span></div><div class="formgrid"><label class="field">Task<input id="proTaskText" placeholder="Inspect plants, check reservoir..."></label><label class="field">Due date<input id="proTaskDate" type="date"></label></div><button class="btn primary" id="proAddTask" style="margin-top:12px">Add reminder</button><div id="proTaskList" style="margin-top:12px"></div><div class="notice warn" style="margin-top:12px">Tasks are stored on this device. This static app cannot guarantee background notifications when Safari is closed.</div>
+  </div>
+  <div class="panel"><div class="paneltitle"><strong>SYNC & DATA STATUS</strong><span class="eyebrow">LOCAL STORAGE</span></div><p class="muted">Each tent is isolated on this device. Use Settings & Backup to export/import your data between devices. Automatic cloud sync needs a secure account/database connection and is not enabled in this build.</p><div class="notice good">Your existing three-tent records and current dashboard tools remain available.</div></div>
+ </div>
+</section>
+
 </main>
 <footer class="footer"><span>HOODIEGHOST GROWS // PRIVATE GROW ROOM</span><span>LOCAL STORAGE · MANUAL READINGS</span></footer>
 </div>
@@ -146,5 +179,38 @@ $('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{ty
 $('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.tents)||d.tents.length!==3)throw Error();data=d;save();alert('Backup imported.')}catch(err){alert('That backup file could not be read.')}};
 $('resetData').onclick=()=>{if(confirm('This permanently clears all three tent records in this browser. Continue?')){data={tents:[blankTent(),blankTent(),blankTent()],offset:-2};save()}};
 $('entryDate').value=new Date().toISOString().slice(0,10);render();
+
+/* Grow Intelligence extension */
+const proStages=['Seed / Germination','Seedling','Vegetative','Early Flower','Mid Flower','Late Flower','Harvest'];
+const proBlankTargets=()=>Object.fromEntries(proStages.map(st=>[st,{tmin:'',tmax:'',rhmin:'',rhmax:'',vmin:'',vmax:''}]));
+function proTent(){let q=data.tents[activeTent];q.proPlants=q.proPlants||[];q.proTargets=q.proTargets||proBlankTargets();q.proTasks=q.proTasks||[];return q}
+function proSave(){localStorage.setItem(KEY,JSON.stringify(data));proRender()}
+function proDay(date){if(!date)return 'No start date';let n=new Date();n.setHours(0,0,0,0);let d=new Date(date+'T00:00:00');return 'Day '+Math.max(1,Math.floor((n-d)/86400000)+1)}
+function proRender(){
+ let q=proTent(),pl=$('proPlantList');if(!pl)return;
+ pl.innerHTML=q.proPlants.length?q.proPlants.map((p,i)=>'<div class="pro-card"><div class="row"><b>'+safe(p.name)+'</b><span class="muted">'+safe(p.strain||'')+'</span><span class="spacer"></span><span class="pro-badge">'+proDay(p.date)+'</span></div><div class="muted" style="margin-top:6px">'+safe(p.stage)+'</div><button class="btn danger" style="margin-top:8px" onclick="proRemovePlant('+i+')">Remove</button></div>').join(''):'<div class="empty">No individually tracked plants yet.</div>';
+ let keys=['tmin','tmax','rhmin','rhmax','vmin','vmax'],labs=['Temp min °F','Temp max °F','RH min %','RH max %','VPD min','VPD max'];
+ $('proTargets').innerHTML='<table><thead><tr><th>Stage</th>'+labs.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+proStages.map(st=>'<tr><td>'+st+'</td>'+keys.map(k=>'<td><input type="number" step=".1" data-pro-stage="'+st+'" data-pro-key="'+k+'" value="'+(q.proTargets[st]?.[k]??'')+'"></td>').join('')+'</tr>').join('')+'</tbody></table>';
+ $('proTaskList').innerHTML=q.proTasks.length?q.proTasks.map((x,i)=>'<div class="row pro-card"><span class="pro-badge">'+safe(x.date)+'</span><span>'+safe(x.text)+'</span><span class="spacer"></span><button class="btn danger" onclick="proRemoveTask('+i+')">Done</button></div>').join(''):'<div class="empty">No reminders yet.</div>';
+ proCharts();proAlerts();
+}
+function proRemovePlant(i){proTent().proPlants.splice(i,1);proSave()}
+function proRemoveTask(i){proTent().proTasks.splice(i,1);proSave()}
+function proCharts(){
+ [['proEnvChart',t().envHistory.slice(-12).map(x=>+x.vpd),'VPD kPa'],['proFeedChart',t().feedLogs.slice(-12).map(x=>+x.feed||0),'Feed PPM']].forEach(([id,vals,label])=>{let c=$(id);if(!c)return;let x=c.getContext('2d'),w=c.width,h=c.height;x.clearRect(0,0,w,h);x.strokeStyle='#2a382e';for(let n=1;n<4;n++){x.beginPath();x.moveTo(0,h*n/4);x.lineTo(w,h*n/4);x.stroke()}x.fillStyle='#96a397';x.font='12px sans-serif';x.fillText(vals.length?label:'Save at least two readings to see a trend',12,18);if(vals.length<2)return;let lo=Math.min(...vals),hi=Math.max(...vals),range=hi-lo||1;x.strokeStyle='#76ff43';x.lineWidth=3;x.beginPath();vals.forEach((v,i)=>{let px=15+i*(w-30)/(vals.length-1),py=h-18-(v-lo)/range*(h-48);i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke()})
+}
+function proAlerts(){
+ let q=proTent(),v=vpdCalc(t().env.temp,t().env.rh,t().env.leaf,t().env.offset),alerts=[];
+ let stages=[...new Set(q.proPlants.map(p=>p.stage).concat([t().stage]))];
+ stages.forEach(st=>{let a=q.proTargets[st]||{},tests=[['Temperature',t().env.temp,a.tmin,a.tmax],['Humidity',t().env.rh,a.rhmin,a.rhmax],['VPD',v,a.vmin,a.vmax]];tests.forEach(([name,val,min,max])=>{if(val!==''&&val!==null&&min!==''&&max!==''&&min!==undefined&&max!==undefined&&(val<+min||val>+max))alerts.push(st+' · '+name+' is outside your saved target band')})});
+ $('proAlertList').innerHTML=alerts.length?alerts.map(x=>'<div class="pro-alert">'+safe(x)+'</div>').join(''):'<div class="pro-alert good">No saved target-band violations detected. Set complete min/max values to activate alerts.</div>';
+}
+$('proAddPlant').onclick=()=>{let name=$('proPlantName').value.trim();if(!name){alert('Enter a plant name.');return}proTent().proPlants.push({name,strain:$('proPlantStrain').value.trim(),date:$('proPlantDate').value,stage:$('proPlantStage').value});$('proPlantName').value='';$('proPlantStrain').value='';$('proPlantDate').value='';proSave()};
+$('proSaveTargets').onclick=()=>{let q=proTent();q.proTargets=proBlankTargets();document.querySelectorAll('[data-pro-stage]').forEach(el=>q.proTargets[el.dataset.proStage][el.dataset.proKey]=el.value===''?'':+el.value);proSave();alert('Your stage target bands have been saved.')};
+$('proAddTask').onclick=()=>{let text=$('proTaskText').value.trim(),date=$('proTaskDate').value;if(!text||!date){alert('Enter a task and due date.');return}proTent().proTasks.push({text,date});$('proTaskText').value='';proSave()};
+const oldShowView=showView;showView=function(name){oldShowView(name);if(name==='pro')proRender()};
+const oldTentRender=render;render=function(){oldTentRender();proRender()};
+proRender();
+
 </script>
 </body></html>
