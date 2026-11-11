@@ -358,14 +358,14 @@ function plantRecords3D(){
 }
 function stageModel(stage){
  const s=String(stage||'').toLowerCase();
- if(s.includes('seed /')||s.includes('germ'))return {scale:.34,leaves:3,height:.55,bloom:0,label:'GERMINATION'};
- if(s.includes('seedling'))return {scale:.56,leaves:7,height:.82,bloom:0,label:'SEEDLING'};
- if(s.includes('vegetative'))return {scale:.88,leaves:16,height:1.25,bloom:0,label:'VEGETATIVE'};
- if(s.includes('early flower'))return {scale:1.02,leaves:20,height:1.48,bloom:.25,label:'EARLY FLOWER'};
- if(s.includes('mid flower'))return {scale:1.08,leaves:22,height:1.58,bloom:.7,label:'MID FLOWER'};
- if(s.includes('late flower'))return {scale:1.04,leaves:20,height:1.52,bloom:1,label:'LATE FLOWER'};
- if(s.includes('harvest'))return {scale:.96,leaves:16,height:1.42,bloom:.9,label:'HARVEST'};
- return {scale:.85,leaves:14,height:1.2,bloom:0,label:'GROWING'};
+ if(s.includes('seed /')||s.includes('germ'))return {scale:.62,leaves:5,height:.72,bloom:0,label:'GERMINATION'};
+ if(s.includes('seedling'))return {scale:.92,leaves:10,height:1.08,bloom:0,label:'SEEDLING'};
+ if(s.includes('vegetative'))return {scale:1.12,leaves:18,height:1.48,bloom:0,label:'VEGETATIVE'};
+ if(s.includes('early flower'))return {scale:1.22,leaves:22,height:1.68,bloom:.25,label:'EARLY FLOWER'};
+ if(s.includes('mid flower'))return {scale:1.28,leaves:24,height:1.82,bloom:.7,label:'MID FLOWER'};
+ if(s.includes('late flower'))return {scale:1.24,leaves:22,height:1.78,bloom:1,label:'LATE FLOWER'};
+ if(s.includes('harvest'))return {scale:1.16,leaves:18,height:1.65,bloom:.9,label:'HARVEST'};
+ return {scale:1.08,leaves:16,height:1.42,bloom:0,label:'GROWING'};
 }
 function makeLeaf(T,material){
  const shape=new T.Shape();
@@ -377,7 +377,7 @@ function sync3DPlants(){
  const T=room3D.THREE,room=room3D.room,records=plantRecords3D();
  roomPlants3D.forEach(p=>{room.remove(p);p.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material.dispose()}})});roomPlants3D=[];
  records.forEach((entry,i)=>{
-  const p=entry.record,model=stageModel(entry.stage),plant=new T.Group(),x=((i%4)-1.5)*1.42,z=Math.floor(i/4)*1.38-.45;
+  const p=entry.record,model=stageModel(entry.stage),plant=new T.Group(),cols=Math.min(4,records.length),row=Math.floor(i/4),x=((i%4)-(Math.min(cols,4)-1)/2)*1.42,z=row*1.38+(records.length===1?.45:-.45);
   plant.position.set(x,0,z);plant.scale.setScalar(model.scale);plant.userData.plantRecord=entry;plant.userData.stageLabel=model.label;
   const potMat=new T.MeshStandardMaterial({color:0x39483d,metalness:.28,roughness:.52});
   const pot=new T.Mesh(new T.CylinderGeometry(.31,.24,.48,32),potMat);pot.position.y=.24;pot.castShadow=true;pot.userData.plantPick=true;plant.add(pot);
