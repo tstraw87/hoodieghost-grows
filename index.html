@@ -56,6 +56,19 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 .pro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pro-field{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px}.pro-field input,.pro-field select{min-width:0}.pro-table{overflow:auto}.pro-table table{min-width:760px}.pro-table input{min-width:76px;padding:7px}.pro-card{background:#0d140f;border:1px solid var(--line);border-radius:9px;padding:12px;margin:8px 0}.pro-badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#1c3220;color:var(--green2);font:10px 'DM Mono'}.pro-alert{border-left:3px solid var(--amber);background:#332918;padding:10px;border-radius:5px;margin:8px 0;font-size:12px}.pro-alert.good{border-color:var(--green);background:#16261a}.pro-chart{width:100%;height:180px;display:block;background:#0b100d;border-radius:8px}
 @media(max-width:700px){.pro-grid{grid-template-columns:1fr}.tent-art{width:94%;height:250px}}
 
+
+/* REAL-TIME 3D GREENHOUSE VIEW */
+.tent-art#tent3dWrap{position:absolute;inset:0;left:0;bottom:0;transform:none;width:100%;height:100%;perspective:none;filter:none;z-index:1;touch-action:none;cursor:grab}
+#greenhouse3d{display:block;width:100%;height:100%;outline:none}
+#tent3dWrap:active{cursor:grabbing}
+.viewhint{position:absolute;right:18px;bottom:44px;color:#c8d9c9;background:#071009bb;border:1px solid #78927a66;border-radius:5px;padding:7px 9px;font:9px 'DM Mono';letter-spacing:1px;pointer-events:none}
+.scenehead,.scenefoot{z-index:4;pointer-events:none}
+.scenehead button,.scenehead a{pointer-events:auto}
+.scenehead .tentpick{pointer-events:auto}
+.scenehead .tentpick button{background:#0b120dcc}
+.scenehead .tentpick button.active{background:var(--green)}
+@media(max-width:600px){.viewhint{right:10px;bottom:42px;font-size:8px}}
+
 </style>
 </head>
 <body>
@@ -72,7 +85,7 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
  <div class="hero">
   <div class="scene">
    <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● SIMULATED ROOM</div></div>
-   <div class="tent-art" aria-label="Animated grow tent illustration"><div class="tent-roof"></div><div class="tent-back"></div><div class="tent-side left"></div><div class="tent-side right"></div><div class="led"></div><div class="fan left"></div><div class="fan right"></div><div class="plants" id="scenePlants"><div class="plant" style="--h:90%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:100%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:78%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div></div><div class="tent-floor"></div></div>
+   <div class="tent-art" id="tent3dWrap" aria-label="Interactive three-dimensional grow tent"><canvas id="greenhouse3d"></canvas><div class="viewhint">DRAG TO ROTATE · SCROLL TO ZOOM</div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
   </div>
   <aside class="sidepanel">
@@ -143,6 +156,7 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 </main>
 <footer class="footer"><span>HOODIEGHOST GROWS // PRIVATE GROW ROOM</span><span>LOCAL STORAGE · MANUAL READINGS</span></footer>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js" defer></script>
 <script>
 const KEY='hoodieghost_freshroom_v2';
 const blankTent=()=>({type:'Photoperiod',stage:'Seed / Germination',startDate:'',medium:'Coco',plants:[],env:{temp:'',rh:'',leaf:'',offset:-2},res:{volume:'',unit:'Gallons',source:'RO',sourcePpm:'',feedPpm:'',ph:''},envHistory:[],feedLogs:[],journal:[],recipes:[]});
@@ -194,6 +208,73 @@ $('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let 
 $('resetData').onclick=()=>{if(confirm('This permanently clears all three tent records in this browser. Continue?')){data={tents:[blankTent(),blankTent(),blankTent()],offset:-2};save()}};
 $('entryDate').value=new Date().toISOString().slice(0,10);render();
 
+
+/* Interactive Three.js grow room. The existing dashboard remains the source of truth. */
+let room3D=null, roomPlants3D=[], roomFans3D=[];
+function initGrowRoom3D(){
+ const canvas=$('greenhouse3d'),wrap=$('tent3dWrap');
+ if(!canvas||!window.THREE||room3D)return;
+ const THREE=window.THREE;
+ try{
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  const scene=new THREE.Scene();scene.fog=new THREE.Fog(0x111b14,8,19);
+  const camera=new THREE.PerspectiveCamera(36,1,.1,100);camera.position.set(6.2,4.2,8.8);
+  const orbit=new THREE.Group();scene.add(orbit);orbit.add(camera);camera.position.set(0,0,10.5);
+  const hemi=new THREE.HemisphereLight(0xc9f3d0,0x172019,2.1);scene.add(hemi);
+  const keyLight=new THREE.DirectionalLight(0xe0ffd0,2.4);keyLight.position.set(-4,8,6);keyLight.castShadow=true;scene.add(keyLight);
+  const ledLight=new THREE.PointLight(0xb8ff7c,35,9);ledLight.position.set(0,3.25,0);scene.add(ledLight);
+  const mat=(color,metalness=0,roughness=.65)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
+  const dark=mat(0x202b23,.35),silver=mat(0x8c9d90,.72,.3),fabric=mat(0x25392b,.12,.82),floorMat=mat(0x344438,.2,.55),green=mat(0x63b84d),leafMats=[mat(0x397a3e),mat(0x5caa4e),mat(0x80c65b)],potMat=mat(0x555e51,.2,.75);
+  const room=new THREE.Group();orbit.add(room);
+  const floor=new THREE.Mesh(new THREE.BoxGeometry(6.5,.18,5),floorMat);floor.position.y=-.1;floor.receiveShadow=true;room.add(floor);
+  const back=new THREE.Mesh(new THREE.BoxGeometry(6.5,5.2,.16),fabric);back.position.set(0,2.5,-2.4);back.receiveShadow=true;room.add(back);
+  const sideL=new THREE.Mesh(new THREE.BoxGeometry(.14,5.2,4.8),dark);sideL.position.set(-3.2,2.5,0);room.add(sideL);
+  const sideR=sideL.clone();sideR.position.x=3.2;room.add(sideR);
+  const roof=new THREE.Mesh(new THREE.BoxGeometry(6.5,.16,5),silver);roof.position.y=5.1;room.add(roof);
+  const frameMat=mat(0xa8b5aa,.7,.28);
+  [[-3.15,0,-2.35],[3.15,0,-2.35],[-3.15,0,2.35],[3.15,0,2.35]].forEach(([x,y,z])=>{let p=new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,5.1,10),frameMat);p.position.set(x,2.5,z);room.add(p)});
+  const frontTop=new THREE.Mesh(new THREE.BoxGeometry(6.35,.09,.09),frameMat);frontTop.position.set(0,5,2.35);room.add(frontTop);
+  const ledGroup=new THREE.Group();room.add(ledGroup);
+  for(let i=0;i<3;i++){let panel=new THREE.Mesh(new THREE.BoxGeometry(1.35,.1,.8),mat(0xeaffd4,.15,.2));panel.position.set((i-1)*1.55,4.75,-.25);ledGroup.add(panel)}
+  const glow=new THREE.PointLight(0xc5ff8b,26,8);glow.position.set(0,4.45,0);room.add(glow);
+  const fanMat=mat(0xa7b4a9,.7,.3);
+  [-2.45,2.45].forEach(x=>{let fan=new THREE.Group();fan.position.set(x,3.75,-2.22);let ring=new THREE.Mesh(new THREE.TorusGeometry(.42,.055,8,28),fanMat);fan.add(ring);let hub=new THREE.Mesh(new THREE.CylinderGeometry(.13,.13,.18,18),dark);hub.rotation.x=Math.PI/2;fan.add(hub);let rotor=new THREE.Group();for(let b=0;b<5;b++){let blade=new THREE.Mesh(new THREE.BoxGeometry(.12,.65,.045),silver);blade.position.y=.32;blade.rotation.z=b*Math.PI*2/5;rotor.add(blade)}fan.add(rotor);room.add(fan);roomFans3D.push(rotor)});
+  const grid=new THREE.GridHelper(6.3,18,0x76917a,0x4b5f4e);grid.position.y=.005;room.add(grid);
+  room3D={THREE,renderer,scene,camera,orbit,room,glow,ledLight,wrap,drag:false,lastX:0,lastY:0,rotY:-.35,rotX:0,zoom:10.5};
+  orbit.rotation.y=room3D.rotY;
+  const resize=()=>{if(!room3D)return;let w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(1,h);camera.updateProjectionMatrix()};
+  room3D.resize=resize;new ResizeObserver(resize).observe(wrap);resize();
+  wrap.addEventListener('pointerdown',e=>{room3D.drag=true;room3D.lastX=e.clientX;room3D.lastY=e.clientY;wrap.setPointerCapture(e.pointerId)});
+  wrap.addEventListener('pointermove',e=>{if(!room3D?.drag)return;let dx=e.clientX-room3D.lastX,dy=e.clientY-room3D.lastY;room3D.lastX=e.clientX;room3D.lastY=e.clientY;room3D.rotY+=dx*.008;room3D.rotX=Math.max(-.35,Math.min(.35,room3D.rotX+dy*.004));room3D.orbit.rotation.y=room3D.rotY;room3D.orbit.rotation.x=room3D.rotX});
+  wrap.addEventListener('pointerup',()=>{if(room3D)room3D.drag=false});wrap.addEventListener('pointercancel',()=>{if(room3D)room3D.drag=false});
+  wrap.addEventListener('wheel',e=>{e.preventDefault();room3D.zoom=Math.max(7,Math.min(15,room3D.zoom+e.deltaY*.012));room3D.camera.position.setLength(room3D.zoom)},{passive:false});
+  sync3DPlants();
+  const clock=new THREE.Clock();
+  const animate=()=>{requestAnimationFrame(animate);let tm=clock.getElapsedTime();roomFans3D.forEach((f,i)=>f.rotation.z=tm*(i?7:-8));if(room3D){room3D.glow.intensity=24+Math.sin(tm*2)*3;room3D.ledLight.intensity=32+Math.sin(tm*1.4)*4;roomPlants3D.forEach((p,i)=>{p.rotation.z=Math.sin(tm*1.3+i)*.025})}renderer.render(scene,camera)};
+  animate();
+ }catch(err){console.warn('3D greenhouse unavailable; showing the dashboard without the 3D layer.',err);canvas.style.display='none'}
+}
+function sync3DPlants(){
+ if(!room3D)return;const T=room3D.THREE,room=room3D.room;
+ roomPlants3D.forEach(p=>room.remove(p));roomPlants3D=[];
+ const entries=(t().plants||[]).map(p=>p.name).concat((t().proPlants||[]).map(p=>p.name));
+ const count=Math.min(entries.length,12),n=Math.max(1,count);
+ for(let i=0;i<count;i++){
+  const plant=new T.Group(),x=((i%4)-1.5)*1.35,z=Math.floor(i/4)*1.25-.55;
+  plant.position.set(x,0,z);
+  const pot=new T.Mesh(new T.CylinderGeometry(.29,.22,.48,8),new T.MeshStandardMaterial({color:0x596052,roughness:.8}));pot.position.y=.24;pot.castShadow=true;plant.add(pot);
+  const soil=new T.Mesh(new T.CylinderGeometry(.255,.255,.035,12),new T.MeshStandardMaterial({color:0x33271b}));soil.position.y=.49;plant.add(soil);
+  const stem=new T.Mesh(new T.CylinderGeometry(.035,.055,1.05,7),new T.MeshStandardMaterial({color:0x4e9145}));stem.position.y=1.02;plant.add(stem);
+  for(let j=0;j<9;j++){let leaf=new T.Mesh(new T.SphereGeometry(1,8,6),[0x397a3e,0x5caa4e,0x80c65b][j%3]===0?new T.MeshStandardMaterial({color:0x397a3e}):new T.MeshStandardMaterial({color:[0x397a3e,0x5caa4e,0x80c65b][j%3]}));let a=j*Math.PI*2/6,level=.68+(j%3)*.24;leaf.position.set(Math.cos(a)*(.22+(j%2)*.12),level,Math.sin(a)*(.22+(j%2)*.12));leaf.scale.set(.32,.075,.14);leaf.rotation.y=-a;leaf.rotation.z=(j%2?-.35:.35);plant.add(leaf)}
+  const tagCanvas=document.createElement('canvas');tagCanvas.width=256;tagCanvas.height=64;const ctx=tagCanvas.getContext('2d');ctx.fillStyle='#101811';ctx.fillRect(0,0,256,64);ctx.fillStyle='#aaff83';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText(String(entries[i]||'PLANT').slice(0,18),128,40);const tex=new T.CanvasTexture(tagCanvas);let tag=new T.Mesh(new T.PlaneGeometry(.9,.23),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));tag.position.set(0,.72,.32);plant.add(tag);
+  room.add(plant);roomPlants3D.push(plant);
+ }
+ setText('scenePlantCount',String(entries.length).padStart(2,'0')+' PLANTS');
+}
+
 /* Grow Intelligence extension */
 const proStages=['Seed / Germination','Seedling','Vegetative','Early Flower','Mid Flower','Late Flower','Harvest'];
 const proBlankTargets=()=>Object.fromEntries(proStages.map(st=>[st,{tmin:'',tmax:'',rhmin:'',rhmax:'',vmin:'',vmax:''}]));
@@ -223,8 +304,9 @@ $('proAddPlant').onclick=()=>{let name=$('proPlantName').value.trim();if(!name){
 $('proSaveTargets').onclick=()=>{let q=proTent();q.proTargets=proBlankTargets();document.querySelectorAll('[data-pro-stage]').forEach(el=>q.proTargets[el.dataset.proStage][el.dataset.proKey]=el.value===''?'':+el.value);proSave();alert('Your stage target bands have been saved.')};
 $('proAddTask').onclick=()=>{let text=$('proTaskText').value.trim(),date=$('proTaskDate').value;if(!text||!date){alert('Enter a task and due date.');return}proTent().proTasks.push({text,date});$('proTaskText').value='';proSave()};
 const oldShowView=showView;showView=function(name){oldShowView(name);if(name==='pro')proRender()};
-const oldTentRender=render;render=function(){oldTentRender();proRender()};
+const oldTentRender=render;render=function(){oldTentRender();proRender();sync3DPlants()};
 proRender();
+initGrowRoom3D();
 
 </script>
 </body></html>
