@@ -527,7 +527,8 @@ $('recipeHistory').innerHTML=x.recipes.length?x.recipes.slice().reverse().map(r=
 $('threePart').style.display=$('baseSystem').value==='3'?'grid':'none';
 document.querySelectorAll('[data-tent]').forEach((b,i)=>b.classList.toggle('active',i===activeTent));
 }
-function setPlantStage(i,stage){if(!t().plants[i])return;t().plants[i].stage=stage;save()}\nfunction removePlant(i){if(confirm('Remove this plant?')){t().plants.splice(i,1);save()}}
+function setPlantStage(i,stage){if(!t().plants[i])return;t().plants[i].stage=stage;save()}
+function removePlant(i){if(confirm('Remove this plant?')){t().plants.splice(i,1);save()}}
 $('saveProfile').onclick=()=>{Object.assign(t(),{type:$('growType').value,stage:$('stage').value,startDate:$('startDate').value,medium:$('medium').value});save()};
 $('addPlant').onclick=()=>{let name=$('plantName').value.trim();if(!name){alert('Enter a plant name first.');return}t().plants.push({name,strain:$('plantStrain').value.trim(),stage:$('newPlantStage').value||t().stage});$('plantName').value='';$('plantStrain').value='';save()};
 $('saveEnvironment').onclick=()=>{let x=t();x.env={temp:$('airTemp').value,rh:$('humidity').value,leaf:$('leafTemp').value,offset:$('leafOffset').value};let v=vpdCalc(x.env.temp,x.env.rh,x.env.leaf,x.env.offset);if(v!==null)x.envHistory.push({date:new Date().toISOString().slice(0,10),temp:x.env.temp,rh:x.env.rh,vpd:v.toFixed(2)});save()};
