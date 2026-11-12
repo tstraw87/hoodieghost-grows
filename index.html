@@ -59,6 +59,18 @@ input:focus,select:focus,textarea:focus{outline:2px solid #a5ff0066!important;bo
 .room-top h3{text-shadow:3px 3px #070b13,0 0 18px #a5ff0050}
 .room-badge{box-shadow:0 0 14px #a5ff0030}
 @media(max-width:600px){.room-card{min-height:390px}.room-top{left:10px;right:10px;top:10px;padding:9px}.room-top h3{font-size:22px}}
+
+/* Living inked botanical scene */
+.room-card{overflow:hidden;background:radial-gradient(ellipse at 50% 36%,#485440 0,#263b38 26%,#111a27 69%,#090e18 100%)}
+.room-card:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#fff1c51c,transparent 48%),repeating-linear-gradient(90deg,transparent 0 38px,#a8c4dc08 39px 40px),radial-gradient(ellipse at 50% 5%,#fff1c544,transparent 47%)}
+.room-art{z-index:1}
+.room-top,.room-stats{z-index:4}
+.plant-figure{transform-box:fill-box;transform-origin:50% 100%;animation:ghost-sway 5s ease-in-out infinite}
+.plant-canopy{transform-box:fill-box;transform-origin:50% 100%;animation:canopy-sway 4.2s ease-in-out infinite alternate}
+.cannabis-leaf{filter:drop-shadow(1px 2px 1px #09110b88)}
+@keyframes ghost-sway{0%,100%{translate:0 0}50%{translate:0 -2px}}
+@keyframes canopy-sway{0%{rotate:-1deg}100%{rotate:1.4deg}}
+@media(prefers-reduced-motion:reduce){.plant-figure,.plant-canopy{animation:none}}
 </style>
 </head>
 <body>
@@ -241,14 +253,17 @@ function roomPlantSvg(p,i,total){
  const xs=total===1?[450]:total===2?[315,585]:total===3?[210,450,690]:total===4?[150,350,550,750]:[110,280,450,620,790];
  const x=xs[i]??450,stage=String(p.stage||'Seedling').toLowerCase();
  const seed=/seed|clone|germ/.test(stage),veg=/veg|vegetative/.test(stage),flower=/flower|bloom/.test(stage),harvest=/harvest|dry|cure/.test(stage);
- const height=seed?54:veg?105:harvest?150:flower?178:145,scale=seed?.58:veg?.82:flower?1.12:harvest?.95:1;
- const leaf=(cx,cy,rot,sz)=>'<path transform="translate('+cx+' '+cy+') rotate('+rot+') scale('+sz+')" d="M0 0 C-9-9-28-12-36-32 C-19-31-11-39-7-52 C1-42 6-37 8-52 C18-37 23-32 38-34 C29-14 13-8 0 0Z" fill="'+(flower?'#426f38':'#4d914b')+'" stroke="#14251b" stroke-width="2"/><path d="M0 0L0 -43" stroke="#b8e98a" stroke-width="1.5"/>';
+ const height=seed?48:veg?108:harvest?150:flower?176:142,scale=seed?.55:veg?.86:flower?1.12:harvest?.96:1;
+ const green=harvest?'#73834a':flower?'#426f38':'#4d914b';
+ const leaflet=(x1,y1,x2,y2,w)=>'<path d="M0 0 Q'+(x1*.5-w)+' '+(y1*.45)+' '+x1+' '+y1+' Q'+(x1*.7-w*.2)+' '+(y1+9)+' '+(x1*.45)+' '+(y1+15)+' Q'+(x1*.9)+' '+(y1+13)+' '+(x1+w*.5)+' '+(y1+4)+' Q'+(x1+w)+' '+(y1+17)+' '+(x1+w*.65)+' '+(y1+24)+' Q'+(x1+w*1.4)+' '+(y1+19)+' '+(x1+w*1.3)+' '+(y1+5)+' Q'+(x1+w*1.1)+' '+(y1-10)+' '+x2+' '+y2+' Q'+(x2*.5)+' '+(y2-9)+' 0 0Z" fill="'+green+'" stroke="#14251b" stroke-width="2" stroke-linejoin="round"/>';
+ const leaf=(cx,cy,rot,sz)=>'<g class="cannabis-leaf" transform="translate('+cx+' '+cy+') rotate('+rot+') scale('+sz+')">'+leaflet(-5,-10,-3,-53,12)+leaflet(-12,-5,-31,-43,10)+leaflet(-16,0,-49,-22,9)+leaflet(5,-10,3,-53,12)+leaflet(12,-5,31,-43,10)+leaflet(16,0,49,-22,9)+'<path d="M0 0L0 -54M0-5L-31-43M0-5L31-43M0-5L-49-22M0-5L49-22" fill="none" stroke="#c4e89a" stroke-width="1.7" opacity=".8"/></g>';
  let leaves='';
- if(seed){leaves=leaf(0,-height+15,-48,.65)+leaf(0,-height+15,48,.65)+leaf(0,-height+28,-5,.5)}
- else {for(let n=0;n<5;n++){let y=-height+28+n*24;leaves+=leaf(0,y,-52,scale*.78)+leaf(0,y,52,scale*.78)}leaves+=leaf(0,-height-8,-5,scale*.9)}
+ if(seed){leaves=leaf(0,-height+16,-42,.52)+leaf(0,-height+16,42,.52)+leaf(0,-height+28,0,.48)}
+ else {for(let n=0;n<5;n++){let y=-height+30+n*24;leaves+=leaf(-2,y,-42,scale*.72)+leaf(2,y,42,scale*.72)}leaves+=leaf(0,-height-7,0,scale*.92)}
  let buds='';
- if(flower||harvest){for(let n=0;n<7;n++){let yy=-height+25+n*18,xx=(n%2?1:-1)*(12+(n%3)*7);buds+='<g transform="translate('+xx+' '+yy+')"><circle r="'+(flower?8:6)+'" fill="#91ad55" stroke="#243b27" stroke-width="2"/><path d="M-5 0l-5-7m10 7l5-7M0-5V-12" stroke="#d8e7a1" stroke-width="2"/></g>'}}
- return '<g transform="translate('+x+' 410)"><ellipse cx="0" cy="4" rx="54" ry="10" fill="#000" opacity=".35"/><path d="M-37-2H37L30 37H-30Z" fill="#263449" stroke="#b18a69" stroke-width="4"/><path d="M-37-2Q0 7 37-2" fill="none" stroke="#e3bd8c" stroke-width="4"/><path d="M0 0V'+(-height)+'" stroke="#80b85a" stroke-width="5"/>'+leaves+buds+'<path d="M-55 48H55" stroke="#83eaff" stroke-opacity=".5" stroke-width="2"/><rect x="-49" y="55" width="98" height="20" rx="6" fill="#101722" stroke="#7650a1"/><text x="0" y="69" text-anchor="middle" fill="#f6f2e8" font-size="10" font-family="DM Mono,monospace">'+(i+1)+' · '+(flower?'FLOWER':harvest?'HARVEST':veg?'VEG':'SEEDLING')+'</text></g>';
+ if(flower||harvest){for(let n=0;n<9;n++){let yy=-height+22+n*15,xx=(n%2?1:-1)*(10+(n%3)*8);buds+='<g transform="translate('+xx+' '+yy+')"><ellipse rx="'+(flower?10:8)+'" ry="'+(flower?14:10)+'" fill="'+(harvest?'#a2a56a':'#779b55')+'" stroke="#263c2b" stroke-width="2"/><path d="M-6 2l-5-9m11 9l5-9M0-3V-14M-3 5L-8 11M3 5L8 11" stroke="#d9e8ae" stroke-width="2" stroke-linecap="round"/><circle cy="-5" r="3" fill="#d9e8ae"/></g>'}}
+ const id='plant-'+i;
+ return '<g class="plant-figure" style="--sway:'+((i%2)?'3deg':'-3deg')+';animation-delay:'+((i%4)*-.7)+'s" transform="translate('+x+' 410)"><ellipse cx="0" cy="4" rx="58" ry="11" fill="#000" opacity=".42"/><path d="M-40-2H40L32 38H-32Z" fill="#263449" stroke="#b18a69" stroke-width="4"/><path d="M-40-2Q0 8 40-2" fill="none" stroke="#e3bd8c" stroke-width="4"/><path d="M0 0V'+(-height)+'" stroke="#80b85a" stroke-width="6"/><g class="plant-canopy">'+leaves+buds+'</g><path d="M-57 46H57" stroke="#83eaff" stroke-opacity=".4" stroke-width="2"/><rect x="-51" y="53" width="102" height="21" rx="6" fill="#101722" stroke="#7650a1"/><text x="0" y="68" text-anchor="middle" fill="#f6f2e8" font-size="10" font-family="DM Mono,monospace">'+(i+1)+' · '+(flower?'FLOWER':harvest?'HARVEST':veg?'VEG':'SEEDLING')+'</text></g>';
 }
 function renderRoomPlants(){
  const g=$('roomPlants');if(!g)return;const plants=t().plants.slice(0,5);
