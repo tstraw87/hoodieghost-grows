@@ -442,17 +442,18 @@ input,select,textarea{background:#050905!important;border:1px solid #354d26!impo
 @keyframes leaf-sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
 @keyframes lamp-breathe{from{opacity:.65}to{opacity:1}}
 @keyframes dust-drift{from{transform:translateY(15px);opacity:.1}to{transform:translateY(-28px);opacity:.6}}
-#tent3dWrap[data-stage="seed---germination"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(.28)!important}
-#tent3dWrap[data-stage="seedling"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(.48)!important}
-#tent3dWrap[data-stage="vegetative"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(.78)!important}
-#tent3dWrap[data-stage="early-flower"] .plant-row use,#tent3dWrap[data-stage="mid-flower"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(1)!important}
-#tent3dWrap[data-stage="late-flower"] .plant-row use,#tent3dWrap[data-stage="harvest"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(1.08)!important}
+.plant-body{transform-box:fill-box;transform-origin:center bottom;transition:transform .8s ease}
+#tent3dWrap[data-stage="seed---germination"] .plant-body{transform:scale(.28)}
+#tent3dWrap[data-stage="seedling"] .plant-body{transform:scale(.48)}
+#tent3dWrap[data-stage="vegetative"] .plant-body{transform:scale(.78)}
+#tent3dWrap[data-stage="early-flower"] .plant-body,#tent3dWrap[data-stage="mid-flower"] .plant-body{transform:scale(1)}
+#tent3dWrap[data-stage="late-flower"] .plant-body,#tent3dWrap[data-stage="harvest"] .plant-body{transform:scale(1.08)}
 #tent3dWrap[data-stage*="flower"] .buds,#tent3dWrap[data-stage="harvest"] .buds{opacity:.9}
 #tent3dWrap[data-stage="seed---germination"] .plant-leaves,#tent3dWrap[data-stage="seedling"] .plant-leaves{opacity:.55}
 #tent3dWrap[data-stage="harvest"] .plant-leaves{fill:#78934b}
-#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(1){transform:scale(.55)!important}
-#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(2){transform:scale(.8)!important}
-#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(3){transform:scale(1)!important}
+#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(1) .plant-body{transform:scale(.55)}
+#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(2) .plant-body{transform:scale(.8)}
+#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(3) .plant-body{transform:scale(1)}
 .fixed-greenhouse .image-vignette{z-index:1}
 @media(prefers-reduced-motion:reduce){.plant-row,.plant-leaves,.grow-lights,.dust{animation:none!important}}
 
