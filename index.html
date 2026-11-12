@@ -302,6 +302,29 @@ input:focus,select:focus,textarea:focus{border-color:#9bdd69!important;box-shado
 @media(max-width:600px){.scene{min-height:390px!important}.scene .tent-art{height:235px!important;width:96%!important;bottom:25px!important}.scene-watermark{width:68px!important;right:12px!important;bottom:12px!important}.gauge-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.gauge-card,.feed-card{min-height:136px!important;padding:9px!important}.gauge{width:104px;height:104px}.gauge:before{inset:7px}.gauge-core b{font-size:21px!important}.feed-card>b{font-size:24px}}
 
 
+
+/* FINAL OVERRIDE: remove all CSS-built 3D tent layers */
+.scene{
+  background:#101610 url('./02-grow-room-tent-background.webp?v=6') left center / 200% 100% no-repeat!important;
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;
+}
+.scene .tent-art,.scene .tent-roof,.scene .tent-back,.scene .tent-side,.scene .tent-floor,
+.scene .led,.scene .fan,.scene .plants,.scene .plant,.scene .leaf,.scene .plantpot,
+.scene-mascot{display:none!important;visibility:hidden!important;opacity:0!important}
+.scene:before{
+ content:""!important;position:absolute!important;inset:0!important;z-index:1!important;
+ background:linear-gradient(90deg,#050b0780 0%,#050b0718 48%,#050b0740 100%),linear-gradient(0deg,#050906a8 0%,transparent 45%)!important;
+}
+.scene:after{
+ content:""!important;position:absolute!important;inset:0!important;z-index:2!important;pointer-events:none!important;
+ background:radial-gradient(ellipse at 50% 70%,#66ff3316,transparent 58%)!important;display:block!important;animation:none!important;
+}
+.scenehead,.scenefoot{z-index:3!important}
+.scene-watermark{z-index:3!important;display:block!important}
+@media(max-width:700px){
+ .scene{background-size:200% 100%!important;background-position:left center!important}
+}
+
 </style>
 </head>
 <body>
