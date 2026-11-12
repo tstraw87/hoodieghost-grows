@@ -423,6 +423,39 @@ input,select,textarea{background:#050905!important;border:1px solid #354d26!impo
 .fixed-greenhouse img{transition:opacity .25s ease;object-fit:cover;object-position:center center}
 
 .stage-photo-credit a{color:#d5ff9e;text-decoration:underline;text-underline-offset:2px}.stage-photo-credit a:hover{color:#fff}
+
+/* Animated, original vector greenhouse — stage-reactive plant silhouettes */
+.fixed-greenhouse{background:#040805;isolation:isolate}
+.animated-grow-scene{position:absolute;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 65%,#23331c 0%,#0a100b 52%,#020403 100%)}
+.greenhouse-svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 12px #8cff0012)}
+.scene-brand-mark{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%);text-align:center;color:#b9ff65;font:900 clamp(18px,3vw,34px)/.9 'Barlow Condensed',sans-serif;letter-spacing:2px;text-shadow:0 0 20px #8cff0080,0 3px 5px #000;opacity:.82;white-space:nowrap}
+.scene-brand-mark span{font-size:.75em}
+.scene-overlay-glow{position:absolute;inset:0;background:linear-gradient(180deg,#02060320,transparent 35%,#02060330 75%,#020603a8);pointer-events:none}
+.plant-row{transform-box:fill-box;transform-origin:center bottom;animation:plant-sway 5.8s ease-in-out infinite alternate}
+.row-right{animation-delay:-2.4s}
+.plant-leaves{transform-box:fill-box;transform-origin:50% 100%;animation:leaf-sway 3.7s ease-in-out infinite alternate}
+.buds{opacity:0;transition:opacity .7s ease}
+.grow-lights{animation:lamp-breathe 4s ease-in-out infinite alternate}
+.dust{animation:dust-drift 8s ease-in-out infinite alternate}
+.d2{animation-delay:-2s}.d3{animation-delay:-5s}.d4{animation-delay:-3s}
+@keyframes plant-sway{from{transform:rotate(-1.1deg)}to{transform:rotate(1.1deg)}}
+@keyframes leaf-sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+@keyframes lamp-breathe{from{opacity:.65}to{opacity:1}}
+@keyframes dust-drift{from{transform:translateY(15px);opacity:.1}to{transform:translateY(-28px);opacity:.6}}
+#tent3dWrap[data-stage="seed---germination"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(.28)!important}
+#tent3dWrap[data-stage="seedling"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(.48)!important}
+#tent3dWrap[data-stage="vegetative"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(.78)!important}
+#tent3dWrap[data-stage="early-flower"] .plant-row use,#tent3dWrap[data-stage="mid-flower"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(1)!important}
+#tent3dWrap[data-stage="late-flower"] .plant-row use,#tent3dWrap[data-stage="harvest"] .plant-row use{transform-box:fill-box;transform-origin:center bottom;transform:scale(1.08)!important}
+#tent3dWrap[data-stage*="flower"] .buds,#tent3dWrap[data-stage="harvest"] .buds{opacity:.9}
+#tent3dWrap[data-stage="seed---germination"] .plant-leaves,#tent3dWrap[data-stage="seedling"] .plant-leaves{opacity:.55}
+#tent3dWrap[data-stage="harvest"] .plant-leaves{fill:#78934b}
+#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(1){transform:scale(.55)!important}
+#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(2){transform:scale(.8)!important}
+#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(3){transform:scale(1)!important}
+.fixed-greenhouse .image-vignette{z-index:1}
+@media(prefers-reduced-motion:reduce){.plant-row,.plant-leaves,.grow-lights,.dust{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -439,7 +472,31 @@ input,select,textarea{background:#050905!important;border:1px solid #354d26!impo
  <div class="hero">
   <div class="scene">
    <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● FIXED GREENHOUSE VIEW</div><div class="scene-stage-pill" id="sceneStagePill">STAGE · NOT SET</div></div>
-   <div class="tent-art fixed-greenhouse" id="tent3dWrap" aria-label="HOODIEGHOST GROWS greenhouse"><img src="open-grow-tent.jpg" alt="HOODIEGHOST GROWS indoor greenhouse with illuminated plant rows" loading="eager"><div class="image-vignette"></div><div class="fixed-stage-caption" id="fixedStageCaption">PLANT PROFILE · <b>STAGE NOT SET</b></div><div class="stage-photo-credit" id="stagePhotoCredit">REFERENCE GREENHOUSE IMAGE</div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
+   <div class="tent-art fixed-greenhouse" id="tent3dWrap" aria-label="HOODIEGHOST GROWS greenhouse"><div class="animated-grow-scene" aria-hidden="true">
+<svg class="greenhouse-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+<defs>
+ <linearGradient id="wall" x2="0" y2="1"><stop stop-color="#17231a"/><stop offset="1" stop-color="#050a07"/></linearGradient>
+ <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#18231a"/><stop offset="1" stop-color="#020403"/></linearGradient>
+ <linearGradient id="lamp" x2="0" y2="1"><stop stop-color="#eaffb8"/><stop offset=".35" stop-color="#b9ff66" stop-opacity=".7"/><stop offset="1" stop-color="#a5ff00" stop-opacity="0"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#b4ff50" stop-opacity=".32"/><stop offset="1" stop-color="#b4ff50" stop-opacity="0"/></radialGradient>
+ <g id="plant"><path d="M0 0 Q-3 -40 0 -86" stroke="#5c9d36" stroke-width="5" fill="none"/><g class="plant-leaves" fill="#276b2d" stroke="#79bb43" stroke-width="1.5">
+ <path d="M0 -25 Q-42 -55 -48 -30 Q-31 -8 0 -20Z"/><path d="M0 -36 Q35 -69 48 -43 Q34 -20 0 -30Z"/>
+ <path d="M0 -48 Q-38 -86 -44 -62 Q-28 -39 0 -42Z"/><path d="M0 -58 Q38 -96 47 -70 Q28 -48 0 -53Z"/>
+ <path d="M0 -70 Q-22 -105 -30 -86 Q-20 -66 0 -65Z"/><path d="M0 -78 Q22 -112 31 -91 Q20 -72 0 -73Z"/>
+ <path d="M0 -88 Q-12 -115 0 -126 Q13 -112 0 -88Z"/>
+ </g><g class="buds" fill="#b9ed68"><circle cx="-8" cy="-76" r="5"/><circle cx="8" cy="-68" r="5"/><circle cx="0" cy="-91" r="6"/><circle cx="-14" cy="-52" r="4"/><circle cx="14" cy="-48" r="4"/></g></g>
+</defs>
+<rect width="1200" height="700" fill="#050906"/><path d="M0 0H1200V470L600 590 0 470Z" fill="url(#wall)"/>
+<g stroke="#354a36" stroke-width="10" fill="none" opacity=".9"><path d="M0 0L600 215 1200 0M0 0V470M1200 0V470M0 130L600 285 1200 130M0 260L600 360 1200 260M0 390L600 430 1200 390"/><path d="M90 0L600 215 1110 0M300 0L600 215 900 0"/></g>
+<path d="M0 470L600 590 1200 470V700H0Z" fill="url(#floor)"/>
+<g stroke="#45613e" opacity=".4" stroke-width="2"><path d="M600 590L0 700M600 590L200 700M600 590L400 700M600 590L800 700M600 590L1000 700M600 590L1200 700M0 520H1200M0 590H1200M0 650H1200"/></g>
+<g class="grow-lights" fill="url(#lamp)"><path d="M80 40L270 110 270 130 80 65Z"/><path d="M390 130L550 190 550 210 390 150Z"/><path d="M650 190L810 130 810 150 650 210Z"/><path d="M930 110L1120 40 1120 65 930 130Z"/><path d="M480 25H720V42H480Z"/></g>
+<g fill="url(#glow)"><ellipse cx="170" cy="360" rx="250" ry="270"/><ellipse cx="1030" cy="360" rx="250" ry="270"/></g>
+<g class="plant-row row-left"><use href="#plant" transform="translate(95 560) scale(1.9)"/><use href="#plant" transform="translate(230 575) scale(1.55)"/><use href="#plant" transform="translate(355 585) scale(1.22)"/></g>
+<g class="plant-row row-right"><use href="#plant" transform="translate(1105 560) scale(1.9)"/><use href="#plant" transform="translate(970 575) scale(1.55)"/><use href="#plant" transform="translate(845 585) scale(1.22)"/></g>
+<path d="M530 585L600 570 670 585" stroke="#a5ff00" stroke-opacity=".25" stroke-width="3" fill="none"/>
+<g fill="#d7ff9a" opacity=".45"><circle class="dust d1" cx="280" cy="250" r="3"/><circle class="dust d2" cx="900" cy="300" r="2"/><circle class="dust d3" cx="740" cy="390" r="3"/><circle class="dust d4" cx="430" cy="180" r="2"/></g>
+</svg><div class="scene-brand-mark">HOODIEGHOST<br><span>GROWS</span></div><div class="scene-overlay-glow"></div></div><div class="image-vignette"></div><div class="fixed-stage-caption" id="fixedStageCaption">PLANT PROFILE · <b>STAGE NOT SET</b></div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
    <aside class="plant-inspector" id="plantInspector" aria-live="polite">
     <div class="plant-inspector-head"><div><div class="eyebrow" id="inspectorKicker">PLANT PROFILE</div><h3 id="inspectorName">Plant</h3><div class="age" id="inspectorStrain">Select a plant to inspect</div></div><button class="close" id="closePlantInspector" aria-label="Close plant details">×</button></div>
@@ -538,34 +595,10 @@ function vpdCalc(temp,rh,leaf,offset){if(temp===''||rh===''||!isFinite(+temp)||!
 function netPpm(){let r=t().res;if(r.feedPpm===''||r.sourcePpm==='')return null;return +r.feedPpm-(+r.sourcePpm)}
 function setText(id,value){$(id).textContent=value}
 function render(){let x=t(),a=age(),v=vpdCalc(x.env.temp,x.env.rh,x.env.leaf,x.env.offset??data.offset),net=netPpm();setText('sceneTentName','Tent 0'+(activeTent+1));setText('lineupLabel','TENT 0'+(activeTent+1));setText('plantTentTag','TENT 0'+(activeTent+1));setText('overviewType',x.type.toUpperCase());setText('overviewStage',x.startDate?x.stage:'Not started');setText('overviewAge',a?'Day '+a+' · '+x.medium:'Set a start date to begin the timeline');setText('overviewCount',x.plants.length);setText('overviewDay',a||'—');setText('scenePlantCount',String(x.plants.length).padStart(2,'0')+' PLANTS');const plantStages=[...new Set(x.plants.map(p=>p.stage||x.stage).filter(Boolean))];const tentStage=plantStages.length===1?plantStages[0]:plantStages.length>1?'Mixed stages':x.stage||'Not set';setText('sceneStagePill','STAGE · '+tentStage.toUpperCase());$('tent3dWrap').dataset.stage=tentStage.toLowerCase().replace(/[^a-z]+/g,'-');setText('fixedStageCaption','PLANT PROFILE · '+tentStage.toUpperCase());$('fixedStageCaption').innerHTML='PLANT PROFILE · <b>'+safe(tentStage.toUpperCase())+'</b>';
-const stagePhotoMap={
- 'seed / germination':'https://upload.wikimedia.org/wikipedia/commons/9/96/Cannabis_seedling_in_humidor.jpg',
- 'seedling':'https://upload.wikimedia.org/wikipedia/commons/9/96/Cannabis_seedling_in_humidor.jpg',
- 'vegetative':'https://upload.wikimedia.org/wikipedia/commons/2/22/Untrained_cannabis_plant_in_the_vegetative_stage.jpg',
- 'early flower':'https://upload.wikimedia.org/wikipedia/commons/1/17/Cannabis_flowering_in_a_greenhouse.jpg',
- 'mid flower':'https://upload.wikimedia.org/wikipedia/commons/1/17/Cannabis_flowering_in_a_greenhouse.jpg',
- 'late flower':'https://upload.wikimedia.org/wikipedia/commons/e/e9/Northern-lights-flowering.jpg',
- 'harvest':'https://upload.wikimedia.org/wikipedia/commons/e/e9/Northern-lights-flowering.jpg'
-};
-const stageCounts={};x.plants.forEach(p=>{const k=String(p.stage||x.stage||'').toLowerCase();if(k)stageCounts[k]=(stageCounts[k]||0)+1;});
-const visualStage=Object.keys(stageCounts).sort((a,b)=>stageCounts[b]-stageCounts[a])[0]||String(x.stage||'Not set').toLowerCase();
-const stageKey=visualStage;
-const stagePhoto=stagePhotoMap[stageKey]||'open-grow-tent.jpg';
-const greenhouseImg=$('tent3dWrap').querySelector('img');
-if(greenhouseImg){
- if(!greenhouseImg.dataset.stageFallbackBound){greenhouseImg.dataset.stageFallbackBound='1';greenhouseImg.addEventListener('error',()=>{greenhouseImg.dataset.failedPhoto=greenhouseImg.src;greenhouseImg.src='open-grow-tent.jpg';greenhouseImg.alt='Reference greenhouse view';});}
- if(greenhouseImg.getAttribute('src')!==stagePhoto && greenhouseImg.dataset.failedPhoto!==stagePhoto){greenhouseImg.src=stagePhoto;greenhouseImg.alt='Greenhouse photo representing '+visualStage+' stage';}
-}
-const creditLinks={
- 'seed / germination':['Public-domain seedling photo','https://commons.wikimedia.org/wiki/File:Cannabis_seedling_in_humidor.jpg'],
- 'seedling':['Public-domain seedling photo','https://commons.wikimedia.org/wiki/File:Cannabis_seedling_in_humidor.jpg'],
- 'vegetative':['Plantlady223 · CC BY-SA 4.0','https://commons.wikimedia.org/wiki/File:Untrained_cannabis_plant_in_the_vegetative_stage.jpg'],
- 'early flower':['Cannabis Tours · CC BY-SA 4.0','https://commons.wikimedia.org/wiki/File:Cannabis_flowering_in_a_greenhouse.jpg'],
- 'mid flower':['Cannabis Tours · CC BY-SA 4.0','https://commons.wikimedia.org/wiki/File:Cannabis_flowering_in_a_greenhouse.jpg'],
- 'late flower':['User Dan · CC BY-SA 3.0','https://commons.wikimedia.org/wiki/File:Northern-lights-flowering.jpg'],
- 'harvest':['User Dan · CC BY-SA 3.0','https://commons.wikimedia.org/wiki/File:Northern-lights-flowering.jpg']
-};
-const credit=creditLinks[stageKey];$('stagePhotoCredit').innerHTML=credit?'PHOTO: <a href="'+credit[1]+'" target="_blank" rel="noopener">'+credit[0]+'</a>':'REFERENCE GREENHOUSE IMAGE';setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
+const stageKey=tentStage.toLowerCase();
+$('tent3dWrap').dataset.stage=stageKey.replace(/[^a-z]+/g,'-');
+setText('fixedStageCaption','PLANT PROFILE · '+tentStage.toUpperCase());
+setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
 $('overviewAlert').textContent=!x.startDate?'Add a plant start date and environment readings to activate grow tracking.':v===null?'Grow timeline active. Add environment readings to calculate VPD.':(v<0.4||v>1.8?'Review VPD reading against your stage and equipment.':'Readings saved. Keep monitoring consistency.');
 $('overviewAlert').className='notice'+(v!==null&&(v<.4||v>1.8)?' warn':'');
 $('plantLineup').innerHTML=x.plants.length?x.plants.map(p=>'<span class="plantchip">'+safe(p.name)+(p.strain?' · '+safe(p.strain):'')+'</span>').join(''):'<span class="muted">No plants added yet.</span>';
