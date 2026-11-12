@@ -320,11 +320,11 @@ body{background:#030503;color:#f4f8ee}
 .tabs{display:flex;gap:7px;flex-wrap:wrap;padding:10px 0 14px;border-bottom:1px solid #26371b}
 .tabs button{background:#0b100a;border:1px solid #263b1b;color:#b8c8ac;border-radius:7px;padding:11px 14px;font:700 12px 'DM Mono',monospace;letter-spacing:.5px}
 .tabs button.active,.tabs button:hover{background:linear-gradient(100deg,#a5ff00,#5d9c00);color:#071000;border-color:#bfff67;box-shadow:0 0 14px #9bff0040}
-#view-overview{display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"metrics metrics" "hero hero" "snapshot snapshot";gap:14px}
+#view-overview{display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"metrics metrics" "hero hero" "snapshothead snapshothead" "snapshotgrid snapshotgrid";gap:14px}
 #view-overview>.metrics{grid-area:metrics;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
 #view-overview>.hero{grid-area:hero;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:stretch}
-#view-overview>.sectionhead{grid-area:snapshot}
-#view-overview>.grid2{grid-area:snapshot;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#view-overview>.sectionhead{grid-area:snapshothead}
+#view-overview>.grid2{grid-area:snapshotgrid;display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .metric,.panel,.notice{background:linear-gradient(145deg,#111910,#080c08);border:1px solid #2e461f;border-radius:9px;box-shadow:inset 0 0 18px #9bff0008}
 .metric{padding:14px 16px;min-height:102px}
 .metric label,.paneltitle strong,.growstat label{font-family:'DM Mono',monospace;letter-spacing:.7px}
