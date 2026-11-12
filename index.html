@@ -76,6 +76,45 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 @media(max-width:700px){.scene-mascot{display:none!important}}
 @media(prefers-reduced-motion:reduce){.scene:after,.scene-mascot{animation:none!important}}
 
+/* HOODIEGHOST — RESTRAINED VISUAL PASS */
+.scene{
+  background:#101511!important;
+  border:1px solid #405448!important;
+  border-radius:14px!important;
+  box-shadow:0 12px 28px #0008!important;
+}
+.scene:before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  background:
+    linear-gradient(90deg,#080d0bc9 0%,#080d0b30 36%,#080d0b12 72%,#080d0b55 100%),
+    linear-gradient(0deg,#080d0bd9 0%,transparent 27%,#080d0b18 100%),
+    url('./02-grow-room-tent-background.webp?v=4') left center / 200% 100% no-repeat!important;
+  filter:saturate(.72) brightness(.86) contrast(1.04)!important;
+  opacity:.98!important;
+}
+.scene:after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background:linear-gradient(135deg,#ffffff08,transparent 38%,#00000016)!important;
+  mix-blend-mode:normal!important;
+  opacity:1!important;
+  animation:none!important;
+}
+.scenehead,.scenefoot{z-index:3!important}
+.scenehead .status{box-shadow:none!important}
+.scenehead h1{text-shadow:0 2px 8px #000b!important}
+.scene .tent-art{display:none!important}
+@media(max-width:700px){
+  .scene:before{background-size:200% 100%!important;background-position:left center!important}
+}
+
+
 
 </style>
 </head>
