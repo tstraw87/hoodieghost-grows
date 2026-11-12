@@ -457,6 +457,26 @@ input,select,textarea{background:#050905!important;border:1px solid #354d26!impo
 .fixed-greenhouse .image-vignette{z-index:1}
 @media(prefers-reduced-motion:reduce){.plant-row,.plant-leaves,.grow-lights,.dust{animation:none!important}}
 
+
+/* Comic-book greenhouse art direction */
+.animated-grow-scene{background:radial-gradient(ellipse at 50% 60%,#31471d 0%,#101a0d 46%,#020403 100%);border:2px solid #a5ff00;box-shadow:inset 0 0 0 5px #030603, inset 0 0 45px #9bff0030,0 0 22px #83ff0030}
+.animated-grow-scene:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.2;background-image:radial-gradient(#c9ff85 1px,transparent 1.6px);background-size:7px 7px;mix-blend-mode:screen;mask-image:linear-gradient(90deg,#000 0%,transparent 34%,transparent 66%,#000 100%)}
+.animated-grow-scene:after{content:"";position:absolute;inset:-20%;z-index:2;pointer-events:none;opacity:.23;background:repeating-conic-gradient(from 4deg at 50% 44%,#baff43 0deg 1deg,transparent 1deg 10deg);mask-image:radial-gradient(ellipse at 50% 44%,transparent 0 28%,#000 70%);animation:comic-rays 28s linear infinite}
+.greenhouse-svg{filter:contrast(1.18) saturate(1.22) drop-shadow(0 0 2px #b5ff62);transform:scale(1.015)}
+.greenhouse-svg g[stroke="#354a36"]{stroke:#9bc66b;stroke-width:13;filter:drop-shadow(3px 3px 0 #020402)}
+.plant-leaves{stroke:#a7e66c;stroke-width:2.7;filter:drop-shadow(2px 3px 0 #061006);animation-duration:2.8s}
+.plant-row{filter:drop-shadow(3px 4px 0 #020502);animation-duration:4.2s}
+.grow-lights{filter:drop-shadow(0 0 9px #c5ff5c);animation-duration:2.6s}
+.scene-brand-mark{font-size:clamp(20px,3.5vw,40px);-webkit-text-stroke:1px #e0ffad;text-shadow:3px 3px 0 #15250b,6px 6px 0 #020402,0 0 22px #8cff00;transform:translate(-50%,-50%) rotate(-3deg)}
+.comic-burst{position:absolute;z-index:4;right:5%;top:13%;width:clamp(66px,10vw,112px);aspect-ratio:1;display:grid;place-content:center;text-align:center;clip-path:polygon(50% 0%,61% 17%,79% 5%,81% 27%,100% 32%,86% 49%,100% 67%,78% 72%,77% 95%,57% 84%,43% 100%,35% 80%,12% 88%,17% 66%,0 53%,18% 39%,6% 19%,31% 22%);background:#a5ff00;color:#081003;font:900 clamp(11px,1.5vw,17px)/.85 'Barlow Condensed',sans-serif;letter-spacing:1px;text-shadow:1px 1px 0 #eaffba;filter:drop-shadow(4px 5px 0 #020402);transform:rotate(9deg);animation:burst-pop 3.4s ease-in-out infinite}
+.comic-burst b{font-size:1.35em}
+.comic-caption{position:absolute;z-index:4;left:15px;top:14px;padding:5px 8px;border:1px solid #caff75;background:#050a04e8;color:#d9ffac;font:900 9px 'DM Mono',monospace;letter-spacing:1.2px;transform:rotate(-2deg);box-shadow:3px 3px 0 #020402}
+.fixed-stage-caption{border:2px solid #a5ff00!important;border-radius:0!important;box-shadow:3px 3px 0 #020402;font-weight:900!important;transform:rotate(-1deg);text-shadow:1px 1px 0 #000}
+.scene-overlay-glow{z-index:3;background:linear-gradient(180deg,#02060310,transparent 32%,#02060320 70%,#020603b8)}
+@keyframes comic-rays{to{transform:rotate(360deg)}}
+@keyframes burst-pop{0%,100%{scale:1;rotate:9deg}50%{scale:1.08;rotate:13deg}}
+@media(prefers-reduced-motion:reduce){.animated-grow-scene:after,.comic-burst{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -497,7 +517,7 @@ input,select,textarea{background:#050905!important;border:1px solid #354d26!impo
 <g class="plant-row row-right"><use href="#plant" transform="translate(1105 560) scale(1.9)"/><use href="#plant" transform="translate(970 575) scale(1.55)"/><use href="#plant" transform="translate(845 585) scale(1.22)"/></g>
 <path d="M530 585L600 570 670 585" stroke="#a5ff00" stroke-opacity=".25" stroke-width="3" fill="none"/>
 <g fill="#d7ff9a" opacity=".45"><circle class="dust d1" cx="280" cy="250" r="3"/><circle class="dust d2" cx="900" cy="300" r="2"/><circle class="dust d3" cx="740" cy="390" r="3"/><circle class="dust d4" cx="430" cy="180" r="2"/></g>
-</svg><div class="scene-brand-mark">HOODIEGHOST<br><span>GROWS</span></div><div class="scene-overlay-glow"></div></div><div class="image-vignette"></div><div class="fixed-stage-caption" id="fixedStageCaption">PLANT PROFILE · <b>STAGE NOT SET</b></div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
+</svg><div class="scene-brand-mark">HOODIEGHOST<br><span>GROWS</span></div><div class="comic-burst" aria-hidden="true">GROW<br><b>MODE!</b></div><div class="comic-caption" aria-hidden="true">ISSUE 01 · THE GROW ROOM</div><div class="scene-overlay-glow"></div></div><div class="image-vignette"></div><div class="fixed-stage-caption" id="fixedStageCaption">PLANT PROFILE · <b>STAGE NOT SET</b></div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
    <aside class="plant-inspector" id="plantInspector" aria-live="polite">
     <div class="plant-inspector-head"><div><div class="eyebrow" id="inspectorKicker">PLANT PROFILE</div><h3 id="inspectorName">Plant</h3><div class="age" id="inspectorStrain">Select a plant to inspect</div></div><button class="close" id="closePlantInspector" aria-label="Close plant details">×</button></div>
