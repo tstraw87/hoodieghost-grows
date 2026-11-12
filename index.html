@@ -65,6 +65,18 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 .scene .scenehead,.scene .scenefoot{z-index:6}
 @media(max-width:700px){.scene-mascot{left:8px!important;bottom:38px!important;width:40%!important;max-height:62%!important}.scene{background-size:200% 100%!important;background-position:left center!important}}
 
+/* HOODIEGHOST FINISH — CHARACTER BADGE + AMBIENT MOTION */
+.scene{border-color:#6f9a70;box-shadow:inset 0 0 55px #0009,0 18px 42px #0008,0 0 0 1px #76ff4320}
+.scene:after{z-index:1;opacity:.72;animation:roomGlow 7s ease-in-out infinite alternate}
+.scene-mascot{left:20px!important;bottom:42px!important;width:clamp(170px,29%,245px)!important;max-height:68%!important;border:1px solid #9cff70;border-radius:14px;padding:4px;background:linear-gradient(145deg,#1c2a1dcc,#080d0bcc);box-shadow:0 0 0 2px #0a100c,0 0 24px #76ff4355,0 12px 26px #000c!important;animation:mascotFloat 6s ease-in-out infinite;transform-origin:50% 90%}
+.scenehead h1{text-shadow:0 3px 14px #000d}
+.scenefoot{z-index:6;text-shadow:0 2px 8px #000;pointer-events:none}
+@keyframes mascotFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
+@keyframes roomGlow{0%{opacity:.52;filter:brightness(.94)}100%{opacity:.9;filter:brightness(1.08)}}
+@media(max-width:700px){.scene-mascot{left:10px!important;bottom:40px!important;width:39%!important;max-height:58%!important}}
+@media(prefers-reduced-motion:reduce){.scene:after,.scene-mascot{animation:none!important}}
+
+
 </style>
 </head>
 <body>
