@@ -308,6 +308,52 @@ table th{color:#c4ff63}
  #view-overview>.hero>.scene{height:470px;min-height:470px}
 }
 
+
+/* Fresh fixed-image greenhouse dashboard */
+:root{--bg:#050805;--surface:#0b100b;--surface2:#111a0f;--line:#273a1c;--green:#9bff00;--green2:#c5ff75;--muted:#92a188}
+body{background:#030503;color:#f4f8ee}
+.shell{max-width:1720px;padding:14px 18px 34px}
+.topbar{background:linear-gradient(100deg,#0b1209,#050805);border:1px solid #2f491c;border-radius:12px;padding:10px 14px;box-shadow:0 0 25px #8cff0017}
+.brand img{width:68px;height:68px;box-shadow:0 0 14px #9bff0040}
+.brandname{font-size:clamp(24px,3vw,38px);letter-spacing:2px}
+.brandname span{color:var(--green)}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;padding:10px 0 14px;border-bottom:1px solid #26371b}
+.tabs button{background:#0b100a;border:1px solid #263b1b;color:#b8c8ac;border-radius:7px;padding:11px 14px;font:700 12px 'DM Mono',monospace;letter-spacing:.5px}
+.tabs button.active,.tabs button:hover{background:linear-gradient(100deg,#a5ff00,#5d9c00);color:#071000;border-color:#bfff67;box-shadow:0 0 14px #9bff0040}
+#view-overview{display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"metrics metrics" "hero hero" "snapshot snapshot";gap:14px}
+#view-overview>.metrics{grid-area:metrics;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
+#view-overview>.hero{grid-area:hero;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:stretch}
+#view-overview>.sectionhead{grid-area:snapshot}
+#view-overview>.grid2{grid-area:snapshot;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric,.panel,.notice{background:linear-gradient(145deg,#111910,#080c08);border:1px solid #2e461f;border-radius:9px;box-shadow:inset 0 0 18px #9bff0008}
+.metric{padding:14px 16px;min-height:102px}
+.metric label,.paneltitle strong,.growstat label{font-family:'DM Mono',monospace;letter-spacing:.7px}
+.metric b{color:#f5ffe9;font:800 clamp(23px,2.3vw,34px) 'Barlow Condensed',sans-serif;text-shadow:0 0 12px #9bff0030}
+.metric small{color:#9aab8d}
+.scene{position:relative;min-height:520px;border:1px solid #577c29;border-radius:10px;overflow:hidden;background:#050805;box-shadow:0 0 24px #8cff001e}
+.scenehead{z-index:2;left:18px;right:18px;top:16px;text-shadow:0 2px 8px #000}
+.scenehead h1{font-size:clamp(25px,3vw,42px)}
+.scenehead h1 em{color:#a5ff00}
+.fixed-greenhouse{position:absolute;inset:0;width:100%;height:100%;max-width:none;bottom:auto;filter:none}
+.fixed-greenhouse img{width:100%;height:100%;object-fit:cover;object-position:center 54%;display:block}
+.image-vignette{position:absolute;inset:0;background:linear-gradient(180deg,#020502a8 0%,transparent 30%,#0205021c 65%,#020502a8 100%),linear-gradient(90deg,#02050240,transparent 30%,transparent 70%,#02050240);pointer-events:none}
+.viewhint{z-index:3;right:14px;bottom:12px;left:auto;background:#030603c9;border:1px solid #587c2b;border-radius:5px;padding:7px 10px;color:#d4f3b0}
+.scenefoot{z-index:3;background:#030603d9;border-top:1px solid #405e24}
+.tentpick button{background:#050905d9;border:1px solid #8bc64a;color:#f2f9e8}
+.tentpick button.active{background:#a5ff00;color:#071000}
+.sidepanel{display:flex;flex-direction:column;gap:10px}
+.panel{padding:14px}
+.paneltitle{border-bottom:1px solid #2b401e;padding-bottom:9px;margin-bottom:11px}
+.paneltitle strong,.sectionhead h2{color:#c3ff7b}
+.stage{color:#a5ff00}
+.growstat{background:#090f08;border:1px solid #2b401f;border-radius:6px}
+.notice{padding:12px;color:#b8c9ab}
+.btn.primary{background:#9bff00;color:#071000;border-color:#caff82}
+input,select,textarea{background:#050905!important;border:1px solid #354d26!important;color:#eff8e7!important}
+.view:not(.active){display:none!important}
+@media(max-width:850px){#view-overview{grid-template-columns:1fr;grid-template-areas:"metrics" "hero" "snapshot"}#view-overview>.hero{grid-template-columns:minmax(0,1fr) 250px}.scene{min-height:440px}.tabs{overflow-x:auto;flex-wrap:nowrap}.tabs button{white-space:nowrap}}
+@media(max-width:620px){.shell{padding:8px}.topbar{align-items:flex-start}.brand img{width:52px;height:52px}.topright{display:none}.tabs{gap:5px}.tabs button{padding:9px 10px;font-size:10px}#view-overview>.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#view-overview>.hero{display:flex;flex-direction:column}.scene{width:100%;min-height:390px;height:390px}.sidepanel{width:100%}#view-overview>.grid2{grid-template-columns:1fr}.scenehead h1{font-size:25px}}
+
 </style>
 </head>
 <body>
@@ -324,7 +370,7 @@ table th{color:#c4ff63}
  <div class="hero">
   <div class="scene">
    <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● SIMULATED ROOM</div></div>
-   <div class="tent-art" id="tent3dWrap" aria-label="Interactive three-dimensional grow tent"><canvas id="greenhouse3d"></canvas><div id="tentFallback" aria-label="Greenhouse visual fallback"><div class="fb-roof"></div><div class="fb-tent"><div class="fb-led"></div><div class="fb-fan left"></div><div class="fb-fan right"></div><div class="fb-plants"><div class="fb-plant" style="--h:62%"><i class="fb-leaves"></i></div><div class="fb-plant" style="--h:82%"><i class="fb-leaves"></i></div><div class="fb-plant" style="--h:70%"><i class="fb-leaves"></i></div></div></div><div class="fb-label">HOODIEGHOST GROW SPACE · VISUAL MODE</div></div><div class="viewhint">DRAG TO ROTATE · SCROLL TO ZOOM</div></div>
+   <div class="tent-art fixed-greenhouse" id="tent3dWrap" aria-label="HOODIEGHOST GROWS greenhouse"><img src="open-grow-tent.jpg" alt="HOODIEGHOST GROWS indoor greenhouse with illuminated plant rows" loading="eager"><div class="image-vignette"></div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
    <aside class="plant-inspector" id="plantInspector" aria-live="polite">
     <div class="plant-inspector-head"><div><div class="eyebrow" id="inspectorKicker">PLANT PROFILE</div><h3 id="inspectorName">Plant</h3><div class="age" id="inspectorStrain">Select a plant to inspect</div></div><button class="close" id="closePlantInspector" aria-label="Close plant details">×</button></div>
@@ -405,7 +451,7 @@ table th{color:#c4ff63}
 </main>
 <footer class="footer"><span>HOODIEGHOST GROWS // PRIVATE GROW ROOM</span><span>LOCAL STORAGE · MANUAL READINGS</span></footer>
 </div>
-<script src="vendor/three.min.js"></script>
+
 <script>
 const KEY='hoodieghost_freshroom_v2';
 const blankTent=()=>({type:'Photoperiod',stage:'Seed / Germination',startDate:'',medium:'Coco',plants:[],env:{temp:'',rh:'',leaf:'',offset:-2},res:{volume:'',unit:'Gallons',source:'RO',sourcePpm:'',feedPpm:'',ph:''},envHistory:[],feedLogs:[],journal:[],recipes:[]});
@@ -687,10 +733,8 @@ $('proAddPlant').onclick=()=>{let name=$('proPlantName').value.trim();if(!name){
 $('proSaveTargets').onclick=()=>{let q=proTent();q.proTargets=proBlankTargets();document.querySelectorAll('[data-pro-stage]').forEach(el=>q.proTargets[el.dataset.proStage][el.dataset.proKey]=el.value===''?'':+el.value);proSave();alert('Your stage target bands have been saved.')};
 $('proAddTask').onclick=()=>{let text=$('proTaskText').value.trim(),date=$('proTaskDate').value;if(!text||!date){alert('Enter a task and due date.');return}proTent().proTasks.push({text,date});$('proTaskText').value='';proSave()};
 const oldShowView=showView;showView=function(name){oldShowView(name);if(name==='pro')proRender()};
-const oldTentRender=render;render=function(){oldTentRender();proRender();sync3DPlants()};
+const oldTentRender=render;render=function(){oldTentRender();proRender()};
 proRender();
-initGrowRoom3D();
-if(!window.THREE){const lib=document.querySelector('script[src*="three.min.js"]');if(lib)lib.addEventListener('load',()=>{const fb=$('tentFallback');if(fb)fb.style.display='none';$('greenhouse3d').style.display='block';initGrowRoom3D()},{once:true})}
 
 </script>
 <script>
