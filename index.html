@@ -422,6 +422,7 @@ input,select,textarea{background:#050905!important;border:1px solid #354d26!impo
 .stage-photo-credit{position:absolute;z-index:4;right:12px;bottom:48px;padding:5px 7px;border-radius:4px;background:#030803c9;color:#d2e6c4;font:8px 'DM Mono',monospace;letter-spacing:.4px}
 .fixed-greenhouse img{transition:opacity .25s ease;object-fit:cover;object-position:center center}
 
+.stage-photo-credit a{color:#d5ff9e;text-decoration:underline;text-underline-offset:2px}.stage-photo-credit a:hover{color:#fff}
 </style>
 </head>
 <body>
@@ -546,11 +547,22 @@ const stagePhotoMap={
  'late flower':'https://upload.wikimedia.org/wikipedia/commons/e/e9/Northern-lights-flowering.jpg',
  'harvest':'https://upload.wikimedia.org/wikipedia/commons/e/e9/Northern-lights-flowering.jpg'
 };
-const stageKey=tentStage.toLowerCase();
+const stageCounts={};x.plants.forEach(p=>{const k=String(p.stage||x.stage||'').toLowerCase();if(k)stageCounts[k]=(stageCounts[k]||0)+1;});
+const visualStage=Object.keys(stageCounts).sort((a,b)=>stageCounts[b]-stageCounts[a])[0]||String(x.stage||'Not set').toLowerCase();
+const stageKey=visualStage;
 const stagePhoto=stagePhotoMap[stageKey]||'open-grow-tent.jpg';
 const greenhouseImg=$('tent3dWrap').querySelector('img');
-if(greenhouseImg && greenhouseImg.getAttribute('src')!==stagePhoto){greenhouseImg.src=stagePhoto;greenhouseImg.alt='Greenhouse photo representing '+tentStage+' stage';}
-setText('stagePhotoCredit',stagePhoto==='open-grow-tent.jpg'?'REFERENCE GREENHOUSE IMAGE':'PHOTO: WIKIMEDIA COMMONS · SEE IMAGE CREDITS');setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
+if(greenhouseImg && greenhouseImg.getAttribute('src')!==stagePhoto){greenhouseImg.src=stagePhoto;greenhouseImg.alt='Greenhouse photo representing '+visualStage+' stage';}
+const creditLinks={
+ 'seed / germination':['Public-domain seedling photo','https://commons.wikimedia.org/wiki/File:Cannabis_seedling_in_humidor.jpg'],
+ 'seedling':['Public-domain seedling photo','https://commons.wikimedia.org/wiki/File:Cannabis_seedling_in_humidor.jpg'],
+ 'vegetative':['Plantlady223 · CC BY-SA 4.0','https://commons.wikimedia.org/wiki/File:Untrained_cannabis_plant_in_the_vegetative_stage.jpg'],
+ 'early flower':['Cannabis Tours · CC BY-SA 4.0','https://commons.wikimedia.org/wiki/File:Cannabis_flowering_in_a_greenhouse.jpg'],
+ 'mid flower':['Cannabis Tours · CC BY-SA 4.0','https://commons.wikimedia.org/wiki/File:Cannabis_flowering_in_a_greenhouse.jpg'],
+ 'late flower':['User Dan · CC BY-SA 3.0','https://commons.wikimedia.org/wiki/File:Northern-lights-flowering.jpg'],
+ 'harvest':['User Dan · CC BY-SA 3.0','https://commons.wikimedia.org/wiki/File:Northern-lights-flowering.jpg']
+};
+const credit=creditLinks[stageKey];$('stagePhotoCredit').innerHTML=credit?'PHOTO: <a href="'+credit[1]+'" target="_blank" rel="noopener">'+credit[0]+'</a>':'REFERENCE GREENHOUSE IMAGE';setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
 $('overviewAlert').textContent=!x.startDate?'Add a plant start date and environment readings to activate grow tracking.':v===null?'Grow timeline active. Add environment readings to calculate VPD.':(v<0.4||v>1.8?'Review VPD reading against your stage and equipment.':'Readings saved. Keep monitoring consistency.');
 $('overviewAlert').className='notice'+(v!==null&&(v<.4||v>1.8)?' warn':'');
 $('plantLineup').innerHTML=x.plants.length?x.plants.map(p=>'<span class="plantchip">'+safe(p.name)+(p.strain?' · '+safe(p.strain):'')+'</span>').join(''):'<span class="muted">No plants added yet.</span>';
