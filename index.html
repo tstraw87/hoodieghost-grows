@@ -76,6 +76,86 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 @media(max-width:700px){.scene-mascot{display:none!important}}
 @media(prefers-reduced-motion:reduce){.scene:after,.scene-mascot{animation:none!important}}
 
+
+/* HOODIEGHOST — PREMIUM LAYOUT PASS */
+:root{--bg:#080c09;--surface:#111813;--surface2:#17221a;--line:#293a2e;--green:#8cff4f;--green2:#c1f5a5;--muted:#9aa99d}
+body{
+ background:radial-gradient(ellipse at 50% 0%,#1b2b20 0%,#0b100c 48%,#070a08 100%)!important;
+ letter-spacing:.01em;
+}
+.shell{max-width:1760px!important;padding:24px clamp(18px,3vw,48px) 56px!important}
+.topbar{padding-bottom:20px!important;border-bottom:1px solid #304335!important}
+.brand img{width:64px!important;height:64px!important;box-shadow:0 0 0 4px #17251a,0 0 0 5px #3b573d!important}
+.brandname{font-size:30px!important;letter-spacing:1.8px!important}
+.tabs{gap:9px!important;padding:18px 0 22px!important}
+.tabs button{padding:12px 17px!important;border-radius:9px!important;background:#111a14!important;border-color:#29392e!important;box-shadow:none!important;transition:background .18s,border-color .18s,transform .18s!important}
+.tabs button:hover{background:#1b2a1e!important;border-color:#55734d!important;transform:translateY(-1px)}
+.tabs button.active{background:var(--green)!important;color:#0b1309!important;border-color:var(--green)!important;box-shadow:0 5px 18px #76ff4322!important}
+.hero{grid-template-columns:minmax(0,1.85fr) minmax(300px,.78fr)!important;gap:18px!important;align-items:stretch!important}
+.scene{
+ min-height:560px!important;
+ border:1px solid #3c5943!important;
+ border-radius:18px!important;
+ box-shadow:0 18px 48px #0009!important;
+ background:#101711!important;
+}
+.scene:before{
+ background:
+  linear-gradient(90deg,#080d0b9c 0%,#080d0b20 38%,transparent 68%,#080d0b26 100%),
+  linear-gradient(0deg,#080d0bb8 0%,transparent 24%,#080d0b12 100%),
+  url('./02-grow-room-tent-background.webp?v=5') left center / 200% 100% no-repeat!important;
+ filter:saturate(.82) contrast(1.05) brightness(.94)!important;
+}
+.scene:after{display:none!important}
+.scenehead{top:25px!important;left:26px!important;right:26px!important}
+.scenehead h1{font-size:clamp(34px,4.2vw,54px)!important;line-height:.94!important;letter-spacing:.3px!important;text-shadow:0 3px 14px #000c!important}
+.scenehead .status{background:#0a120dd9!important;border-color:#5b795d!important;border-radius:20px!important;padding:8px 12px!important}
+.tentpick{margin-top:17px!important;gap:8px!important}
+.tentpick button{padding:9px 15px!important;border-radius:7px!important;background:#0a100dcc!important;border-color:#506251!important}
+.tentpick button.active{background:var(--green)!important;border-color:var(--green)!important}
+.scenefoot{left:24px!important;right:24px!important;bottom:19px!important;font-size:10px!important;letter-spacing:1.2px!important;color:#d1ddcf!important}
+.sidepanel{gap:14px!important}
+.panel{padding:21px!important;border-radius:15px!important;background:linear-gradient(145deg,#17221a,#101611 78%)!important;border:1px solid #2c4032!important;box-shadow:0 10px 26px #0005!important}
+.paneltitle{margin-bottom:17px!important}
+.paneltitle strong{font-size:20px!important;letter-spacing:1px!important;text-shadow:none!important}
+.stage{font-size:30px!important}
+.growgrid{gap:10px!important}
+.growstat{padding:14px!important;border-radius:10px!important;background:#0b120d!important;border-color:#2b3b30!important;box-shadow:none!important}
+.growstat b{font-size:27px!important}
+.metrics{gap:13px!important;margin:20px 0 24px!important}
+.metric{padding:18px 19px!important;border-radius:13px!important;background:linear-gradient(145deg,#172119,#0e1510)!important;border-color:#293b2e!important;box-shadow:0 8px 20px #0004!important}
+.metric label{font-size:11px!important;letter-spacing:1.2px!important}
+.metric b{font-size:34px!important}
+.metric small{font-size:11px!important}
+.sectionhead{margin:22px 0 15px!important}
+.sectionhead h2{font-size:34px!important;letter-spacing:.4px!important;text-shadow:none!important}
+.sectionhead p{font-size:13px!important}
+.btn{padding:12px 16px!important;border-radius:8px!important;box-shadow:none!important}
+.notice{border-radius:8px!important;background:#152019!important}
+.footer{padding-top:30px!important;border-top:1px solid #1e2c22!important;margin-top:24px!important}
+@media(max-width:900px){
+ .shell{padding:16px 16px 42px!important}
+ .hero{grid-template-columns:1fr!important}
+ .scene{min-height:500px!important}
+ .sidepanel{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:600px){
+ .shell{padding:12px 12px 34px!important}
+ .brand img{width:48px!important;height:48px!important}
+ .brandname{font-size:22px!important}
+ .tabs{padding:13px 0 17px!important}
+ .scene{min-height:390px!important}
+ .scenehead{top:17px!important;left:16px!important;right:16px!important}
+ .scenehead h1{font-size:32px!important}
+ .scenefoot{left:13px!important;right:13px!important;bottom:13px!important;font-size:8px!important}
+ .sidepanel{grid-template-columns:1fr!important}
+ .panel{padding:16px!important}
+ .metrics{gap:8px!important;margin:13px 0 19px!important}
+ .metric{padding:12px!important}
+ .metric b{font-size:25px!important}
+ .sectionhead h2{font-size:28px!important}
+}
+
 /* HOODIEGHOST — RESTRAINED VISUAL PASS */
 .scene{
   background:#101511!important;
