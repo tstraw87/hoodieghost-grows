@@ -11,12 +11,51 @@
 @media(max-width:1100px){.layout{grid-template-columns:190px minmax(0,1fr)}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lower-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.lower-grid>.card:last-child{grid-column:1/-1}}
 @media(max-width:760px){.app{padding:12px 12px 90px}.topbar{top:5px;padding:11px 13px;border-radius:14px}.brand h1{font-size:16px}.brand small{font-size:8px}.logo{width:42px;height:42px}.status{display:none}.layout{display:block;margin-top:15px}.sidebar{position:static;padding:8px;margin-bottom:14px}.tent-switch{padding:5px 4px 9px;margin-bottom:7px}.nav{display:flex;overflow:auto;gap:5px;scrollbar-width:none}.nav button{white-space:nowrap;padding:9px 11px;font-size:11px}.nav .ico{font-size:14px;width:auto}.sidebar-foot{display:none}.page-head{align-items:start;flex-direction:column;margin-bottom:14px}.page-head h2{font-size:22px}.overview-grid{grid-template-columns:1fr}.room-card{min-height:340px}.lower-grid{grid-template-columns:1fr}.lower-grid>.card:last-child{grid-column:auto}.plant-grid{grid-template-columns:1fr}.target-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cal-day{min-height:58px;padding:5px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.mobile-nav{display:none}}
 @media(max-width:420px){.metrics{gap:8px}.metric{padding:13px}.metric .value{font-size:25px}.room-card{min-height:300px}.room-top h3{font-size:19px}.head-actions{width:100%}.head-actions .btn{flex:1}.calendar{gap:3px}.cal-day{min-height:48px}.cal-day i{margin-top:4px}}
+
+/* HOODIEGHOST comic-book visual identity */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+:root{--bg:#080b13;--surface:#101722;--surface2:#151e2c;--surface3:#202b3d;--line:#34465a;--line2:#7650a1;--text:#f6f2e8;--muted:#9ba9b9;--green:#a5ff00;--green2:#d7ff77;--amber:#ffb35c;--red:#ff5c68;--blue:#83eaff;--radius:15px;--shadow:0 12px 32px #0009,0 0 18px #a5ff0010}
+body{background:radial-gradient(ellipse at 50% -10%,#43245e 0,transparent 35%),radial-gradient(ellipse at 90% 35%,#173b32 0,transparent 35%),#080b13;font-family:Rajdhani,system-ui,sans-serif;font-size:16px}
+.app{max-width:1720px;padding:16px 18px 38px}
+.topbar{background:linear-gradient(110deg,#101827f5,#171426f5);border:1px solid #7650a1;border-radius:18px;box-shadow:0 0 0 2px #171027,0 0 28px #9c54ff30;min-height:82px}
+.logo{border:2px solid var(--green);background:radial-gradient(circle,#293f22,#101722 70%);color:var(--green);font-family:'Barlow Condensed';font-size:22px;letter-spacing:0;box-shadow:0 0 18px #a5ff0060;position:relative;overflow:hidden}
+.logo span{font-size:29px;position:absolute;opacity:.35}.logo b{position:relative;text-shadow:0 0 9px #a5ff00}
+.brand h1{font:900 clamp(22px,3vw,36px)/.95 'Barlow Condensed',sans-serif;letter-spacing:1px;text-shadow:2px 3px #000}.brand h1 span{color:var(--green);text-shadow:0 0 15px #a5ff0060}
+.brand small,.eyebrow,.label,.metric .label,.panel-head small,.sidebar-foot{font-family:'DM Mono',monospace;letter-spacing:1.4px}
+.status{border:1px solid #466b3b;background:#101b17;padding:9px 13px;border-radius:10px;color:var(--green);font:700 11px 'DM Mono'}
+.layout{gap:16px;grid-template-columns:205px minmax(0,1fr)}
+.sidebar{background:linear-gradient(180deg,#101827,#0c121c);border:1px solid #3b4d61;border-radius:16px;padding:14px;box-shadow:var(--shadow);height:max-content}
+.tent-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.tent-buttons button,.nav button{border:1px solid #34465a;background:#121b28;color:#c4d0dc;border-radius:10px;font:700 13px 'Barlow Condensed';letter-spacing:.8px}
+.tent-buttons button.active,.nav button.active{background:linear-gradient(110deg,#a5ff00,#66c900);color:#10150b;border-color:#d5ff67;box-shadow:0 0 16px #a5ff0050}
+.nav{gap:6px}.nav button{padding:11px 10px;font-size:15px;text-transform:uppercase}.nav button:hover,.btn:hover{border-color:var(--green);filter:brightness(1.13)}
+.nav .ico{color:var(--green);font-size:19px}
+.sidebar-foot{border-top:1px solid #34465a;padding-top:14px;font-size:9px;line-height:1.8}
+.content{min-width:0}.page-head{margin:5px 0 17px}.page-head h2{font:900 clamp(26px,3vw,38px)/1 'Barlow Condensed';text-transform:uppercase;letter-spacing:.5px}.page-head p{font-size:15px}
+.card{background:linear-gradient(145deg,#151f2b,#0d141d);border:1px solid #3b5063;border-radius:15px;box-shadow:0 7px 18px #0006,inset 0 1px #ffffff0a}
+.metric{border-color:#566b7c;position:relative;overflow:hidden}.metric:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(var(--green),#8b4cff)}.metric .label{font-size:10px}.metric .value{font:800 34px 'Barlow Condensed';color:#fff}.metric .hint{font-size:12px}
+.btn{background:#182536;border:1px solid #51657a;border-radius:10px;color:#eaf2f7;font:700 14px 'Rajdhani';letter-spacing:.3px}.btn.primary{background:linear-gradient(100deg,#a5ff00,#62ce00);border-color:#d4ff61;color:#101608;box-shadow:0 0 14px #a5ff0030}.btn.danger{border-color:#a94d58}
+.room-card{background:linear-gradient(145deg,#111c2a,#101522);border:2px solid #7650a1;box-shadow:0 0 0 2px #161124,0 0 28px #9d5cff24;overflow:hidden}.room-top h3{font:900 clamp(25px,3vw,42px)/.92 'Barlow Condensed';text-transform:uppercase}.room-top h3 em{color:var(--green);font-style:normal;text-shadow:0 0 15px #a5ff0060}.room-top p{font:600 12px 'DM Mono';letter-spacing:1px}.room-badge{background:#172a19;border:1px solid var(--green);color:var(--green);font:700 10px 'DM Mono'}
+.room-art{border:1px solid #7e5da0;border-radius:12px;filter:saturate(1.4) contrast(1.08);background:#111827}
+.room-stats .chip{border:1px solid #536a7b;background:#101b27;color:#d8e5ef;font:700 11px 'DM Mono'}
+.panel-head h3{font:800 21px 'Barlow Condensed';text-transform:uppercase;letter-spacing:.4px}.panel-head small{font-size:9px;color:var(--green)}
+.status-row{font:600 14px 'Rajdhani'}.status-row strong{color:#f5f4e9;font-weight:800}
+.chart{background:linear-gradient(135deg,#0b151d,#101b20);border:1px solid #2e4650;border-radius:10px}
+.field label{font:700 12px 'DM Mono';letter-spacing:.4px;color:#b6c6d2}
+input,select,textarea{background:#0b131e!important;border:1px solid #42576a!important;color:#f5f2e8!important;border-radius:9px!important;font-family:Rajdhani!important;font-weight:600!important}
+input:focus,select:focus,textarea:focus{outline:2px solid #a5ff0066!important;border-color:var(--green)!important}
+.data-table th{font:700 10px 'DM Mono';color:var(--green);text-transform:uppercase}.data-table td{font:600 13px Rajdhani}
+.notice{background:#18251d;border:1px solid #567d39;color:#d9edc8;border-radius:10px}
+.toast{background:#a5ff00;color:#101608;font-weight:800}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:static}.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.nav button{justify-content:center;text-align:center;padding:10px 5px;font-size:12px}.sidebar-foot{display:none}}
+@media(max-width:600px){.app{padding:9px}.topbar{padding:11px}.brand h1{font-size:24px}.brand small{font-size:8px}.top-actions{gap:5px}.status{font-size:8px;padding:7px}.layout{gap:10px}.sidebar{padding:10px}.nav{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric .value{font-size:28px}.room-art{height:auto}.lower-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div class="app">
 <header class="topbar">
- <div class="brand"><div class="logo">HG</div><div><small>PRIVATE CULTIVATION WORKSPACE</small><h1>HOODIEGHOST <span>GROWS</span></h1></div></div>
+ <div class="brand"><div class="logo"><span>☠</span><b>HG</b></div><div><small>COMIC-STYLE CULTIVATION COMMAND</small><h1>HOODIEGHOST <span>GROWS</span></h1></div></div>
  <div class="top-actions"><div class="status"><span class="dot"></span> LOCAL DATA SAVED</div><button class="btn ghost" id="quickExport">↧ Export backup</button></div>
 </header>
 <div class="layout">
@@ -45,7 +84,7 @@
  </div>
  <div class="grid overview-grid">
   <div class="card room-card">
-   <div class="room-top"><div><span class="eyebrow">ACTIVE GROW SPACE / <span id="roomTent">TENT 01</span></span><h3>Grow with intention.</h3><p>A clear view of your current grow cycle.</p></div><span class="room-badge" id="roomStage">NO ACTIVE CYCLE</span></div>
+   <div class="room-top"><div><span class="eyebrow">ACTIVE GROW SPACE / <span id="roomTent">TENT 01</span></span><h3>YOUR GROW. <em>YOUR CONTROL.</em></h3><p>THE GROW ROOM COMMAND CENTER</p></div><span class="room-badge" id="roomStage">NO ACTIVE CYCLE</span></div>
    <svg class="room-art" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid slice" aria-label="Stylized grow room illustration">
     <defs><linearGradient id="roomBg" x2="0" y2="1"><stop stop-color="#354a37"/><stop offset=".6" stop-color="#18291e"/><stop offset="1" stop-color="#0b120d"/></linearGradient><linearGradient id="roomLight" x2="0" y2="1"><stop stop-color="#e5ffc3" stop-opacity=".7"/><stop offset="1" stop-color="#a5e66b" stop-opacity="0"/></linearGradient><pattern id="roomDots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#d3f7a5" opacity=".14"/></pattern></defs>
     <rect width="900" height="520" fill="url(#roomBg)"/><path d="M0 0L450 120 900 0V390L450 300 0 390Z" fill="#111b14" stroke="#78916b" stroke-opacity=".4" stroke-width="4"/><path d="M0 390L450 300 900 390V520H0Z" fill="#0a100c"/><path d="M0 0L450 120 900 0" fill="none" stroke="#a5e66b" stroke-opacity=".45" stroke-width="5"/><path d="M70 24L450 120 830 24" fill="none" stroke="#8ba27e" stroke-opacity=".5" stroke-width="7"/><g fill="#eaffce"><path d="M120 44L280 83 280 98 120 59Z"/><path d="M370 106L530 106 530 122 370 122Z"/><path d="M620 83L780 44 780 59 620 98Z"/></g><g fill="url(#roomLight)"><path d="M120 59L280 98 330 390H40Z"/><path d="M370 122H530L580 390H320Z"/><path d="M620 98L780 59 860 390H570Z"/></g><path d="M450 300V520M0 390L450 300 900 390" stroke="#72896a" stroke-opacity=".3" stroke-width="3"/>
