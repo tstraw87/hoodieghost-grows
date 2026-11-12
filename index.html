@@ -161,7 +161,7 @@
 'use strict';
 const KEY='hoodieghost_grows_professional_v1';
 const $=id=>document.getElementById(id);
-const today=()=>new Date().toISOString().slice(0,10);
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const blankTent=()=>({type:'Photoperiod',stage:'Not started',startDate:'',medium:'Coco',plants:[],env:{temp:'',rh:'',leaf:'',offset:-2},envHistory:[],res:{volume:'',unit:'Gallons',source:'RO',sourcePpm:'',feedPpm:'',ph:''},feedLogs:[],recipes:[],journal:[],tasks:[],targets:{}});
 let state=loadState(),activeTent=0,currentPage='overview',calMonth=new Date(),selectedDate=today(),selectedPlant='';
 function loadState(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&Array.isArray(v.tents)&&v.tents.length===3)return v}catch(e){}return{tents:[blankTent(),blankTent(),blankTent()],prefs:{offset:-2,tempUnit:'Fahrenheit',volumeUnit:'Gallons',workspace:'HOODIEGHOST GROWS'}}}
@@ -170,7 +170,7 @@ function t(){return state.tents[activeTent]}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1900)}
 function daysBetween(a,b=today()){if(!a)return null;return Math.max(1,Math.floor((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000)+1)}
-function vpd(temp,rh,leaf,offset){if(temp===''||rh===''||!Number.isFinite(+temp)||!Number.isFinite(+rh)||+rh<=0)return null;const tc=(leaf!==''&&Number.isFinite(+leaf)?+leaf:+temp+(Number(offset)||0)-32)*5/9;const air=(+temp-32)*5/9;const svp=x=>0.6108*Math.exp((17.27*x)/(x+237.3));return Math.max(0,svp(air)*(1-(+rh/100))+(svp(tc)-svp(air))*0.5)}
+function vpd(temp,rh,leaf,offset){if(temp===''||rh===''||!Number.isFinite(+temp)||!Number.isFinite(+rh)||+rh<=0)return null;const leafF=(leaf!==''&&Number.isFinite(+leaf)?+leaf:+temp+(Number(offset)||0));const tc=(leafF-32)*5/9;const air=(+temp-32)*5/9;const svp=x=>0.6108*Math.exp((17.27*x)/(x+237.3));return Math.max(0,svp(air)*(1-(+rh/100))+(svp(tc)-svp(air))*0.5)}
 function netPpm(){const r=t().res;return r.feedPpm!==''&&r.sourcePpm!==''?Number(r.feedPpm)-Number(r.sourcePpm):null}
 function latestEnv(){return t().envHistory[0]||null}
 function setPage(page){currentPage=page;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+page));document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));renderPage(page);window.scrollTo({top:0,behavior:'smooth'})}
