@@ -50,6 +50,15 @@ input:focus,select:focus,textarea:focus{outline:2px solid #a5ff0066!important;bo
 @media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:static}.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.nav button{justify-content:center;text-align:center;padding:10px 5px;font-size:12px}.sidebar-foot{display:none}}
 @media(max-width:600px){.app{padding:9px}.topbar{padding:11px}.brand h1{font-size:24px}.brand small{font-size:8px}.top-actions{gap:5px}.status{font-size:8px;padding:7px}.layout{gap:10px}.sidebar{padding:10px}.nav{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric .value{font-size:28px}.room-art{height:auto}.lower-grid{grid-template-columns:1fr}}
 
+
+/* Graphic-novel grow-room illustration refinements */
+.room-card{min-height:470px;background:radial-gradient(ellipse at 50% 45%,#31443b 0,#111a27 62%,#090e18 100%);border:2px solid #7650a1;box-shadow:0 0 0 2px #111827,0 0 32px #7650a144;isolation:isolate}
+.room-card:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 5px,#05091412 6px),radial-gradient(ellipse at center,transparent 35%,#05091499 100%);mix-blend-mode:multiply}
+.room-art{opacity:1;filter:contrast(1.08) saturate(1.14)}
+.room-top{padding:12px 14px;border:1px solid #7650a188;border-radius:12px;background:linear-gradient(100deg,#0b111ddd,#111827aa);backdrop-filter:blur(5px)}
+.room-top h3{text-shadow:3px 3px #070b13,0 0 18px #a5ff0050}
+.room-badge{box-shadow:0 0 14px #a5ff0030}
+@media(max-width:600px){.room-card{min-height:390px}.room-top{left:10px;right:10px;top:10px;padding:9px}.room-top h3{font-size:22px}}
 </style>
 </head>
 <body>
@@ -88,12 +97,25 @@ input:focus,select:focus,textarea:focus{outline:2px solid #a5ff0066!important;bo
    <svg class="room-art" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid slice" aria-label="Stylized grow room illustration">
     <defs><linearGradient id="roomBg" x2="0" y2="1"><stop stop-color="#354a37"/><stop offset=".6" stop-color="#18291e"/><stop offset="1" stop-color="#0b120d"/></linearGradient><linearGradient id="roomLight" x2="0" y2="1"><stop stop-color="#e5ffc3" stop-opacity=".7"/><stop offset="1" stop-color="#a5e66b" stop-opacity="0"/></linearGradient><pattern id="roomDots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#d3f7a5" opacity=".14"/></pattern></defs>
     <rect width="900" height="520" fill="url(#roomBg)"/><path d="M0 0L450 120 900 0V390L450 300 0 390Z" fill="#111b14" stroke="#78916b" stroke-opacity=".4" stroke-width="4"/><path d="M0 390L450 300 900 390V520H0Z" fill="#0a100c"/><path d="M0 0L450 120 900 0" fill="none" stroke="#a5e66b" stroke-opacity=".45" stroke-width="5"/><path d="M70 24L450 120 830 24" fill="none" stroke="#8ba27e" stroke-opacity=".5" stroke-width="7"/><g fill="#eaffce"><path d="M120 44L280 83 280 98 120 59Z"/><path d="M370 106L530 106 530 122 370 122Z"/><path d="M620 83L780 44 780 59 620 98Z"/></g><g fill="url(#roomLight)"><path d="M120 59L280 98 330 390H40Z"/><path d="M370 122H530L580 390H320Z"/><path d="M620 98L780 59 860 390H570Z"/></g><path d="M450 300V520M0 390L450 300 900 390" stroke="#72896a" stroke-opacity=".3" stroke-width="3"/>
-    <g id="roomPlants" stroke="#101a0e" stroke-width="4" stroke-linejoin="round">
-     <g transform="translate(185 380) scale(1.05)"><path d="M0 0V-145" stroke="#81b84f" stroke-width="7"/><path d="M0 -35L-65 -92 -42 -88 -75 -132 -32 -115 -25 -165 0 -127 26 -169 31 -119 76 -140 42 -94 70 -88 0 -35Z" fill="#5c9a3d"/><path d="M0 -60L-52 -107M0 -77L52 -121M0 -105V-157" fill="none" stroke="#c6ee8a" stroke-width="2"/></g>
-     <g transform="translate(450 360) scale(1.55)"><path d="M0 0V-145" stroke="#81b84f" stroke-width="7"/><path d="M0 -35L-65 -92 -42 -88 -75 -132 -32 -115 -25 -165 0 -127 26 -169 31 -119 76 -140 42 -94 70 -88 0 -35Z" fill="#70aa45"/><path d="M0 -60L-52 -107M0 -77L52 -121M0 -105V-157" fill="none" stroke="#d5f59d" stroke-width="2"/></g>
-     <g transform="translate(700 380) scale(1.05)"><path d="M0 0V-145" stroke="#81b84f" stroke-width="7"/><path d="M0 -35L-65 -92 -42 -88 -75 -132 -32 -115 -25 -165 0 -127 26 -169 31 -119 76 -140 42 -94 70 -88 0 -35Z" fill="#5c9a3d"/><path d="M0 -60L-52 -107M0 -77L52 -121M0 -105V-157" fill="none" stroke="#c6ee8a" stroke-width="2"/></g>
-    </g><g fill="#17231a" stroke="#829b70" stroke-width="4"><path d="M130 380H240L230 455H140Z"/><path d="M375 360H525L510 462H390Z"/><path d="M650 380H760L750 455H660Z"/></g><rect width="900" height="520" fill="url(#roomDots)"/>
-   </svg>
+    <g opacity=".8" stroke="#a5ff00" stroke-width="2" fill="none"><path d="M18 18h45M18 18v45M882 18h-45M882 18v45M18 502h45M18 502v-45M882 502h-45M882 502v-45" opacity=".55"/><path d="M0 0L450 120 900 0M0 390L450 300 900 390" stroke="#83eaff" stroke-opacity=".28" stroke-width="3"/></g>
+    <g id="comicRoomDetails">
+      <g fill="#111827" stroke="#8ba1b6" stroke-width="5"><circle cx="75" cy="108" r="48"/><circle cx="825" cy="108" r="48"/></g>
+      <g stroke="#83eaff" stroke-width="4" fill="none" opacity=".65"><path d="M75 62v92m-46-46h92M825 62v92m-46-46h92"/></g>
+      <path d="M310 30H590L610 72H290Z" fill="#fff0b5" stroke="#d2b985" stroke-width="5"/><path d="M330 42H570L580 60H320Z" fill="#fff9d8"/>
+      <g fill="#ffbd68"><circle cx="350" cy="50" r="3"/><circle cx="380" cy="50" r="3"/><circle cx="410" cy="50" r="3"/><circle cx="440" cy="50" r="3"/><circle cx="470" cy="50" r="3"/><circle cx="500" cy="50" r="3"/><circle cx="530" cy="50" r="3"/><circle cx="560" cy="50" r="3"/></g>
+      <path d="M0 470L450 350 900 470" fill="none" stroke="#83eaff" stroke-opacity=".22" stroke-width="3"/>
+    </g>
+    <g id="roomPlants"></g>
+    <g id="mascotPanel" transform="translate(450 220)">
+      <path d="M-55 60Q-83 13-60-43Q-48-78 0-83Q48-78 60-43Q83 13 55 60L37 85H-37Z" fill="#202b3d" stroke="#f2c77c" stroke-width="5"/>
+      <path d="M-48-35Q-38-94 0-95Q38-94 48-35L25-54Q0-72-25-54Z" fill="#d2b98c" stroke="#111827" stroke-width="5"/>
+      <path d="M-38-18Q-18-32 0-18Q18-32 38-18L33 8Q15 23 0 9Q-15 23-33 8Z" fill="#111827" stroke="#83eaff" stroke-width="4"/>
+      <circle cx="-19" cy="-5" r="8" fill="#a5ff00"/><circle cx="19" cy="-5" r="8" fill="#a5ff00"/>
+      <path d="M-10 28Q0 37 10 28" fill="none" stroke="#ffb35c" stroke-width="4" stroke-linecap="round"/>
+      <path d="M-66 8L-88-8M66 8L88-8" stroke="#83eaff" stroke-width="4" stroke-linecap="round"/>
+      <rect x="-80" y="92" width="160" height="29" rx="8" fill="#101722" stroke="#a5ff00" stroke-width="2"/>
+      <text x="0" y="112" text-anchor="middle" fill="#d7ff77" font-family="DM Mono,monospace" font-size="13" letter-spacing="2">HG GROW CREW</text>
+    </g>   </svg>
    <div class="room-stats"><span class="chip" id="roomPlantCount">0 PLANTS</span><span class="chip" id="roomGrowType">PHOTOPERIOD</span><span class="chip" id="roomDay">DAY —</span></div>
   </div>
   <div class="stack">
@@ -215,8 +237,26 @@ function latestEnv(){return t().envHistory[0]||null}
 function setPage(page){currentPage=page;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+page));document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));renderPage(page);window.scrollTo({top:0,behavior:'smooth'})}
 function switchTent(n){activeTent=n;document.querySelectorAll('[data-tent]').forEach(b=>b.classList.toggle('active',+b.dataset.tent===n));renderAll()}
 function fmt(v,unit=''){return v===''||v===null||v===undefined?'—':esc(v)+(unit?' '+unit:'')}
+function roomPlantSvg(p,i,total){
+ const xs=total===1?[450]:total===2?[315,585]:total===3?[210,450,690]:total===4?[150,350,550,750]:[110,280,450,620,790];
+ const x=xs[i]??450,stage=String(p.stage||'Seedling').toLowerCase();
+ const seed=/seed|clone|germ/.test(stage),veg=/veg|vegetative/.test(stage),flower=/flower|bloom/.test(stage),harvest=/harvest|dry|cure/.test(stage);
+ const height=seed?54:veg?105:harvest?150:flower?178:145,scale=seed?.58:veg?.82:flower?1.12:harvest?.95:1;
+ const leaf=(cx,cy,rot,sz)=>'<path transform="translate('+cx+' '+cy+') rotate('+rot+') scale('+sz+')" d="M0 0 C-9-9-28-12-36-32 C-19-31-11-39-7-52 C1-42 6-37 8-52 C18-37 23-32 38-34 C29-14 13-8 0 0Z" fill="'+(flower?'#426f38':'#4d914b')+'" stroke="#14251b" stroke-width="2"/><path d="M0 0L0 -43" stroke="#b8e98a" stroke-width="1.5"/>';
+ let leaves='';
+ if(seed){leaves=leaf(0,-height+15,-48,.65)+leaf(0,-height+15,48,.65)+leaf(0,-height+28,-5,.5)}
+ else {for(let n=0;n<5;n++){let y=-height+28+n*24;leaves+=leaf(0,y,-52,scale*.78)+leaf(0,y,52,scale*.78)}leaves+=leaf(0,-height-8,-5,scale*.9)}
+ let buds='';
+ if(flower||harvest){for(let n=0;n<7;n++){let yy=-height+25+n*18,xx=(n%2?1:-1)*(12+(n%3)*7);buds+='<g transform="translate('+xx+' '+yy+')"><circle r="'+(flower?8:6)+'" fill="#91ad55" stroke="#243b27" stroke-width="2"/><path d="M-5 0l-5-7m10 7l5-7M0-5V-12" stroke="#d8e7a1" stroke-width="2"/></g>'}}
+ return '<g transform="translate('+x+' 410)"><ellipse cx="0" cy="4" rx="54" ry="10" fill="#000" opacity=".35"/><path d="M-37-2H37L30 37H-30Z" fill="#263449" stroke="#b18a69" stroke-width="4"/><path d="M-37-2Q0 7 37-2" fill="none" stroke="#e3bd8c" stroke-width="4"/><path d="M0 0V'+(-height)+'" stroke="#80b85a" stroke-width="5"/>'+leaves+buds+'<path d="M-55 48H55" stroke="#83eaff" stroke-opacity=".5" stroke-width="2"/><rect x="-49" y="55" width="98" height="20" rx="6" fill="#101722" stroke="#7650a1"/><text x="0" y="69" text-anchor="middle" fill="#f6f2e8" font-size="10" font-family="DM Mono,monospace">'+(i+1)+' · '+(flower?'FLOWER':harvest?'HARVEST':veg?'VEG':'SEEDLING')+'</text></g>';
+}
+function renderRoomPlants(){
+ const g=$('roomPlants');if(!g)return;const plants=t().plants.slice(0,5);
+ if(!plants.length){g.innerHTML=roomPlantSvg({stage:'Vegetative'},0,1);return}
+ g.innerHTML=plants.map((p,i)=>roomPlantSvg(p,i,plants.length)).join('');
+}
 function renderOverview(){const x=t(),e=latestEnv(),r=x.res,net=netPpm(),v=e?vpd(e.temp,e.rh,e.leaf,e.offset):null; $('mTemp').innerHTML=fmt(e?.temp,'°F');$('mRh').innerHTML=fmt(e?.rh,'%');$('mVpd').innerHTML=v===null?'—':v.toFixed(2)+'<span class="unit"> kPa</span>';$('mPpm').innerHTML=net===null?'—':net+'<span class="unit"> ppm</span>';
-$('roomTent').textContent='TENT 0'+(activeTent+1);$('roomStage').textContent=x.stage.toUpperCase();$('roomPlantCount').textContent=x.plants.length+' PLANTS';$('roomGrowType').textContent=x.type.toUpperCase();$('roomDay').textContent='DAY '+(x.startDate?daysBetween(x.startDate):'—');
+renderRoomPlants();$('roomTent').textContent='TENT 0'+(activeTent+1);$('roomStage').textContent=x.stage.toUpperCase();$('roomPlantCount').textContent=x.plants.length+' PLANTS';$('roomGrowType').textContent=x.type.toUpperCase();$('roomDay').textContent='DAY '+(x.startDate?daysBetween(x.startDate):'—');
 $('cycleType').textContent=x.type.toUpperCase();$('cycleStage').textContent=x.stage;$('cycleDay').textContent=x.startDate?daysBetween(x.startDate):'—';$('cycleCount').textContent=x.plants.length;$('cycleMedium').textContent=x.medium||'—';
 $('resVolumeMini').textContent=r.volume? r.volume+' '+r.unit:'—';$('resSourceMini').textContent=r.source||'—';$('resPpmMini').textContent=fmt(r.sourcePpm);$('resPhMini').textContent=fmt(r.ph);
 $('recentFeed').innerHTML=x.feedLogs.length?x.feedLogs.slice(0,3).map(f=>'<div class="status-row"><span>'+esc(f.date)+'</span><strong>'+fmt(f.inputPpm,'PPM')+'</strong></div>').join(''):'<div class="empty">No feed events logged yet.</div>';
