@@ -533,6 +533,26 @@ input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #a5ff0040}
 @media(max-width:560px){.shell{padding:9px 8px 30px}.topbar{padding:8px}.brand img{width:48px;height:48px}.brandname{font-size:23px}.tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.tabs button{padding:8px 4px;font-size:11px}.scene{min-height:360px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.scenehead{left:12px;right:12px;top:12px}.scenehead h1{font-size:27px}}
 @media(prefers-reduced-motion:reduce){.tabs button,.btn{transition:none!important}}
 
+
+/* Greenhouse scene refinement: cinematic aisle, grow-room hardware and comic inking */
+.animated-grow-scene{background:radial-gradient(ellipse at 50% 45%,#26351e 0%,#101710 45%,#030504 100%);border:2px solid #91c82c;box-shadow:inset 0 0 0 4px #050805,inset 0 0 70px #000b,0 0 20px #8cff0028}
+.animated-grow-scene:after{opacity:.09;mask-image:radial-gradient(ellipse at 50% 45%,transparent 0 36%,#000 78%)}
+.animated-grow-scene:before{opacity:.12;background-size:5px 5px}
+.greenhouse-svg{filter:contrast(1.28) saturate(1.3) drop-shadow(0 0 3px #b5ff6230)}
+.greenhouse-svg .grow-lights{filter:drop-shadow(0 0 14px #d7ff86);animation:lamp-breathe 2.8s ease-in-out infinite alternate}
+.greenhouse-svg .ceiling-hardware{filter:drop-shadow(2px 3px 0 #020402)}
+.greenhouse-svg .vent-hardware{filter:drop-shadow(3px 4px 0 #020402)}
+.fan-blades{transform-box:fill-box;transform-origin:center;animation:fan-spin 5s linear infinite}
+@keyframes fan-spin{to{transform:rotate(360deg)}}
+.grow-pots{filter:drop-shadow(3px 4px 0 #020302)}
+.plant-row{filter:drop-shadow(4px 5px 0 #020302);animation-duration:3.8s}
+.plant-leaves{stroke:#d4ff83;stroke-width:2.5;filter:drop-shadow(2px 3px 0 #081006)}
+.scene-brand-mark{display:none}
+.comic-burst{display:none}
+.comic-caption{left:18px;top:16px;background:#070a07eF;border-color:#b6e46b;transform:rotate(-1deg)}
+.scene-overlay-glow{background:linear-gradient(180deg,#02060318,transparent 38%,#02060320 68%,#020603c4)}
+@media(prefers-reduced-motion:reduce){.fan-blades{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -572,6 +592,21 @@ input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #a5ff0040}
 <rect width="1200" height="700" fill="#050906"/><path d="M0 0H1200V470L600 590 0 470Z" fill="url(#wall)"/>
 <g stroke="#354a36" stroke-width="10" fill="none" opacity=".9"><path d="M0 0L600 215 1200 0M0 0V470M1200 0V470M0 130L600 285 1200 130M0 260L600 360 1200 260M0 390L600 430 1200 390"/><path d="M90 0L600 215 1110 0M300 0L600 215 900 0"/></g>
 <path d="M0 470L600 590 1200 470V700H0Z" fill="url(#floor)"/>
+<!-- Reflective mylar wall panels and structural seams -->
+<g fill="none" stroke="#8da47a" stroke-opacity=".22" stroke-width="3"><path d="M20 24L575 218 575 575M1180 24L625 218 625 575M80 70L575 250M1120 70L625 250M20 205L575 350M1180 205L625 350"/><path d="M45 35l85 30-15 95-85-30ZM1070 35l85-30 15 95-85 30Z" fill="#b6c6a0" fill-opacity=".05"/></g>
+<!-- Center aisle with strong vanishing point -->
+<path d="M548 438L652 438 850 700H350Z" fill="#111a12" stroke="#6f8c4e" stroke-width="3"/>
+<path d="M590 440L610 440 650 700H550Z" fill="#35452c" opacity=".35"/>
+<path d="M600 440L600 700" stroke="#b5ed67" stroke-opacity=".25" stroke-width="3" stroke-dasharray="14 18"/>
+<path d="M548 438L350 700M652 438L850 700" stroke="#a5ff00" stroke-opacity=".28" stroke-width="4"/>
+<!-- Ceiling LED fixtures, rails and hanging hardware -->
+<g class="ceiling-hardware" stroke="#a9bd91" stroke-width="4" fill="none"><path d="M105 28L1095 28M180 12V55M1020 12V55M400 110V160M800 110V160"/><path d="M210 76L355 126M990 76L845 126" stroke="#75856a" stroke-width="2"/></g>
+<g class="grow-lights" fill="#f0ffd1" stroke="#a5ff00" stroke-width="3"><path d="M95 62L270 119 270 132 95 77Z"/><path d="M380 151L555 205 555 219 380 166Z"/><path d="M645 205L820 151 820 166 645 219Z"/><path d="M930 119L1105 62 1105 77 930 132Z"/><path d="M485 46H715V62H485Z"/></g>
+<g fill="#caff7a" opacity=".14"><path d="M95 77L270 132 340 470 20 470Z"/><path d="M1105 77L930 132 860 470 1180 470Z"/></g>
+<!-- Ventilation duct, inline fan and wall circulation fans -->
+<g class="vent-hardware"><path d="M940 8H1170Q1190 8 1190 28V53H940Z" fill="#303a31" stroke="#b1c39b" stroke-width="4"/><path d="M950 18H1180M950 43H1180" stroke="#87977c" stroke-width="3"/><circle cx="1080" cy="135" r="49" fill="#101610" stroke="#a7bd88" stroke-width="6"/><circle cx="1080" cy="135" r="8" fill="#c4db9f"/><g class="fan-blades" fill="#7e9270" stroke="#c5d9a9" stroke-width="2"><path d="M1080 128Q1042 78 1067 91Q1090 102 1080 128Z"/><path d="M1087 135Q1137 97 1123 122Q1111 145 1087 135Z"/><path d="M1073 139Q1054 198 1046 170Q1041 147 1073 139Z"/></g><circle cx="1080" cy="135" r="48" fill="none" stroke="#a7bd88" stroke-width="3"/></g>
+<!-- Pots and trays establish a real grow-room floor plane -->
+<g class="grow-pots"><path d="M54 550L130 550 119 614 65 614Z" fill="#171c17" stroke="#b5c99a" stroke-width="4"/><path d="M64 550H121" stroke="#d3e6b2" stroke-width="5"/><path d="M193 564L254 564 245 620 202 620Z" fill="#171c17" stroke="#9eb787" stroke-width="3"/><path d="M201 564H247" stroke="#d3e6b2" stroke-width="4"/><path d="M322 575L374 575 367 626 329 626Z" fill="#171c17" stroke="#91a87a" stroke-width="3"/><path d="M328 575H370" stroke="#d3e6b2" stroke-width="4"/><path d="M1070 550L1146 550 1135 614 1081 614Z" fill="#171c17" stroke="#b5c99a" stroke-width="4"/><path d="M1079 550H1137" stroke="#d3e6b2" stroke-width="5"/><path d="M946 564L1007 564 998 620 955 620Z" fill="#171c17" stroke="#9eb787" stroke-width="3"/><path d="M954 564H1000" stroke="#d3e6b2" stroke-width="4"/><path d="M826 575L878 575 871 626 833 626Z" fill="#171c17" stroke="#91a87a" stroke-width="3"/><path d="M832 575H874" stroke="#d3e6b2" stroke-width="4"/></g>
 <g stroke="#45613e" opacity=".4" stroke-width="2"><path d="M600 590L0 700M600 590L200 700M600 590L400 700M600 590L800 700M600 590L1000 700M600 590L1200 700M0 520H1200M0 590H1200M0 650H1200"/></g>
 <g class="grow-lights" fill="url(#lamp)"><path d="M80 40L270 110 270 130 80 65Z"/><path d="M390 130L550 190 550 210 390 150Z"/><path d="M650 190L810 130 810 150 650 210Z"/><path d="M930 110L1120 40 1120 65 930 130Z"/><path d="M480 25H720V42H480Z"/></g>
 <g fill="url(#glow)"><ellipse cx="170" cy="360" rx="250" ry="270"/><ellipse cx="1030" cy="360" rx="250" ry="270"/></g>
