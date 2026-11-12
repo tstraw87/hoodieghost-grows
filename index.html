@@ -354,6 +354,40 @@ input,select,textarea{background:#050905!important;border:1px solid #354d26!impo
 @media(max-width:850px){#view-overview{grid-template-columns:1fr;grid-template-areas:"metrics" "hero" "snapshot"}#view-overview>.hero{grid-template-columns:minmax(0,1fr) 250px}.scene{min-height:440px}.tabs{overflow-x:auto;flex-wrap:nowrap}.tabs button{white-space:nowrap}}
 @media(max-width:620px){.shell{padding:8px}.topbar{align-items:flex-start}.brand img{width:52px;height:52px}.topright{display:none}.tabs{gap:5px}.tabs button{padding:9px 10px;font-size:10px}#view-overview>.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#view-overview>.hero{display:flex;flex-direction:column}.scene{width:100%;min-height:390px;height:390px}.sidepanel{width:100%}#view-overview>.grid2{grid-template-columns:1fr}.scenehead h1{font-size:25px}}
 
+
+/* Tablet-first layout correction from Safari screenshot */
+.shell{width:min(100%,1500px)!important;max-width:none!important;margin:0 auto!important;padding:12px clamp(10px,2vw,24px) 36px!important;box-sizing:border-box}
+.topbar{width:100%;box-sizing:border-box;min-height:88px}
+.tabs{width:100%;box-sizing:border-box;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:stretch;gap:7px;overflow-x:auto!important;overflow-y:hidden;padding:12px 0 14px;white-space:nowrap}
+.tabs button{flex:0 0 auto!important;width:auto!important;min-width:max-content!important;min-height:42px;text-align:center!important}
+#view-overview.view.active{display:grid!important;width:100%;grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"metrics" "hero" "snapshothead" "snapshotgrid"!important;gap:12px!important;align-items:stretch}
+#view-overview>.metrics{grid-area:metrics!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;flex-direction:initial!important;width:100%;gap:9px!important}
+#view-overview>.hero{grid-area:hero!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%;min-width:0;gap:12px!important}
+#view-overview>.hero>.scene{grid-area:auto!important;width:100%;min-width:0;min-height:0!important;height:clamp(420px,62vw,680px)!important}
+#view-overview>.hero>.sidepanel{grid-area:auto!important;width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:10px}
+#view-overview>.hero>.sidepanel>.notice{grid-column:1/-1}
+#view-overview>.sectionhead{grid-area:snapshothead!important}
+#view-overview>.grid2{grid-area:snapshotgrid!important;width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fixed-greenhouse{inset:0!important;width:100%!important;height:100%!important}
+.fixed-greenhouse img{width:100%;height:100%;object-fit:cover;object-position:center 48%}
+.scenehead{left:16px;right:16px;top:14px}
+.scenefoot{left:0;right:0;bottom:0}
+@media(max-width:900px){
+ #view-overview>.metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #view-overview>.hero>.scene{height:clamp(390px,78vw,560px)!important}
+}
+@media(max-width:620px){
+ .shell{padding:8px 8px 24px!important}
+ .topbar{min-height:64px;gap:8px}
+ .brand img{width:48px;height:48px}
+ .brandname{font-size:23px}
+ .tabs button{font-size:10px;padding:9px 10px}
+ #view-overview>.hero>.scene{height:430px!important;min-height:430px!important}
+ #view-overview>.hero>.sidepanel{grid-template-columns:1fr}
+ #view-overview>.grid2{grid-template-columns:1fr}
+ .scenehead h1{font-size:25px}
+}
+
 </style>
 </head>
 <body>
