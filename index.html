@@ -56,6 +56,15 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 .pro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pro-field{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px}.pro-field input,.pro-field select{min-width:0}.pro-table{overflow:auto}.pro-table table{min-width:760px}.pro-table input{min-width:76px;padding:7px}.pro-card{background:#0d140f;border:1px solid var(--line);border-radius:9px;padding:12px;margin:8px 0}.pro-badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#1c3220;color:var(--green2);font:10px 'DM Mono'}.pro-alert{border-left:3px solid var(--amber);background:#332918;padding:10px;border-radius:5px;margin:8px 0;font-size:12px}.pro-alert.good{border-color:var(--green);background:#16261a}.pro-chart{width:100%;height:180px;display:block;background:#0b100d;border-radius:8px}
 @media(max-width:700px){.pro-grid{grid-template-columns:1fr}.tent-art{width:94%;height:250px}}
 
+
+/* HOODIEGHOST BRAND ARTWORK INTEGRATION */
+.scene{background-image:linear-gradient(90deg,#080d0bc9 0%,#080d0b72 48%,#080d0b9c 100%),url('02-grow-room-tent-background.webp');background-size:100% 100%,200% 100%;background-position:center,left center;background-repeat:no-repeat}
+.scene-mascot{position:absolute;z-index:2;left:18px;bottom:48px;width:clamp(132px,21%,218px);max-height:58%;object-fit:contain;border-radius:14px;filter:drop-shadow(0 12px 22px #000c);opacity:.97;pointer-events:none}
+.scene .tent-art{z-index:1;right:3%;left:auto;transform:none;width:min(66%,620px);opacity:.92}
+.scene .scenehead{z-index:4}
+.scene .scenefoot{z-index:4}
+@media(max-width:700px){.scene-mascot{left:8px;bottom:44px;width:30%;max-height:42%}.scene .tent-art{right:-2%;width:76%;height:230px;opacity:.82}.scene{background-size:100% 100%,200% 100%}}
+
 </style>
 </head>
 <body>
@@ -70,7 +79,7 @@ body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),r
 <main>
 <section class="view active" id="view-overview">
  <div class="hero">
-  <div class="scene">
+  <div class="scene"><img class="scene-mascot" src="01-mascot-brand.webp" alt="" aria-hidden="true">
    <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● SIMULATED ROOM</div></div>
    <div class="tent-art" aria-label="Animated grow tent illustration"><div class="tent-roof"></div><div class="tent-back"></div><div class="tent-side left"></div><div class="tent-side right"></div><div class="led"></div><div class="fan left"></div><div class="fan right"></div><div class="plants" id="scenePlants"><div class="plant" style="--h:90%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:100%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:78%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div></div><div class="tent-floor"></div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
