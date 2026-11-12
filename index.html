@@ -282,6 +282,32 @@ table th{color:#c4ff63}
 @media(max-width:900px){.shell{margin-left:174px;padding:8px}.tabs{width:164px;padding:10px 8px}.tabs:before{font-size:21px}.tabs button{font-size:11px;padding:11px 8px}.topbar{height:auto}.brandname{font-size:23px}#view-overview{grid-template-columns:minmax(0,1fr) 230px}.scene{min-height:480px!important;height:55vh!important}}
 @media(max-width:650px){.shell{margin:0;padding:8px}.tabs{position:sticky;top:0;width:auto;height:auto;bottom:auto;flex-direction:row;padding:7px;overflow-x:auto;border:1px solid #39551f;border-radius:8px}.tabs:before{display:none}.tabs button{min-width:max-content;width:auto;padding:10px}.topbar{margin-bottom:8px}.topright{display:none}#view-overview{display:flex;flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%}#view-overview .scene{width:100%;height:470px!important;min-height:470px!important}.sidepanel,#view-overview>.grid2{width:100%}#view-overview>.grid2{grid-template-columns:1fr}.scenehead h1{font-size:25px}.tent-art{height:65%;width:98%}}
 
+
+/* Correct the active overview's display mode and repair the sidebar */
+.view.active#view-overview{display:grid!important}
+#view-overview{grid-template-columns:minmax(0,1fr) 275px;grid-template-areas:"metrics metrics" "scene side" "bottom side" "lineup lineup";gap:12px;align-items:start}
+#view-overview>.metrics{grid-area:metrics;margin:0}
+#view-overview>.hero{display:contents}
+#view-overview>.hero>.scene{grid-area:scene;min-width:0}
+#view-overview>.hero>.sidepanel{grid-area:side;min-width:0}
+#view-overview>.sectionhead{grid-area:lineup}
+#view-overview>.grid2{grid-area:bottom;min-width:0}
+.tabs:before{content:none!important;display:none!important}
+.tabs{padding-top:18px}
+#view-overview>.hero>.scene{height:clamp(500px,65vh,720px);min-height:500px}
+#tent3dWrap{inset:0!important}
+#greenhouse3d{position:absolute;inset:0;width:100%;height:100%}
+.scenehead{z-index:5}
+.scenefoot{z-index:5}
+@media(max-width:900px){
+ #view-overview{grid-template-columns:minmax(0,1fr) 230px;grid-template-areas:"metrics metrics" "scene side" "bottom side" "lineup lineup"}
+}
+@media(max-width:650px){
+ .view.active#view-overview{display:flex!important;flex-direction:column}
+ #view-overview>.metrics,#view-overview>.hero>.scene,#view-overview>.hero>.sidepanel,#view-overview>.grid2{width:100%}
+ #view-overview>.hero>.scene{height:470px;min-height:470px}
+}
+
 </style>
 </head>
 <body>
@@ -443,14 +469,14 @@ function initGrowRoom3D(){
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
   renderer.outputColorSpace=THREE.SRGBColorSpace;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x101a12,.035);
   const camera=new THREE.PerspectiveCamera(42,1,.1,100);
   const orbit=new THREE.Group();scene.add(orbit);orbit.add(camera);camera.position.set(0,2.25,13.4);camera.lookAt(0,2.25,0);
-  const hemi=new THREE.HemisphereLight(0xd9ffe0,0x101810,2.25);scene.add(hemi);
-  const keyLight=new THREE.DirectionalLight(0xe8ffdf,3.1);keyLight.position.set(-5,9,7);keyLight.castShadow=true;keyLight.shadow.mapSize.set(1024,1024);scene.add(keyLight);
-  const rimLight=new THREE.DirectionalLight(0x75ff9b,1.1);rimLight.position.set(6,4,-5);scene.add(rimLight);
+  const hemi=new THREE.HemisphereLight(0xd9ffe0,0x101810,1.15);scene.add(hemi);
+  const keyLight=new THREE.DirectionalLight(0xe8ffdf,1.75);keyLight.position.set(-5,9,7);keyLight.castShadow=true;keyLight.shadow.mapSize.set(1024,1024);scene.add(keyLight);
+  const rimLight=new THREE.DirectionalLight(0x75ff9b,.65);rimLight.position.set(6,4,-5);scene.add(rimLight);
   const mat=(color,metalness=0,roughness=.65,extra={})=>new THREE.MeshStandardMaterial({color,metalness,roughness,...extra});
   // Procedural materials keep the greenhouse self-contained.
   const makeSurface=(base,accent)=>{
@@ -461,7 +487,7 @@ function initGrowRoom3D(){
    g.strokeStyle=accent;g.globalAlpha=.2;g.lineWidth=2;for(let y=28;y<512;y+=64){g.beginPath();g.moveTo(0,y);g.lineTo(512,y);g.stroke()}g.globalAlpha=1;
    const tex=new THREE.CanvasTexture(c);tex.wrapS=tex.wrapT=THREE.RepeatWrapping;tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=renderer.capabilities.getMaxAnisotropy();return tex;
   };
-  const foilMap=makeSurface('#69766c','#dce9dc'),floorMap=makeSurface('#303a32','#87988a');
+  const foilMap=makeSurface('#28352b','#879b82'),floorMap=makeSurface('#171f18','#657763');
   const steel=mat(0x89978d,.82,.25),black=mat(0x111713,.45,.48),fabric=new THREE.MeshStandardMaterial({color:0xffffff,map:foilMap,metalness:.48,roughness:.38}),floorMat=new THREE.MeshStandardMaterial({color:0xffffff,map:floorMap,metalness:.22,roughness:.72}),trim=mat(0xb1beb2,.78,.24);
   const room=new THREE.Group();orbit.add(room);
   const floor=new THREE.Mesh(new THREE.BoxGeometry(6.9,.18,5.25),floorMat);floor.position.y=-.12;floor.receiveShadow=true;room.add(floor);
