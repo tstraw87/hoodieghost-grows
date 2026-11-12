@@ -270,6 +270,37 @@ input:focus,select:focus,textarea:focus{border-color:#9bdd69!important;box-shado
  .sectionhead h2{font-size:19px!important}
 }
 
+
+/* INTERACTIVE GROW BAY + LIVE INSTRUMENT GAUGES */
+.scene{background:linear-gradient(145deg,#18251c,#0b110d)!important;min-height:450px!important}
+.scene:before{background:repeating-linear-gradient(90deg,transparent 0 79px,#ffffff06 80px),linear-gradient(0deg,#05080699,transparent 55%)!important;z-index:0!important}
+.scene:after{display:none!important}
+.scene-watermark{width:110px!important;right:22px!important;top:auto!important;bottom:24px!important;transform:none!important;border-radius:12px!important;opacity:.34!important;filter:grayscale(.25) brightness(1.12)!important;mix-blend-mode:screen!important;z-index:2!important}
+.scene-mascot{display:none!important}
+.scene .tent-art{display:block!important;z-index:2!important;left:50%!important;bottom:22px!important;width:min(82%,680px)!important;height:290px!important;opacity:1!important;filter:drop-shadow(0 16px 18px #0009)!important}
+.scene .tent-back{background:linear-gradient(145deg,#28392d,#111b14 75%)!important;border-color:#718476!important;box-shadow:inset 0 0 48px #000c, inset 0 0 24px #9bda5a18!important}
+.scene .tent-side{border-color:#647768!important}
+.scene .led{height:16px!important;box-shadow:0 0 12px 4px #d9ffa7,0 0 38px 13px #b6ff6a66!important}
+.scene .fan{box-shadow:0 0 0 4px #17221a,0 0 16px #0008!important}
+.scene .plant{filter:drop-shadow(0 0 7px #83c65a33)!important}
+.scenehead{z-index:4!important}
+.scenefoot{z-index:4!important}
+.gauge-metrics{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important}
+.gauge-card{display:grid!important;place-items:center!important;min-height:164px!important;padding:14px!important;background:linear-gradient(145deg,#141e17,#0c120e)!important;border-color:#2b3b30!important}
+.gauge{--gauge-fill:0%;width:124px;height:124px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#91d85c var(--gauge-fill),#29372e var(--gauge-fill));position:relative;box-shadow:0 0 20px #0005}
+.gauge:before{content:"";position:absolute;inset:8px;border-radius:50%;background:linear-gradient(145deg,#17231a,#0b110d);border:1px solid #344738}
+.gauge-core{position:relative;z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px}
+.gauge-core label{font:700 9px 'DM Mono',monospace!important;letter-spacing:1.2px;color:#9baa9d}
+.gauge-core b{font:700 24px 'Barlow Condensed',sans-serif!important;color:#eef4ec}
+.gauge-core small{font:9px 'DM Mono',monospace;color:#7f8e82}
+.gauge:not(.is-live){background:conic-gradient(#344238 0 100%)}
+.feed-card{display:flex;flex-direction:column;justify-content:center;min-height:164px!important;padding:20px!important}
+.feed-card>b{font:700 30px 'Barlow Condensed';margin:12px 0;color:#edf2ed}
+.feed-track{height:7px;background:#29372e;border-radius:8px;overflow:hidden;margin-top:18px}
+.feed-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,#6cae48,#b6e77f);border-radius:8px;transition:width .5s}
+@media(max-width:900px){.gauge-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}.scene .tent-art{width:90%!important}}
+@media(max-width:600px){.scene{min-height:390px!important}.scene .tent-art{height:235px!important;width:96%!important;bottom:25px!important}.scene-watermark{width:68px!important;right:12px!important;bottom:12px!important}.gauge-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.gauge-card,.feed-card{min-height:136px!important;padding:9px!important}.gauge{width:104px;height:104px}.gauge:before{inset:7px}.gauge-core b{font-size:21px!important}.feed-card>b{font-size:24px}}
+
 </style>
 </head>
 <body>
@@ -295,7 +326,7 @@ input:focus,select:focus,textarea:focus{border-color:#9bdd69!important;box-shado
    <div class="notice" id="overviewAlert">Add your plant start date and environment readings to activate grow tracking.</div>
   </aside>
  </div>
- <div class="metrics"><div class="metric"><label>Temperature</label><b id="metricTemp">— °F</b><small>Air temperature</small></div><div class="metric"><label>Relative humidity</label><b id="metricRh">— %</b><small>Room humidity</small></div><div class="metric"><label>Vapor pressure deficit</label><b id="metricVpd">— kPa</b><small>Leaf offset included</small></div><div class="metric"><label>Net feed strength</label><b id="metricPpm">— ppm</b><small>Feed minus source water</small></div></div>
+ <div class="metrics gauge-metrics"><div class="metric gauge-card"><div class="gauge" id="tempGauge"><div class="gauge-core"><label>TEMP</label><b id="metricTemp">— °F</b><small>Air temperature</small></div></div></div><div class="metric gauge-card"><div class="gauge" id="rhGauge"><div class="gauge-core"><label>HUMIDITY</label><b id="metricRh">— %</b><small>Relative humidity</small></div></div></div><div class="metric gauge-card"><div class="gauge" id="vpdGauge"><div class="gauge-core"><label>LEAF VPD</label><b id="metricVpd">— kPa</b><small>Leaf offset included</small></div></div></div><div class="metric feed-card"><label>NET FEED STRENGTH</label><b id="metricPpm">— ppm</b><small>Feed minus source water</small><div class="feed-track"><span id="feedGauge"></span></div></div></div>
  <div class="sectionhead"><div><h2>ROOM SNAPSHOT</h2><p>Each tent keeps its own plant, environment, and feed records.</p></div><button class="btn primary" onclick="showView('plants')">Manage this tent ↗</button></div>
  <div class="grid2"><div class="panel"><div class="paneltitle"><strong>PLANT LINEUP</strong><span class="eyebrow" id="lineupLabel">TENT 01</span></div><div class="plantlist" id="plantLineup"><span class="muted">No plants added yet.</span></div></div><div class="panel"><div class="paneltitle"><strong>LATEST ACTIVITY</strong><span class="eyebrow">LOG</span></div><div id="latestActivity" class="muted">Your grow journal is ready when you are.</div></div></div>
 </section>
@@ -373,7 +404,8 @@ function age(){if(!t().startDate)return null;let start=new Date(t().startDate+'T
 function vpdCalc(temp,rh,leaf,offset){if(temp===''||rh===''||!isFinite(+temp)||!isFinite(+rh))return null;let air=+temp,rel=+rh,leafT=leaf===''?air+(+offset||0):+leaf;let svp=x=>0.6108*Math.exp((17.27*x)/(x+237.3));let c=x=>(x-32)*5/9;let result=svp(c(leafT))-(rel/100)*svp(c(air));return Math.max(0,result)}
 function netPpm(){let r=t().res;if(r.feedPpm===''||r.sourcePpm==='')return null;return +r.feedPpm-(+r.sourcePpm)}
 function setText(id,value){$(id).textContent=value}
-function render(){let x=t(),a=age(),v=vpdCalc(x.env.temp,x.env.rh,x.env.leaf,x.env.offset??data.offset),net=netPpm();setText('sceneTentName','Tent 0'+(activeTent+1));setText('lineupLabel','TENT 0'+(activeTent+1));setText('plantTentTag','TENT 0'+(activeTent+1));setText('overviewType',x.type.toUpperCase());setText('overviewStage',x.startDate?x.stage:'Not started');setText('overviewAge',a?'Day '+a+' · '+x.medium:'Set a start date to begin the timeline');setText('overviewCount',x.plants.length);setText('overviewDay',a||'—');setText('scenePlantCount',String(x.plants.length).padStart(2,'0')+' PLANTS');setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
+function setGauge(id,value,max){let el=$(id);if(!el)return;let pct=value===''||value===null||!Number.isFinite(+value)?0:Math.max(0,Math.min(100,(+value/max)*100));el.style.setProperty('--gauge-fill',pct+'%');el.classList.toggle('is-live',value!==''&&value!==null&&Number.isFinite(+value))}
+ function render(){let x=t(),a=age(),v=vpdCalc(x.env.temp,x.env.rh,x.env.leaf,x.env.offset??data.offset),net=netPpm();setText('sceneTentName','Tent 0'+(activeTent+1));setText('lineupLabel','TENT 0'+(activeTent+1));setText('plantTentTag','TENT 0'+(activeTent+1));setText('overviewType',x.type.toUpperCase());setText('overviewStage',x.startDate?x.stage:'Not started');setText('overviewAge',a?'Day '+a+' · '+x.medium:'Set a start date to begin the timeline');setText('overviewCount',x.plants.length);setText('overviewDay',a||'—');setText('scenePlantCount',String(x.plants.length).padStart(2,'0')+' PLANTS');setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setGauge('tempGauge',x.env.temp,100);setGauge('rhGauge',x.env.rh,100);setGauge('vpdGauge',v,3);$('feedGauge').style.width=(net===null?0:Math.max(0,Math.min(100,net/1500*100)))+'%';setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
 $('overviewAlert').textContent=!x.startDate?'Add a plant start date and environment readings to activate grow tracking.':v===null?'Grow timeline active. Add environment readings to calculate VPD.':(v<0.4||v>1.8?'Review VPD reading against your stage and equipment.':'Readings saved. Keep monitoring consistency.');
 $('overviewAlert').className='notice'+(v!==null&&(v<.4||v>1.8)?' warn':'');
 $('plantLineup').innerHTML=x.plants.length?x.plants.map(p=>'<span class="plantchip">'+safe(p.name)+(p.strain?' · '+safe(p.strain):'')+'</span>').join(''):'<span class="muted">No plants added yet.</span>';
