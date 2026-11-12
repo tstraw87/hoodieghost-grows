@@ -552,7 +552,10 @@ const visualStage=Object.keys(stageCounts).sort((a,b)=>stageCounts[b]-stageCount
 const stageKey=visualStage;
 const stagePhoto=stagePhotoMap[stageKey]||'open-grow-tent.jpg';
 const greenhouseImg=$('tent3dWrap').querySelector('img');
-if(greenhouseImg && greenhouseImg.getAttribute('src')!==stagePhoto){greenhouseImg.src=stagePhoto;greenhouseImg.alt='Greenhouse photo representing '+visualStage+' stage';}
+if(greenhouseImg){
+ if(!greenhouseImg.dataset.stageFallbackBound){greenhouseImg.dataset.stageFallbackBound='1';greenhouseImg.addEventListener('error',()=>{greenhouseImg.dataset.failedPhoto=greenhouseImg.src;greenhouseImg.src='open-grow-tent.jpg';greenhouseImg.alt='Reference greenhouse view';});}
+ if(greenhouseImg.getAttribute('src')!==stagePhoto && greenhouseImg.dataset.failedPhoto!==stagePhoto){greenhouseImg.src=stagePhoto;greenhouseImg.alt='Greenhouse photo representing '+visualStage+' stage';}
+}
 const creditLinks={
  'seed / germination':['Public-domain seedling photo','https://commons.wikimedia.org/wiki/File:Cannabis_seedling_in_humidor.jpg'],
  'seedling':['Public-domain seedling photo','https://commons.wikimedia.org/wiki/File:Cannabis_seedling_in_humidor.jpg'],
