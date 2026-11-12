@@ -71,6 +71,16 @@ input:focus,select:focus,textarea:focus{outline:2px solid #a5ff0066!important;bo
 @keyframes ghost-sway{0%,100%{translate:0 0}50%{translate:0 -2px}}
 @keyframes canopy-sway{0%{rotate:-1deg}100%{rotate:1.4deg}}
 @media(prefers-reduced-motion:reduce){.plant-figure,.plant-canopy{animation:none}}
+
+/* Recompose the room: full mascot at the side, real plant focus in the foreground */
+.room-card{min-height:500px;background:radial-gradient(ellipse at 56% 45%,#62704b 0,#304338 34%,#121d2b 76%,#080e17 100%)}
+.room-art{opacity:1;filter:contrast(1.12) saturate(1.2)}
+#mascotPanel{filter:drop-shadow(5px 8px 7px #000b)}
+#mascotPanel path{vector-effect:non-scaling-stroke}
+.plant-figure{filter:drop-shadow(0 7px 4px #0009)}
+.plant-canopy{transform-origin:50% 100%;animation:canopy-sway 5s ease-in-out infinite alternate}
+.room-card:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(90deg,#080d16aa 0%,transparent 30%,transparent 100%),radial-gradient(ellipse at 70% 0%,#fff3c433,transparent 42%);mix-blend-mode:screen}
+@media(max-width:600px){.room-card{min-height:440px}.room-art{object-fit:cover}.room-stats{left:10px;right:10px;bottom:10px}}
 </style>
 </head>
 <body>
@@ -118,16 +128,27 @@ input:focus,select:focus,textarea:focus{outline:2px solid #a5ff0066!important;bo
       <path d="M0 470L450 350 900 470" fill="none" stroke="#83eaff" stroke-opacity=".22" stroke-width="3"/>
     </g>
     <g id="roomPlants"></g>
-    <g id="mascotPanel" transform="translate(450 220)">
-      <path d="M-55 60Q-83 13-60-43Q-48-78 0-83Q48-78 60-43Q83 13 55 60L37 85H-37Z" fill="#202b3d" stroke="#f2c77c" stroke-width="5"/>
-      <path d="M-48-35Q-38-94 0-95Q38-94 48-35L25-54Q0-72-25-54Z" fill="#d2b98c" stroke="#111827" stroke-width="5"/>
-      <path d="M-38-18Q-18-32 0-18Q18-32 38-18L33 8Q15 23 0 9Q-15 23-33 8Z" fill="#111827" stroke="#83eaff" stroke-width="4"/>
-      <circle cx="-19" cy="-5" r="8" fill="#a5ff00"/><circle cx="19" cy="-5" r="8" fill="#a5ff00"/>
-      <path d="M-10 28Q0 37 10 28" fill="none" stroke="#ffb35c" stroke-width="4" stroke-linecap="round"/>
-      <path d="M-66 8L-88-8M66 8L88-8" stroke="#83eaff" stroke-width="4" stroke-linecap="round"/>
-      <rect x="-80" y="92" width="160" height="29" rx="8" fill="#101722" stroke="#a5ff00" stroke-width="2"/>
-      <text x="0" y="112" text-anchor="middle" fill="#d7ff77" font-family="DM Mono,monospace" font-size="13" letter-spacing="2">HG GROW CREW</text>
-    </g>   </svg>
+    <g id="mascotPanel" transform="translate(145 305)">
+      <!-- Full upper-body HoodieGhost character, integrated into the grow room -->
+      <path d="M-94 184Q-112 102-81 45Q-61 10-28 0H30Q72 17 89 65Q108 123 91 184Z" fill="#182333" stroke="#080d16" stroke-width="12"/>
+      <path d="M-90 178Q-101 95-65 40Q-48 14-22 10L-37 74L-25 184Z" fill="#344256" stroke="#d0bd9a" stroke-width="4"/>
+      <path d="M90 178Q101 95 65 40Q48 14 22 10L37 74L25 184Z" fill="#344256" stroke="#d0bd9a" stroke-width="4"/>
+      <path d="M-66 45Q-79-25-36-68Q-4-101 38-66Q78-30 65 42L48 95H-49Z" fill="#d8c7a4" stroke="#111827" stroke-width="8"/>
+      <path d="M-64 12Q-92-62-29-99Q17-122 57-73Q76-49 63 10L42-23Q17-42-9-23L-39 18Z" fill="#c7b58f" stroke="#111827" stroke-width="8"/>
+      <path d="M-48-56Q-15-82 12-58Q32-44 48-21L34-8Q8-34-13-23L-42 1Z" fill="#f0dfb9" stroke="#111827" stroke-width="4"/>
+      <path d="M-44-8Q-24-22-5-8M7-8Q27-22 45-8" fill="none" stroke="#111827" stroke-width="5"/>
+      <g fill="#111827" stroke="#83eaff" stroke-width="4"><rect x="-48" y="-7" width="42" height="30" rx="9"/><rect x="7" y="-7" width="42" height="30" rx="9"/><path d="M-6 5H7"/></g>
+      <circle cx="-27" cy="8" r="7" fill="#a5ff00"/><circle cx="28" cy="8" r="7" fill="#a5ff00"/>
+      <path d="M-9 39Q4 51 17 38" fill="none" stroke="#7b3940" stroke-width="6" stroke-linecap="round"/>
+      <path d="M-68 72Q-48 45-23 55L0 85L23 55Q48 45 68 72L91 184H-91Z" fill="#303d50" stroke="#111827" stroke-width="7"/>
+      <path d="M-49 75L-5 112L-24 184M49 75L5 112L24 184" fill="none" stroke="#aeb5b9" stroke-width="5"/>
+      <path d="M-3 110V166M3 110V166" stroke="#111827" stroke-width="4"/>
+      <path d="M-88 91Q-120 66-128 30Q-131 12-116 7Q-102 4-95 23L-73 57" fill="none" stroke="#d6c4a5" stroke-width="21" stroke-linecap="round"/>
+      <path d="M-115 10Q-124-9-115-21Q-106-29-98-13L-90 1Q-82-17-73-9Q-65 0-81 18L-94 34" fill="#d6c4a5" stroke="#111827" stroke-width="5"/>
+      <g transform="translate(-126 -42)" stroke="#17301d" stroke-width="3" fill="#66b84a"><path d="M0 24Q-18 5-12-20Q-1-16 0-37Q11-18 12-20Q23 4 0 24Z"/><path d="M0 24L0-35M0 8L-12-15M0 8L12-15" fill="none" stroke="#d6f0a4" stroke-width="2"/></g>
+      <path d="M-35 70Q0 92 35 70" fill="none" stroke="#8292a4" stroke-width="3" opacity=".7"/>
+      <path d="M-80 187H80" stroke="#a5ff00" stroke-width="3" opacity=".75"/>
+    </g> </svg>
    <div class="room-stats"><span class="chip" id="roomPlantCount">0 PLANTS</span><span class="chip" id="roomGrowType">PHOTOPERIOD</span><span class="chip" id="roomDay">DAY —</span></div>
   </div>
   <div class="stack">
@@ -250,10 +271,10 @@ function setPage(page){currentPage=page;document.querySelectorAll('.page').forEa
 function switchTent(n){activeTent=n;document.querySelectorAll('[data-tent]').forEach(b=>b.classList.toggle('active',+b.dataset.tent===n));renderAll()}
 function fmt(v,unit=''){return v===''||v===null||v===undefined?'—':esc(v)+(unit?' '+unit:'')}
 function roomPlantSvg(p,i,total){
- const xs=total===1?[450]:total===2?[315,585]:total===3?[210,450,690]:total===4?[150,350,550,750]:[110,280,450,620,790];
+ const xs=total===1?[635]:total===2?[500,740]:total===3?[390,590,790]:total===4?[350,510,670,820]:[330,455,580,705,830];
  const x=xs[i]??450,stage=String(p.stage||'Seedling').toLowerCase();
  const seed=/seed|clone|germ/.test(stage),veg=/veg|vegetative/.test(stage),flower=/flower|bloom/.test(stage),harvest=/harvest|dry|cure/.test(stage);
- const height=seed?48:veg?108:harvest?150:flower?176:142,scale=seed?.55:veg?.86:flower?1.12:harvest?.96:1;
+ const height=seed?66:veg?128:harvest?174:flower?198:162,scale=seed?.55:veg?.86:flower?1.12:harvest?.96:1;
  const green=harvest?'#73834a':flower?'#426f38':'#4d914b';
  const leaflet=(x1,y1,x2,y2,w)=>'<path d="M0 0 Q'+(x1*.5-w)+' '+(y1*.45)+' '+x1+' '+y1+' Q'+(x1*.7-w*.2)+' '+(y1+9)+' '+(x1*.45)+' '+(y1+15)+' Q'+(x1*.9)+' '+(y1+13)+' '+(x1+w*.5)+' '+(y1+4)+' Q'+(x1+w)+' '+(y1+17)+' '+(x1+w*.65)+' '+(y1+24)+' Q'+(x1+w*1.4)+' '+(y1+19)+' '+(x1+w*1.3)+' '+(y1+5)+' Q'+(x1+w*1.1)+' '+(y1-10)+' '+x2+' '+y2+' Q'+(x2*.5)+' '+(y2-9)+' 0 0Z" fill="'+green+'" stroke="#14251b" stroke-width="2" stroke-linejoin="round"/>';
  const leaf=(cx,cy,rot,sz)=>'<g class="cannabis-leaf" transform="translate('+cx+' '+cy+') rotate('+rot+') scale('+sz+')">'+leaflet(-5,-10,-3,-53,12)+leaflet(-12,-5,-31,-43,10)+leaflet(-16,0,-49,-22,9)+leaflet(5,-10,3,-53,12)+leaflet(12,-5,31,-43,10)+leaflet(16,0,49,-22,9)+'<path d="M0 0L0 -54M0-5L-31-43M0-5L31-43M0-5L-49-22M0-5L49-22" fill="none" stroke="#c4e89a" stroke-width="1.7" opacity=".8"/></g>';
@@ -263,7 +284,7 @@ function roomPlantSvg(p,i,total){
  let buds='';
  if(flower||harvest){for(let n=0;n<9;n++){let yy=-height+22+n*15,xx=(n%2?1:-1)*(10+(n%3)*8);buds+='<g transform="translate('+xx+' '+yy+')"><ellipse rx="'+(flower?10:8)+'" ry="'+(flower?14:10)+'" fill="'+(harvest?'#a2a56a':'#779b55')+'" stroke="#263c2b" stroke-width="2"/><path d="M-6 2l-5-9m11 9l5-9M0-3V-14M-3 5L-8 11M3 5L8 11" stroke="#d9e8ae" stroke-width="2" stroke-linecap="round"/><circle cy="-5" r="3" fill="#d9e8ae"/></g>'}}
  const id='plant-'+i;
- return '<g class="plant-figure" style="--sway:'+((i%2)?'3deg':'-3deg')+';animation-delay:'+((i%4)*-.7)+'s" transform="translate('+x+' 410)"><ellipse cx="0" cy="4" rx="58" ry="11" fill="#000" opacity=".42"/><path d="M-40-2H40L32 38H-32Z" fill="#263449" stroke="#b18a69" stroke-width="4"/><path d="M-40-2Q0 8 40-2" fill="none" stroke="#e3bd8c" stroke-width="4"/><path d="M0 0V'+(-height)+'" stroke="#80b85a" stroke-width="6"/><g class="plant-canopy">'+leaves+buds+'</g><path d="M-57 46H57" stroke="#83eaff" stroke-opacity=".4" stroke-width="2"/><rect x="-51" y="53" width="102" height="21" rx="6" fill="#101722" stroke="#7650a1"/><text x="0" y="68" text-anchor="middle" fill="#f6f2e8" font-size="10" font-family="DM Mono,monospace">'+(i+1)+' · '+(flower?'FLOWER':harvest?'HARVEST':veg?'VEG':'SEEDLING')+'</text></g>';
+ return '<g class="plant-figure" style="--sway:'+((i%2)?'3deg':'-3deg')+';animation-delay:'+((i%4)*-.7)+'s" transform="translate('+x+' 425)"><ellipse cx="0" cy="4" rx="58" ry="11" fill="#000" opacity=".42"/><path d="M-40-2H40L32 38H-32Z" fill="#263449" stroke="#b18a69" stroke-width="4"/><path d="M-40-2Q0 8 40-2" fill="none" stroke="#e3bd8c" stroke-width="4"/><path d="M0 0V'+(-height)+'" stroke="#80b85a" stroke-width="6"/><g class="plant-canopy">'+leaves+buds+'</g><path d="M-57 46H57" stroke="#83eaff" stroke-opacity=".4" stroke-width="2"/><rect x="-51" y="53" width="102" height="21" rx="6" fill="#101722" stroke="#7650a1"/><text x="0" y="68" text-anchor="middle" fill="#f6f2e8" font-size="10" font-family="DM Mono,monospace">'+(i+1)+' · '+(flower?'FLOWER':harvest?'HARVEST':veg?'VEG':'SEEDLING')+'</text></g>';
 }
 function renderRoomPlants(){
  const g=$('roomPlants');if(!g)return;const plants=t().plants.slice(0,5);
