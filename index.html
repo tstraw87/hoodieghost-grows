@@ -553,6 +553,29 @@ input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #a5ff0040}
 .scene-overlay-glow{background:linear-gradient(180deg,#02060318,transparent 38%,#02060320 68%,#020603c4)}
 @media(prefers-reduced-motion:reduce){.fan-blades{animation:none!important}}
 
+/* Complete greenhouse art reset: graphic-novel grow-room stage */
+.animated-grow-scene{background:#050707;border:2px solid #a5ff00;border-radius:3px;box-shadow:0 0 0 5px #050605,0 0 26px #a5ff0030;overflow:hidden}
+.animated-grow-scene:before{display:none}
+.animated-grow-scene:after{opacity:.12;background:repeating-conic-gradient(from 0deg at 50% 48%,#baff43 0deg .6deg,transparent .6deg 13deg);mask-image:radial-gradient(ellipse at 50% 50%,transparent 0 52%,#000 100%);animation:comic-rays 34s linear infinite}
+.greenhouse-svg{width:100%;height:100%;display:block;filter:contrast(1.16) saturate(1.2)}
+.greenhouse-svg .plant-row{filter:drop-shadow(5px 7px 0 #020302);animation:plant-rise 4.5s ease-in-out infinite alternate}
+.greenhouse-svg .row-center{animation-delay:-1.4s}.greenhouse-svg .row-right{animation-delay:-2.7s}
+.greenhouse-svg .plant-body{transform-box:fill-box;transform-origin:center bottom;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.greenhouse-svg .plant-leaves{stroke:#101b0b;stroke-width:3.5;filter:drop-shadow(2px 3px 0 #061006);animation:leaf-rustle 3.1s ease-in-out infinite alternate}
+.greenhouse-svg .leaf-veins{opacity:.85}
+.greenhouse-svg .buds{opacity:0;transition:opacity .7s ease;filter:drop-shadow(0 0 7px #d7ff85)}
+#tent3dWrap[data-stage*="flower"] .greenhouse-svg .buds,#tent3dWrap[data-stage="harvest"] .greenhouse-svg .buds{opacity:1}
+#tent3dWrap[data-stage="harvest"] .greenhouse-svg .plant-leaves{fill:#82964a}
+.greenhouse-svg .fan-blades{transform-box:fill-box;transform-origin:center;animation:fan-spin 5s linear infinite}
+.greenhouse-svg .grow-lights{filter:drop-shadow(0 0 12px #dcff9b);animation:lamp-breathe 2.4s ease-in-out infinite alternate}
+.scene-brand-mark,.comic-burst{display:none!important}
+.comic-caption{border:2px solid #d5ff88;background:#080c09;box-shadow:3px 3px 0 #020302}
+.scene-overlay-glow{background:linear-gradient(180deg,#03060312,transparent 48%,#02060365)}
+@keyframes plant-rise{from{transform:translateY(2px)}to{transform:translateY(-4px)}}
+@keyframes leaf-rustle{from{transform:rotate(-1deg)}to{transform:rotate(1deg)}}
+@keyframes fan-spin{to{transform:rotate(360deg)}}
+@keyframes lamp-breathe{from{opacity:.78}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.animated-grow-scene:after,.greenhouse-svg .plant-row,.greenhouse-svg .plant-leaves,.greenhouse-svg .fan-blades,.greenhouse-svg .grow-lights{animation:none!important}}
 </style>
 </head>
 <body>
@@ -570,51 +593,40 @@ input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #a5ff0040}
   <div class="scene">
    <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● FIXED GREENHOUSE VIEW</div><div class="scene-stage-pill" id="sceneStagePill">STAGE · NOT SET</div></div>
    <div class="tent-art fixed-greenhouse" id="tent3dWrap" aria-label="HOODIEGHOST GROWS greenhouse"><div class="animated-grow-scene" aria-hidden="true">
-<svg class="greenhouse-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+<svg class="greenhouse-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Graphic novel indoor grow room with illustrated cannabis plants">
 <defs>
- <linearGradient id="wall" x2="0" y2="1"><stop stop-color="#17231a"/><stop offset="1" stop-color="#050a07"/></linearGradient>
- <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#18231a"/><stop offset="1" stop-color="#020403"/></linearGradient>
- <linearGradient id="lamp" x2="0" y2="1"><stop stop-color="#eaffb8"/><stop offset=".35" stop-color="#b9ff66" stop-opacity=".7"/><stop offset="1" stop-color="#a5ff00" stop-opacity="0"/></linearGradient>
- <radialGradient id="glow"><stop stop-color="#b4ff50" stop-opacity=".32"/><stop offset="1" stop-color="#b4ff50" stop-opacity="0"/></radialGradient>
- <g id="plant"><g class="plant-body"><path d="M0 0 Q-3 -40 0 -86" stroke="#5c9d36" stroke-width="5" fill="none"/><g class="plant-leaves" fill="#3d8b25" stroke="#b2ed55" stroke-width="1.8" stroke-linejoin="round">
- <!-- Seven pointed, serrated cannabis leaflets -->
- <path d="M0 -22 L-9 -32 -8 -39 -17 -37 -18 -48 -27 -45 -29 -57 -38 -54 -39 -68 -31 -75 -19 -66 -10 -52 0 -34Z"/>
- <path d="M0 -31 L9 -42 8 -50 18 -48 20 -60 29 -57 32 -69 41 -65 43 -78 34 -84 22 -73 12 -57 0 -42Z"/>
- <path d="M0 -42 L-7 -54 -6 -63 -15 -61 -17 -74 -25 -71 -27 -84 -35 -81 -36 -94 -27 -101 -17 -90 -8 -71 0 -54Z"/>
- <path d="M0 -48 L8 -62 7 -70 17 -68 19 -81 28 -78 30 -91 39 -87 41 -100 32 -106 21 -95 10 -76 0 -61Z"/>
- <path d="M0 -62 L-6 -75 -5 -83 -13 -81 -15 -94 -22 -91 -24 -104 -16 -110 -8 -101 0 -78Z"/>
- <path d="M0 -68 L7 -82 6 -90 14 -88 16 -101 23 -98 25 -111 17 -117 9 -108 0 -85Z"/>
- <path d="M0 -70 L-7 -83 -5 -95 0 -113 5 -95 7 -83Z"/>
- </g>
- <g class="leaf-veins" fill="none" stroke="#d8ff85" stroke-width="1.1" opacity=".9"><path d="M0 -22L-31 -72M0 -31L34 -81M0 -42L-28 -97M0 -48L37 -101M0 -62L-19 -105M0 -68L21 -112M0 -70L0 -111"/></g>
- <g class="buds"><g fill="#f4d7a1" stroke="#f0a7c4" stroke-width="1.2"><circle cx="-7" cy="-78" r="7"/><circle cx="7" cy="-75" r="7"/><circle cx="0" cy="-91" r="8"/><circle cx="-14" cy="-57" r="5"/><circle cx="14" cy="-55" r="5"/><circle cx="0" cy="-65" r="6"/></g><g fill="none" stroke="#ffb3d0" stroke-width="1.5"><path d="M-7 -78l-8 -9m8 9l-2 -12m9 12l7 -10m-7 10l2 -13M0 -91l-5 -9m5 9l5 -10M-14 -57l-6 -7m6 7l-1 -9M14 -55l7 -8m-7 8l1 -10"/></g><g fill="#fff0c9"><circle cx="-4" cy="-82" r="1.5"/><circle cx="5" cy="-74" r="1.5"/><circle cx="0" cy="-93" r="1.8"/></g></g></g>
-</defs>
-<rect width="1200" height="700" fill="#050906"/><path d="M0 0H1200V470L600 590 0 470Z" fill="url(#wall)"/>
-<g stroke="#354a36" stroke-width="10" fill="none" opacity=".9"><path d="M0 0L600 215 1200 0M0 0V470M1200 0V470M0 130L600 285 1200 130M0 260L600 360 1200 260M0 390L600 430 1200 390"/><path d="M90 0L600 215 1110 0M300 0L600 215 900 0"/></g>
-<path d="M0 470L600 590 1200 470V700H0Z" fill="url(#floor)"/>
-<!-- Reflective mylar wall panels and structural seams -->
-<g fill="none" stroke="#8da47a" stroke-opacity=".22" stroke-width="3"><path d="M20 24L575 218 575 575M1180 24L625 218 625 575M80 70L575 250M1120 70L625 250M20 205L575 350M1180 205L625 350"/><path d="M45 35l85 30-15 95-85-30ZM1070 35l85-30 15 95-85 30Z" fill="#b6c6a0" fill-opacity=".05"/></g>
-<!-- Center aisle with strong vanishing point -->
-<path d="M548 438L652 438 850 700H350Z" fill="#111a12" stroke="#6f8c4e" stroke-width="3"/>
-<path d="M590 440L610 440 650 700H550Z" fill="#35452c" opacity=".35"/>
-<path d="M600 440L600 700" stroke="#b5ed67" stroke-opacity=".25" stroke-width="3" stroke-dasharray="14 18"/>
-<path d="M548 438L350 700M652 438L850 700" stroke="#a5ff00" stroke-opacity=".28" stroke-width="4"/>
-<!-- Ceiling LED fixtures, rails and hanging hardware -->
-<g class="ceiling-hardware" stroke="#a9bd91" stroke-width="4" fill="none"><path d="M105 28L1095 28M180 12V55M1020 12V55M400 110V160M800 110V160"/><path d="M210 76L355 126M990 76L845 126" stroke="#75856a" stroke-width="2"/></g>
-<g class="grow-lights" fill="#f0ffd1" stroke="#a5ff00" stroke-width="3"><path d="M95 62L270 119 270 132 95 77Z"/><path d="M380 151L555 205 555 219 380 166Z"/><path d="M645 205L820 151 820 166 645 219Z"/><path d="M930 119L1105 62 1105 77 930 132Z"/><path d="M485 46H715V62H485Z"/></g>
-<g fill="#caff7a" opacity=".14"><path d="M95 77L270 132 340 470 20 470Z"/><path d="M1105 77L930 132 860 470 1180 470Z"/></g>
-<!-- Ventilation duct, inline fan and wall circulation fans -->
-<g class="vent-hardware"><path d="M940 8H1170Q1190 8 1190 28V53H940Z" fill="#303a31" stroke="#b1c39b" stroke-width="4"/><path d="M950 18H1180M950 43H1180" stroke="#87977c" stroke-width="3"/><circle cx="1080" cy="135" r="49" fill="#101610" stroke="#a7bd88" stroke-width="6"/><circle cx="1080" cy="135" r="8" fill="#c4db9f"/><g class="fan-blades" fill="#7e9270" stroke="#c5d9a9" stroke-width="2"><path d="M1080 128Q1042 78 1067 91Q1090 102 1080 128Z"/><path d="M1087 135Q1137 97 1123 122Q1111 145 1087 135Z"/><path d="M1073 139Q1054 198 1046 170Q1041 147 1073 139Z"/></g><circle cx="1080" cy="135" r="48" fill="none" stroke="#a7bd88" stroke-width="3"/></g>
-<!-- Pots and trays establish a real grow-room floor plane -->
-<g class="grow-pots"><path d="M54 550L130 550 119 614 65 614Z" fill="#171c17" stroke="#b5c99a" stroke-width="4"/><path d="M64 550H121" stroke="#d3e6b2" stroke-width="5"/><path d="M193 564L254 564 245 620 202 620Z" fill="#171c17" stroke="#9eb787" stroke-width="3"/><path d="M201 564H247" stroke="#d3e6b2" stroke-width="4"/><path d="M322 575L374 575 367 626 329 626Z" fill="#171c17" stroke="#91a87a" stroke-width="3"/><path d="M328 575H370" stroke="#d3e6b2" stroke-width="4"/><path d="M1070 550L1146 550 1135 614 1081 614Z" fill="#171c17" stroke="#b5c99a" stroke-width="4"/><path d="M1079 550H1137" stroke="#d3e6b2" stroke-width="5"/><path d="M946 564L1007 564 998 620 955 620Z" fill="#171c17" stroke="#9eb787" stroke-width="3"/><path d="M954 564H1000" stroke="#d3e6b2" stroke-width="4"/><path d="M826 575L878 575 871 626 833 626Z" fill="#171c17" stroke="#91a87a" stroke-width="3"/><path d="M832 575H874" stroke="#d3e6b2" stroke-width="4"/></g>
-<g stroke="#45613e" opacity=".4" stroke-width="2"><path d="M600 590L0 700M600 590L200 700M600 590L400 700M600 590L800 700M600 590L1000 700M600 590L1200 700M0 520H1200M0 590H1200M0 650H1200"/></g>
-<g class="grow-lights" fill="url(#lamp)"><path d="M80 40L270 110 270 130 80 65Z"/><path d="M390 130L550 190 550 210 390 150Z"/><path d="M650 190L810 130 810 150 650 210Z"/><path d="M930 110L1120 40 1120 65 930 130Z"/><path d="M480 25H720V42H480Z"/></g>
-<g fill="url(#glow)"><ellipse cx="170" cy="360" rx="250" ry="270"/><ellipse cx="1030" cy="360" rx="250" ry="270"/></g>
-<g class="plant-row row-left"><use href="#plant" transform="translate(95 560) scale(1.9)"/><use href="#plant" transform="translate(230 575) scale(1.55)"/><use href="#plant" transform="translate(355 585) scale(1.22)"/></g>
-<g class="plant-row row-right"><use href="#plant" transform="translate(1105 560) scale(1.9)"/><use href="#plant" transform="translate(970 575) scale(1.55)"/><use href="#plant" transform="translate(845 585) scale(1.22)"/></g>
-<path d="M530 585L600 570 670 585" stroke="#a5ff00" stroke-opacity=".25" stroke-width="3" fill="none"/>
-<g fill="#d7ff9a" opacity=".45"><circle class="dust d1" cx="280" cy="250" r="3"/><circle class="dust d2" cx="900" cy="300" r="2"/><circle class="dust d3" cx="740" cy="390" r="3"/><circle class="dust d4" cx="430" cy="180" r="2"/></g>
-</svg><div class="scene-brand-mark">HOODIEGHOST<br><span>GROWS</span></div><div class="comic-burst" aria-hidden="true">GROW<br><b>MODE!</b></div><div class="comic-caption" aria-hidden="true">ISSUE 01 · THE GROW ROOM</div><div class="scene-overlay-glow"></div></div><div class="image-vignette"></div><div class="fixed-stage-caption" id="fixedStageCaption">PLANT PROFILE · <b>STAGE NOT SET</b></div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
+<linearGradient id="comicWall" x2="0" y2="1"><stop stop-color="#24213a"/><stop offset=".55" stop-color="#111a1b"/><stop offset="1" stop-color="#080b0b"/></linearGradient>
+<linearGradient id="comicFloor" x2="0" y2="1"><stop stop-color="#24332c"/><stop offset="1" stop-color="#090d0b"/></linearGradient>
+<linearGradient id="comicPot" x2="0" y2="1"><stop stop-color="#46504a"/><stop offset=".18" stop-color="#202823"/><stop offset="1" stop-color="#090d0b"/></linearGradient>
+<linearGradient id="comicLeaf" x2=".8" y2="1"><stop stop-color="#c8ff69"/><stop offset=".48" stop-color="#5eae32"/><stop offset="1" stop-color="#17451f"/></linearGradient>
+<radialGradient id="comicLamp"><stop stop-color="#edffb7" stop-opacity=".8"/><stop offset="1" stop-color="#a5ff00" stop-opacity="0"/></radialGradient>
+<pattern id="halftone" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="#c5ff71" opacity=".28"/></pattern>
+<g id="plant"><g class="plant-body">
+<path d="M0 0Q-5 -45 0 -132" stroke="#8cc64d" stroke-width="7" fill="none"/>
+<g class="plant-leaves" fill="url(#comicLeaf)" stroke="#101d0c" stroke-width="3.5" stroke-linejoin="round">
+<path d="M0 -25L-11 -35 -10 -45 -21 -42 -24 -57 -35 -53 -39 -68 -50 -64 -53 -82 -43 -92 -28 -80 -14 -58 0 -39Z"/>
+<path d="M0 -42L12 -54 10 -65 22 -62 25 -77 37 -73 41 -89 53 -84 56 -102 45 -111 30 -97 14 -73 0 -56Z"/>
+<path d="M0 -57L-10 -72 -8 -83 -20 -80 -23 -96 -34 -92 -38 -109 -48 -104 -50 -123 -39 -133 -26 -119 -12 -91 0 -72Z"/>
+<path d="M0 -70L11 -85 9 -96 21 -93 24 -109 36 -105 40 -121 52 -116 55 -134 44 -143 29 -130 13 -104 0 -87Z"/>
+<path d="M0 -88L-8 -103 -6 -114 -17 -111 -20 -127 -30 -123 -33 -141 -22 -150 -10 -137 0 -113Z"/>
+<path d="M0 -94L9 -110 7 -121 18 -118 21 -134 31 -130 34 -148 23 -157 11 -144 0 -119Z"/>
+<path d="M0 -98L-9 -115 -6 -133 0 -158 7 -133 9 -115Z"/>
+</g>
+<g class="leaf-veins" fill="none" stroke="#e0ff9b" stroke-width="1.8" opacity=".8"><path d="M0 -26L-43 -88M0 -42L47 -105M0 -57L-43 -126M0 -70L47 -137M0 -88L-27 -145M0 -94L28 -151M0 -98V-153"/></g>
+<g class="buds"><g fill="#c8e77b" stroke="#16220d" stroke-width="2"><circle cx="-8" cy="-109" r="10"/><circle cx="9" cy="-105" r="11"/><circle cx="0" cy="-128" r="12"/><circle cx="-19" cy="-87" r="8"/><circle cx="19" cy="-86" r="8"/><circle cx="0" cy="-96" r="9"/></g><g fill="none" stroke="#f1a8ca" stroke-width="2.2" stroke-linecap="round"><path d="M-8 -109l-9 -12m9 12l-2 -15m10 15l9 -12m-9 12l2 -15M0 -128l-7 -12m7 12l7 -12M-19 -87l-7 -9m7 9l-1 -11M19 -86l8 -10m-8 10l1 -11"/></g><g fill="#fff4d4"><circle cx="-4" cy="-112" r="2"/><circle cx="7" cy="-105" r="2"/><circle cx="0" cy="-131" r="2.2"/></g></g>
+</g></g></defs>
+<rect width="1200" height="700" fill="#050707"/><path d="M0 0H1200V505L0 565Z" fill="url(#comicWall)"/><path d="M0 0H1200V505L0 565Z" fill="url(#halftone)" opacity=".65"/>
+<g fill="none" stroke-linecap="round"><path d="M0 95L1200 30M0 225L1200 160M0 355L1200 290M0 485L1200 420" stroke="#93a77d" stroke-opacity=".22" stroke-width="3"/><path d="M70 0L235 505M1130 0L965 505M390 0L470 500M810 0L730 500" stroke="#c4d2a2" stroke-opacity=".14" stroke-width="4"/><path d="M0 0L1200 505M1200 0L0 505" stroke="#a5ff00" stroke-opacity=".06" stroke-width="10"/></g>
+<g stroke="#b4c79c" stroke-width="5" fill="#18231a"><path d="M90 30H1110V58H90Z"/><path d="M180 85H1020V104H180Z"/><path d="M130 18H340V42H130Z" fill="#eaffb8"/><path d="M495 18H705V42H495Z" fill="#f2ffc8"/><path d="M860 18H1070V42H860Z" fill="#eaffb8"/></g>
+<g fill="url(#comicLamp)"><ellipse cx="235" cy="190" rx="200" ry="210"/><ellipse cx="600" cy="190" rx="230" ry="220"/><ellipse cx="965" cy="190" rx="200" ry="210"/></g>
+<g transform="translate(1055 205)" fill="#7c8d76" stroke="#101710" stroke-width="5"><circle r="59" fill="#101712" stroke="#b7c99b" stroke-width="7"/><g class="fan-blades"><path d="M0 -7Q-39 -72 -13 -62Q17 -53 7 -8ZM8 0Q72 -39 62 -13Q53 17 8 7ZM0 8Q39 72 13 62Q-17 53 -7 8Z"/></g><circle r="10" fill="#d7e7b9"/></g><g fill="none" stroke="#b5c89a" stroke-width="7"><circle cx="1055" cy="205" r="68"/><path d="M1055 273V320M1025 320H1085"/></g>
+<path d="M0 500L1200 440V700H0Z" fill="url(#comicFloor)" stroke="#90a77d" stroke-width="5"/><path d="M0 548L1200 488M0 615L1200 555M0 680L1200 620" stroke="#9eb58b" stroke-opacity=".18" stroke-width="4"/><path d="M45 525L1155 468V650L45 700Z" fill="#101713" stroke="#a5ff00" stroke-opacity=".5" stroke-width="5"/>
+<g class="plant-row row-left"><path d="M125 520L295 512 280 650 145 665Z" fill="url(#comicPot)" stroke="#b7c99b" stroke-width="6"/><path d="M130 520L295 512" stroke="#e1e9d0" stroke-width="9"/><use href="#plant" transform="translate(210 530) scale(1.72)"/></g>
+<g class="plant-row row-center"><path d="M495 485L705 485 688 660 512 660Z" fill="url(#comicPot)" stroke="#c5d4ad" stroke-width="7"/><path d="M500 486H700" stroke="#f0f5df" stroke-width="10"/><use href="#plant" transform="translate(600 493) scale(2.18)"/></g>
+<g class="plant-row row-right"><path d="M905 512L1075 520 1055 665 920 650Z" fill="url(#comicPot)" stroke="#b7c99b" stroke-width="6"/><path d="M905 512L1070 520" stroke="#e1e9d0" stroke-width="9"/><use href="#plant" transform="translate(990 530) scale(1.72)"/></g>
+<path d="M0 0H1200V700H0Z" fill="none" stroke="#0a0c09" stroke-width="24"/><path d="M18 18H1182V682H18Z" fill="none" stroke="#a5ff00" stroke-opacity=".65" stroke-width="3"/>
+<g fill="#d9ff9b" stroke="#111" stroke-width="3" font-family="Arial,sans-serif" font-weight="900" letter-spacing="3"><text x="48" y="465" font-size="19">GROW ROOM / 01</text><text x="950" y="465" font-size="16">LIVE PANEL</text></g>
+<g fill="#d8ff9b" opacity=".55"><circle class="dust d1" cx="280" cy="250" r="3"/><circle class="dust d2" cx="900" cy="300" r="2"/><circle class="dust d3" cx="740" cy="390" r="3"/><circle class="dust d4" cx="430" cy="180" r="2"/></g></svg><div class="scene-brand-mark">HOODIEGHOST<br><span>GROWS</span></div><div class="comic-burst" aria-hidden="true">GROW<br><b>MODE!</b></div><div class="comic-caption" aria-hidden="true">ISSUE 01 · THE GROW ROOM</div><div class="scene-overlay-glow"></div></div><div class="image-vignette"></div><div class="fixed-stage-caption" id="fixedStageCaption">PLANT PROFILE · <b>STAGE NOT SET</b></div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
    <aside class="plant-inspector" id="plantInspector" aria-live="polite">
     <div class="plant-inspector-head"><div><div class="eyebrow" id="inspectorKicker">PLANT PROFILE</div><h3 id="inspectorName">Plant</h3><div class="age" id="inspectorStrain">Select a plant to inspect</div></div><button class="close" id="closePlantInspector" aria-label="Close plant details">×</button></div>
