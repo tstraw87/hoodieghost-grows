@@ -2,1015 +2,230 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101411"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#101410"><meta name="description" content="HOODIEGHOST GROWS — a private cultivation journal and grow-room dashboard.">
 <title>HOODIEGHOST GROWS — Grow Room</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap');
-:root{--bg:#0b0e0c;--surface:#141a16;--surface2:#1b241e;--line:#2a382e;--green:#76ff43;--green2:#b4ff8d;--white:#f5f7f3;--muted:#96a397;--red:#ff6868;--amber:#ffc56d;--blue:#8dd7ff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#263a2b 0,transparent 42%),var(--bg);color:var(--white);font:14px Inter,system-ui,sans-serif;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}
-.shell{max-width:1600px;margin:auto;padding:18px 22px 50px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);padding:2px 0 16px}.brand{display:flex;align-items:center;gap:13px}.brand img{width:58px;height:58px;object-fit:contain;border-radius:50%;background:#202720;border:1px solid #3a4c3d}.brandname{font:900 26px 'Barlow Condensed',sans-serif;letter-spacing:1.5px}.brandname span{color:var(--green)}.eyebrow{font:11px 'DM Mono',monospace;color:var(--muted);letter-spacing:1.8px;text-transform:uppercase}.topright{display:flex;align-items:center;gap:10px}.live{display:flex;align-items:center;gap:8px;color:var(--green);font:11px 'DM Mono',monospace;letter-spacing:1px}.live:before{content:"";width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
-.tabs{display:flex;gap:7px;overflow:auto;padding:14px 0 18px;scrollbar-width:none}.tabs button,.tentpick button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:10px 14px;white-space:nowrap;font-size:12px;font-weight:700;letter-spacing:.4px}.tabs button.active,.tentpick button.active{background:var(--green);color:#10170e;border-color:var(--green)}
-.hero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(270px,.8fr);gap:16px}.scene{position:relative;min-height:430px;border:1px solid #34463a;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#26382b 0%,#18231b 40%,#0e1510 100%);box-shadow:inset 0 0 80px #0008}.scene:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 79px,#ffffff05 80px),linear-gradient(0deg,#050806aa,transparent 48%);pointer-events:none}.scenehead{position:absolute;z-index:3;top:19px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:flex-start}.scenehead h1{font:800 clamp(27px,4vw,43px)/.95 'Barlow Condensed',sans-serif;margin:6px 0 0;letter-spacing:.7px}.scenehead h1 em{color:var(--green);font-style:normal}.scenehead .status{font:10px 'DM Mono';border:1px solid #54705a;color:var(--green2);border-radius:5px;padding:7px 9px;background:#0b120dcc}
-.tentpick{display:flex;gap:6px;margin-top:12px}.tentpick button{padding:7px 13px;background:#0b120d99}
-.tent-art{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);width:min(76%,620px);height:285px;perspective:900px}.tent-roof{position:absolute;left:8%;right:8%;top:0;height:48px;background:linear-gradient(180deg,#59645b,#27332b);clip-path:polygon(8% 0,92% 0,100% 100%,0 100%);border-top:2px solid #9ca89b;filter:drop-shadow(0 6px 5px #0008)}.tent-back{position:absolute;left:8%;right:8%;top:42px;bottom:0;background:linear-gradient(145deg,#29392d,#111a14 72%);border:2px solid #718075;box-shadow:inset 0 0 35px #000b}.tent-side{position:absolute;top:42px;bottom:0;width:9%;background:linear-gradient(90deg,#68756b,#28342b);border:2px solid #718075}.tent-side.left{left:0;clip-path:polygon(100% 0,100% 100%,0 88%,0 12%)}.tent-side.right{right:0;clip-path:polygon(0 0,100% 12%,100% 88%,0 100%)}.tent-floor{position:absolute;left:8%;right:8%;bottom:0;height:34px;background:linear-gradient(180deg,#37443a,#101611);transform:perspective(160px) rotateX(15deg);border:1px solid #637066}
-.led{position:absolute;top:58px;left:29%;right:29%;height:12px;background:#f1ffe2;border-radius:10px;box-shadow:0 0 12px 5px #d6ff9c,0 0 48px 17px #b6ff6a77;animation:pulse 4s infinite alternate}.led:after{content:"";position:absolute;left:-15%;right:-15%;top:15px;height:110px;background:linear-gradient(180deg,#c9ff9b22,transparent);filter:blur(10px)}
-.fan{position:absolute;top:79px;width:42px;height:42px;border:3px solid #9eada0;border-radius:50%;background:#111a15;display:grid;place-items:center}.fan:before{content:"";width:5px;height:30px;background:#8b9b8d;border-radius:5px;box-shadow:0 0 0 9px transparent;animation:spin 2.8s linear infinite}.fan:after{content:"";position:absolute;width:30px;height:5px;background:#8b9b8d;border-radius:5px;animation:spin 2.8s linear infinite}.fan.left{left:14%}.fan.right{right:14%}
-.plants{position:absolute;bottom:23px;left:18%;right:18%;height:166px;display:flex;align-items:flex-end;justify-content:space-around;gap:12px}.plant{position:relative;width:24%;height:var(--h);min-height:82px;transform-origin:bottom;animation:sway 4.5s ease-in-out infinite alternate}.plant:nth-child(2){animation-delay:-1.3s}.plant:nth-child(3){animation-delay:-2.2s}.stem{position:absolute;bottom:0;left:50%;width:5px;height:78%;background:linear-gradient(90deg,#315b30,#79b64b);border-radius:5px}.leaf{position:absolute;width:43px;height:17px;background:linear-gradient(90deg,#315f32,#8cce58);border-radius:100% 0 100% 0;transform-origin:0 50%;box-shadow:0 0 9px #7bff4540}.leaf.a{left:50%;top:28%;transform:rotate(-25deg)}.leaf.b{right:45%;top:39%;transform:scaleX(-1) rotate(-25deg)}.leaf.c{left:50%;top:51%;transform:rotate(-10deg) scale(.85)}.leaf.d{right:45%;top:60%;transform:scaleX(-1) rotate(-10deg) scale(.85)}.plantpot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:53px;height:35px;background:linear-gradient(90deg,#202b24,#64715e,#1b241e);clip-path:polygon(7% 0,93% 0,82% 100%,18% 100%);border-top:3px solid #91a08f}.scenefoot{position:absolute;z-index:2;bottom:15px;left:20px;right:20px;display:flex;justify-content:space-between;color:#b7c4b9;font:10px 'DM Mono';letter-spacing:1px}.scenefoot span{color:var(--green2)}
-@keyframes spin{to{transform:rotate(360deg)}}@keyframes sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}@keyframes pulse{from{opacity:.75}to{opacity:1;box-shadow:0 0 17px 7px #d6ff9c,0 0 58px 20px #b6ff6a99}}
-.sidepanel{display:flex;flex-direction:column;gap:12px}.panel{background:linear-gradient(145deg,#1b241e,#121814);border:1px solid var(--line);border-radius:13px;padding:17px}.paneltitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.paneltitle strong{font:700 18px 'Barlow Condensed';letter-spacing:.8px}.muted{color:var(--muted)}.stage{font:800 25px 'Barlow Condensed';color:var(--green);margin:3px 0}.age{font:11px 'DM Mono';color:var(--muted)}.growgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.growstat{background:#0b100d88;border:1px solid #29372d;border-radius:8px;padding:11px}.growstat label{display:block;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}.growstat b{display:block;font:700 23px 'Barlow Condensed';margin-top:3px}.growstat small{font:10px 'DM Mono';color:var(--muted)}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.metric{padding:14px 16px;background:#131a15;border:1px solid var(--line);border-radius:10px}.metric label{display:block;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase}.metric b{font:700 28px 'Barlow Condensed';display:block;margin:4px 0}.metric small{color:var(--muted);font:10px 'DM Mono'}.metric.alert b{color:var(--amber)}
-.view{display:none}.view.active{display:block}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:14px 0}.sectionhead h2{font:800 30px 'Barlow Condensed';margin:0;letter-spacing:.8px}.sectionhead p{margin:4px 0 0;color:var(--muted);font-size:12px}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-label.field{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px;letter-spacing:.4px}input,select,textarea{width:100%;background:#0c120e;border:1px solid #35463a;color:var(--white);padding:11px 12px;border-radius:7px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--green)}textarea{min-height:85px;resize:vertical}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-.btn{border:1px solid #526a55;background:#1a281d;color:var(--green2);border-radius:7px;padding:10px 13px;font-weight:700;font-size:12px}.btn.primary{background:var(--green);color:#0d160b;border-color:var(--green)}.btn.ghost{background:transparent}.btn.danger{color:var(--red);border-color:#694040}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.spacer{flex:1}.notice{border-left:3px solid var(--green);background:#18251b;padding:12px 14px;border-radius:0 7px 7px 0;color:#c8d7ca;font-size:12px}.notice.warn{border-color:var(--amber)}.notice.bad{border-color:var(--red)}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase}td{color:#dbe4dc}.empty{padding:25px;text-align:center;color:var(--muted);border:1px dashed #35463a;border-radius:9px;font-size:12px}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.day{min-height:64px;border:1px solid var(--line);border-radius:7px;background:#111813;color:var(--white);padding:7px;text-align:left}.day.today{border-color:var(--green)}.day.selected{background:#263a28;border-color:var(--green)}.day small{display:block;color:var(--muted);font-size:9px;margin-top:5px}
-.plantlist{display:flex;gap:8px;flex-wrap:wrap}.plantchip{border:1px solid var(--line);border-radius:20px;padding:7px 11px;font-size:11px;color:var(--green2)}
-.footer{padding:25px 0 0;color:#647368;font:10px 'DM Mono';display:flex;justify-content:space-between;gap:12px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.scene{min-height:390px}.sidepanel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.shell{padding:12px 12px 35px}.brand img{width:45px;height:45px}.brandname{font-size:21px}.topbar{align-items:flex-start}.topright .eyebrow{display:none}.tabs{margin-right:-12px}.scene{min-height:350px}.tent-art{width:94%;height:235px;bottom:34px}.plants{height:132px}.plantpot{width:42px;height:29px}.leaf{width:35px;height:14px}.scenehead{left:14px;right:14px}.scenehead h1{font-size:30px}.scenefoot{font-size:8px;left:12px;right:12px}.sidepanel{grid-template-columns:1fr}.grid2,.grid3,.formgrid,.formgrid.three{grid-template-columns:1fr}.metrics{gap:7px}.metric{padding:11px}.metric b{font-size:24px}.sectionhead h2{font-size:26px}.day{min-height:52px;padding:5px;font-size:11px}}
-
-/* DIMENSIONAL GROW ROOM REDESIGN */
-/* Unified Pro Edition surface treatment */
-body{background:radial-gradient(ellipse at 50% -12%,#304a35 0,transparent 38%),radial-gradient(ellipse at 100% 40%,#16251a 0,transparent 42%),#080c09}
-.shell{max-width:1680px}
-.topbar{border-bottom-color:#415345}
-.brand img{box-shadow:0 0 25px #76ff4320,0 8px 18px #0009}
-.tabs button{background:linear-gradient(180deg,#202b23,#111813);box-shadow:0 4px 12px #0005}
-.tabs button.active{background:linear-gradient(180deg,#b4ff8d,#66ff33);box-shadow:0 0 20px #66ff3340,0 5px 12px #0007}
-.panel{background:linear-gradient(145deg,#202b23 0%,#141c17 58%,#101611 100%);border-color:#394a3d;box-shadow:inset 0 1px #ffffff0b,0 12px 25px #0005}
-.metric,.growstat{background:linear-gradient(145deg,#1c281f,#0c130e);box-shadow:inset 0 1px #ffffff0a,0 7px 15px #0004}
-.sectionhead h2,.paneltitle strong{ text-shadow:0 2px 10px #0009}
-.btn{box-shadow:0 4px 12px #0005;transition:transform .18s ease,box-shadow .18s ease}
-.btn:active{transform:translateY(1px)}
-.scene{border-color:#829487}
-
-.scene{min-height:470px;isolation:isolate;transform-style:preserve-3d;background:radial-gradient(ellipse at 50% 68%,#8dff5b24,transparent 45%),linear-gradient(145deg,#526457 0%,#26382b 18%,#18231b 50%,#0a100c 100%);box-shadow:inset 0 0 90px #000c,0 25px 70px #0009,0 0 0 1px #71877555}
-.tent-art{width:min(80%,690px);height:315px;perspective:1100px;filter:drop-shadow(0 22px 18px #0009)}
-.tent-back{background:repeating-linear-gradient(90deg,#ffffff09 0 1px,transparent 1px 48px),linear-gradient(145deg,#394b3d 0%,#1c2b20 28%,#111a14 72%);border-color:#a2b1a3;box-shadow:inset 0 0 45px #000d,inset 0 0 0 8px #ffffff08,0 0 22px #a4ff7a18}
-.tent-side{background:linear-gradient(90deg,#a5b2a4 0%,#536457 28%,#27352b 100%);border-color:#b1bdb1;box-shadow:inset 0 0 18px #0009}
-.tent-roof{background:linear-gradient(180deg,#a7b2a8,#4b5b4e 44%,#27332b);box-shadow:0 9px 16px #0008}
-.tent-floor{background:repeating-linear-gradient(90deg,#ffffff0b 0 1px,transparent 1px 30px),linear-gradient(180deg,#59665b,#1a241d);box-shadow:0 12px 22px #000a}
-.led{height:16px}.fan{width:48px;height:48px;box-shadow:0 0 20px #a5ff8c22}
-.scene:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,#ffffff12,transparent 22% 70%,#b4ff8d0b),radial-gradient(ellipse at 50% 100%,#8dff5b12,transparent 55%);mix-blend-mode:screen}
-.pro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pro-field{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px}.pro-field input,.pro-field select{min-width:0}.pro-table{overflow:auto}.pro-table table{min-width:760px}.pro-table input{min-width:76px;padding:7px}.pro-card{background:#0d140f;border:1px solid var(--line);border-radius:9px;padding:12px;margin:8px 0}.pro-badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#1c3220;color:var(--green2);font:10px 'DM Mono'}.pro-alert{border-left:3px solid var(--amber);background:#332918;padding:10px;border-radius:5px;margin:8px 0;font-size:12px}.pro-alert.good{border-color:var(--green);background:#16261a}.pro-chart{width:100%;height:180px;display:block;background:#0b100d;border-radius:8px}
-@media(max-width:700px){.pro-grid{grid-template-columns:1fr}.tent-art{width:94%;height:250px}}
-
-
-/* REAL-TIME 3D GREENHOUSE VIEW */
-.tent-art#tent3dWrap{position:absolute;inset:0;left:0;bottom:0;transform:none;width:100%;height:100%;perspective:none;filter:none;z-index:1;touch-action:none;cursor:grab}
-#greenhouse3d{display:block;width:100%;height:100%;outline:none}
-#tent3dWrap:active{cursor:grabbing}
-.viewhint{position:absolute;right:18px;bottom:44px;color:#c8d9c9;background:#071009bb;border:1px solid #78927a66;border-radius:5px;padding:7px 9px;font:9px 'DM Mono';letter-spacing:1px;pointer-events:none}
-.scenehead,.scenefoot{z-index:4;pointer-events:none}
-.scenehead button,.scenehead a{pointer-events:auto}
-.scenehead .tentpick{pointer-events:auto}
-.scenehead .tentpick button{background:#0b120dcc}
-.scenehead .tentpick button.active{background:var(--green)}
-@media(max-width:600px){.viewhint{right:10px;bottom:42px;font-size:8px}}
-
-
-/* PRO 3D GREENHOUSE FINISH */
-:root{--bg:#090d0a;--surface:#141a16;--surface2:#1b241e;--line:#344438;--green:#76ff43;--green2:#b4ff8d}
-.shell{padding-top:20px}
-.topbar{padding-bottom:18px}
-.brandname{font-size:29px;letter-spacing:2px}
-.scene{min-height:520px;border-radius:18px;background:radial-gradient(ellipse at 50% 78%,#83ff5424,transparent 42%),linear-gradient(145deg,#344a39 0%,#1b2a20 48%,#090f0b 100%);box-shadow:inset 0 0 100px #000d,0 28px 65px #0008}
-.scene:before{background:linear-gradient(0deg,#050806aa,transparent 55%),radial-gradient(ellipse at 50% 100%,#76ff4310,transparent 55%);z-index:2}
-.scenehead h1{font-size:clamp(32px,4.4vw,50px);text-shadow:0 5px 25px #000b}
-.scenehead .status{backdrop-filter:blur(12px);background:#071009bb;border-color:#76ff4366}
-.tentpick button{backdrop-filter:blur(10px);border-color:#ffffff2b}
-#tent3dWrap{inset:12px 0 0!important}
-.viewhint{background:#071009d9;border-color:#76ff4370;box-shadow:0 5px 20px #0008;backdrop-filter:blur(10px)}
-.scenefoot{background:linear-gradient(90deg,#071009c9,#07100988);border:1px solid #ffffff18;border-radius:8px;padding:9px 12px;backdrop-filter:blur(10px)}
-.panel{border-radius:15px}
-.metric{border-radius:12px}
-.metric b,.growstat b{letter-spacing:.4px}
-.tabs button{border-radius:9px}
-.tabs button.active{color:#081006}
-.btn.primary{box-shadow:0 0 20px #76ff4326}
-@media(max-width:900px){.scene{min-height:460px}}
-@media(max-width:600px){.scene{min-height:410px}.scenefoot{gap:8px;flex-wrap:wrap}.scenehead h1{font-size:32px}}
-
-
-/* SELECTABLE 3D PLANT INSPECTOR */
-.plant-inspector{position:absolute;z-index:8;right:18px;top:105px;width:min(300px,calc(100% - 36px));padding:16px;background:linear-gradient(145deg,#1b2b20f5,#09110cf5);border:1px solid #76ff4380;border-radius:13px;box-shadow:0 18px 48px #000b,inset 0 1px #ffffff16;backdrop-filter:blur(16px);display:none}
-.plant-inspector.open{display:block;animation:inspectorIn .2s ease-out}
-@keyframes inspectorIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.plant-inspector-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.plant-inspector h3{font:800 23px 'Barlow Condensed';margin:3px 0 2px;color:#f5f7f3}
-.plant-inspector .close{border:1px solid #536858;background:#111b14;color:#dce9dc;border-radius:7px;width:30px;height:30px;font-size:18px;line-height:1}
-.plant-inspector-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:13px}
-.plant-inspector-stat{background:#07100a99;border:1px solid #344438;border-radius:7px;padding:9px}
-.plant-inspector-stat small{display:block;color:#91a394;font:9px 'DM Mono';letter-spacing:.8px;text-transform:uppercase}
-.plant-inspector-stat b{display:block;color:#caffad;font-size:13px;margin-top:5px;overflow-wrap:anywhere}
-.plant-inspector .plant-note{color:#9cad9f;font-size:10px;line-height:1.5;margin:12px 0 0}
-.plant-selected-ring{color:#76ff43}
-.viewhint{left:18px;right:auto;bottom:44px}
-@media(max-width:600px){.plant-inspector{top:auto;bottom:62px;right:10px;width:min(270px,calc(100% - 20px));padding:12px}.plant-inspector h3{font-size:20px}.plant-inspector-grid{gap:5px}.plant-inspector-stat{padding:7px}.viewhint{left:10px;bottom:12px}}
-
-
-/* Safari-safe greenhouse fallback while WebGL/Three.js is unavailable */
-#tentFallback{position:absolute;inset:0;z-index:1;display:none;overflow:hidden;background:radial-gradient(ellipse at 50% 72%,#76ff4320,transparent 55%),linear-gradient(145deg,#26382b,#0a100c)}
-#tentFallback .fb-tent{position:absolute;left:9%;right:9%;top:18%;bottom:13%;border:5px solid #829487;border-bottom-width:8px;transform:perspective(900px) rotateY(-7deg);background:repeating-linear-gradient(90deg,#ffffff08 0 1px,transparent 1px 48px),linear-gradient(135deg,#26392b,#101812 75%);box-shadow:inset 0 0 45px #000b,0 22px 38px #0009}
-#tentFallback .fb-roof{position:absolute;left:7%;right:7%;top:10%;height:13%;border:4px solid #a0afa2;background:linear-gradient(#7c8c7e,#27362b);clip-path:polygon(8% 0,92% 0,100% 100%,0 100%);box-shadow:0 0 22px #0009}
-#tentFallback .fb-led{position:absolute;left:29%;right:29%;top:28%;height:9px;border-radius:10px;background:#f2ffdb;box-shadow:0 0 15px 7px #caff91,0 0 60px 22px #9dff5b66;animation:pulse 3s ease-in-out infinite alternate}
-#tentFallback .fb-fan{position:absolute;top:39%;width:43px;height:43px;border:3px solid #9cac9e;border-radius:50%;background:#111a15}
-#tentFallback .fb-fan:before,#tentFallback .fb-fan:after{content:"";position:absolute;background:#a6b6a7;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:8px}
-#tentFallback .fb-fan:before{width:5px;height:31px;animation:spin 2s linear infinite}
-#tentFallback .fb-fan:after{width:31px;height:5px;animation:spin 2s linear infinite}
-#tentFallback .fb-fan.left{left:14%}#tentFallback .fb-fan.right{right:14%}
-#tentFallback .fb-plants{position:absolute;left:17%;right:17%;bottom:7%;height:53%;display:flex;align-items:flex-end;justify-content:space-around;gap:3%}
-#tentFallback .fb-plant{position:relative;width:18%;height:var(--h);min-height:50px;transform-origin:bottom;animation:sway 4s ease-in-out infinite alternate}
-#tentFallback .fb-plant:before{content:"";position:absolute;bottom:13%;left:48%;height:80%;width:5px;border-radius:6px;background:linear-gradient(#9acb64,#386a39)}
-#tentFallback .fb-plant:after{content:"";position:absolute;bottom:0;left:15%;width:70%;height:25%;background:linear-gradient(90deg,#25342a,#788a78,#25342a);clip-path:polygon(8% 0,92% 0,78% 100%,22% 100%)}
-#tentFallback .fb-leaves{position:absolute;left:0;right:0;top:10%;height:70%;background:radial-gradient(ellipse at 50% 48%,#79b94d 0 9%,transparent 10%),radial-gradient(ellipse at 22% 55%,#4c9147 0 20%,transparent 21%),radial-gradient(ellipse at 78% 55%,#4c9147 0 20%,transparent 21%),radial-gradient(ellipse at 34% 22%,#68a951 0 19%,transparent 20%),radial-gradient(ellipse at 66% 22%,#68a951 0 19%,transparent 20%)}
-#tentFallback .fb-label{position:absolute;left:18px;bottom:12px;color:#b4ff8d;font:10px 'DM Mono';letter-spacing:1.4px}
-@media(max-width:600px){#tentFallback .fb-tent{left:6%;right:6%}#tentFallback .fb-plant{width:22%}}
-
-/* HOODIEGHOST dashboard redesign — reference-inspired responsive control room */
-:root{--bg:#050705;--surface:#0b100c;--surface2:#111a12;--line:#35472e;--green:#9cff00;--green2:#c4ff58;--white:#f4f7ef;--muted:#929e8d;--red:#ff514c;--amber:#ffc52f}
-body{background:radial-gradient(ellipse at 52% 8%,rgba(105,153,49,.17),transparent 38%),linear-gradient(180deg,#080b08,#030403 75%);letter-spacing:.01em}
-.shell{max-width:1900px;padding:12px 16px 42px}
-.topbar{border:0;padding:8px 4px 14px;gap:20px}
-.brand{gap:16px}.brand img{width:104px;height:104px;object-fit:contain;border-radius:18px;filter:drop-shadow(0 0 13px #8cff0044)}
-.brandname{font-size:clamp(25px,3vw,38px);letter-spacing:.015em;text-shadow:0 0 22px #8cff0022}
-.brandname span{color:var(--green)}
-.topright{padding:12px 18px;border:1px solid #34472c;border-radius:12px;background:linear-gradient(145deg,#101910,#070a07);box-shadow:inset 0 0 22px #8cff0009}
-.live{color:var(--green);font-weight:800;letter-spacing:.12em}
-.tabs{position:sticky;top:0;z-index:30;display:flex;gap:7px;padding:9px;margin:0 0 16px;background:#080c09eF;border:1px solid #273528;border-radius:14px;backdrop-filter:blur(18px);overflow-x:auto;scrollbar-width:none}
-.tabs button{white-space:nowrap;border:1px solid transparent;border-radius:9px;background:#111811;color:#aeb9aa;padding:12px 17px;font-weight:750;transition:.2s}
-.tabs button:hover{border-color:#5c8b35;color:#fff}.tabs button.active{background:linear-gradient(135deg,#a4ff00,#55d900);color:#071000;box-shadow:0 0 20px #8cff0040}
-.panel,.metric,.scene,.growstat{background:linear-gradient(145deg,rgba(21,31,21,.98),rgba(7,12,8,.98));border:1px solid #354832;box-shadow:inset 0 1px #ffffff0a,0 12px 30px #0008;border-radius:15px}
-.hero{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(270px,.92fr);gap:14px;align-items:stretch}
-.scene{position:relative;overflow:hidden;min-height:620px;background:radial-gradient(ellipse at 50% 46%,#263e20,#0b120c 67%);border-color:#526d43;box-shadow:0 0 0 1px #a3ff0010,inset 0 0 55px #8cff0010,0 18px 45px #000a}
-.scenehead{position:relative;z-index:3;padding:20px 22px 0}.scene h1{font-size:clamp(30px,3vw,48px);line-height:.96;text-shadow:0 4px 18px #000b}.scene h1 em{color:var(--green);font-style:normal}
-.tent-art{position:absolute;inset:95px 0 42px;min-height:0;height:auto;background:radial-gradient(ellipse at 50% 60%,#6a9c3630,transparent 57%)}
-#greenhouse3d{width:100%!important;height:100%!important;display:block;touch-action:pan-y}
-#tentFallback{inset:0!important;transform:scale(.98);transform-origin:center}
-.viewhint{z-index:4;bottom:10px;left:16px;background:#050805b8;border:1px solid #5c7d3d;border-radius:7px;padding:7px 10px;color:#b9e98d}
-.scenefoot{position:absolute;z-index:4;bottom:12px;left:18px;right:18px;background:#070b08d9;border:1px solid #354b2b;border-radius:10px;padding:12px 14px;backdrop-filter:blur(10px);color:#a9d47d}
-.sidepanel{display:flex;flex-direction:column;gap:12px}.panel{padding:17px}.paneltitle{margin-bottom:13px}.paneltitle strong{font-size:15px;letter-spacing:.055em}.eyebrow{color:#879783;letter-spacing:.16em}
-.stage{color:var(--green);font-size:26px;font-weight:850}.growstat{border-radius:10px;background:#0b120d;padding:12px}.growstat b{font-size:22px}.growstat label,.metric label{color:#9ba996;letter-spacing:.1em}
-.notice{border-left:3px solid var(--green);background:#142017;padding:14px;border-radius:0 10px 10px 0;color:#c3d0bd}
-.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0 24px}.metric{padding:17px}.metric b{font-size:28px;color:#f6f8f3}
-.sectionhead{margin:24px 0 12px}.sectionhead h2{font-size:27px;letter-spacing:.02em}.grid2{gap:14px}.btn.primary{background:linear-gradient(135deg,#a4ff00,#55d900);color:#071000;border:0;box-shadow:0 0 18px #8cff0030}
-input,select,textarea{background:#070c08!important;border:1px solid #3a4e35!important;color:#f4f7ef!important;border-radius:8px!important}
-button:not(.tabs button){transition:filter .18s,transform .18s}button:not(.tabs button):hover{filter:brightness(1.16)}
-.view:not(.active){display:none}
-@media(max-width:1050px){.hero{grid-template-columns:minmax(0,1.45fr) minmax(250px,.9fr)}.scene{min-height:540px}.brand img{width:82px;height:82px}}
-@media(max-width:760px){.shell{padding:8px 9px 28px}.topbar{align-items:center}.brand img{width:58px;height:58px}.brandname{font-size:22px}.topright{padding:8px;font-size:10px}.tabs{margin-bottom:10px;padding:6px}.tabs button{padding:10px 12px;font-size:12px}.hero{grid-template-columns:1fr}.scene{min-height:510px}.tent-art{inset:102px 0 42px}.sidepanel{display:grid;grid-template-columns:1fr 1fr}.sidepanel .notice{grid-column:1/-1}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{padding:13px}.metric b{font-size:22px}.grid2{grid-template-columns:1fr}}
-@media(max-width:430px){.sidepanel{grid-template-columns:1fr}.sidepanel .notice{grid-column:auto}.scene{min-height:455px}.scenehead{padding:14px 14px 0}.scene h1{font-size:30px}.tentpick button{padding:7px 9px}}
-
-
-/* Reference-led three-zone command dashboard */
-#view-overview{display:grid;grid-template-columns:minmax(205px,.72fr) minmax(420px,1.8fr) minmax(270px,.92fr);grid-template-areas:"rail scene side" "rail scene side" "bottom bottom bottom" "snap snap snap";gap:14px;align-items:stretch}
-#view-overview>.hero{display:contents}
-#view-overview>.hero>.scene{grid-area:scene;min-height:650px;min-width:0}
-#view-overview>.hero>.sidepanel{grid-area:side;min-width:0}
-#view-overview>.metrics{grid-area:rail;display:flex;flex-direction:column;margin:0;gap:10px}
-#view-overview>.metrics .metric{min-height:105px;display:flex;flex-direction:column;justify-content:center}
-#view-overview>.metrics .metric b{font-size:clamp(22px,2vw,30px);margin:7px 0}
-#view-overview>.sectionhead{grid-area:bottom;margin:7px 0 0}
-#view-overview>.grid2{grid-area:snap}
-#view-overview>.hero>.scene .scenehead{display:flex;justify-content:space-between;align-items:flex-start}
-#view-overview>.hero>.scene h1{font-size:clamp(27px,2.7vw,43px);max-width:440px}
-#view-overview>.hero>.scene .tent-art{inset:112px 0 42px}
-#view-overview>.hero>.scene .scenefoot{display:flex;justify-content:space-between;gap:8px;font-size:10px;letter-spacing:.1em}
-#view-overview .sidepanel .panel{flex:0 0 auto}
-#view-overview .sidepanel .notice{margin-top:auto}
-@media(max-width:1100px){
- #view-overview{grid-template-columns:minmax(170px,.65fr) minmax(360px,1.55fr);grid-template-areas:"rail scene" "side side" "bottom bottom" "snap snap"}
- #view-overview>.hero>.scene{min-height:580px}
- #view-overview>.hero>.sidepanel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
- #view-overview>.hero>.sidepanel .notice{grid-column:1/-1}
-}
-@media(max-width:680px){
- #view-overview{grid-template-columns:1fr;grid-template-areas:"scene" "side" "rail" "bottom" "snap";gap:10px}
- #view-overview>.hero>.scene{min-height:480px}
- #view-overview>.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
- #view-overview>.hero>.sidepanel{display:flex}
- #view-overview>.hero>.scene .scenehead{padding:14px}
- #view-overview>.hero>.scene .scenefoot{font-size:8px;letter-spacing:.04em;padding:9px}
-}
-
-
-/* Full visual-system replacement: industrial greenhouse command console */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
-:root{--bg:#050605;--surface:#0b0e0b;--surface2:#111611;--line:#273128;--green:#a5ff00;--green2:#d0ff72;--white:#edf2e9;--muted:#788477}
-body{font-family:Inter,system-ui,sans-serif!important;background:#050605!important;color:var(--white)!important;background-image:radial-gradient(ellipse at 50% -15%,#7bbf2630,transparent 48%),linear-gradient(120deg,#050705,#090d09 52%,#030403)!important}
-.shell{max-width:2000px!important;padding:14px 20px 60px!important}
-.topbar{display:flex!important;min-height:92px!important;border-bottom:1px solid #33432b!important;padding:8px 0 18px!important}
-.brand{gap:18px!important}.brand img{width:76px!important;height:76px!important;border-radius:50%!important;border:1px solid #8cce47!important;padding:5px!important;background:#080c08!important;box-shadow:0 0 30px #9cff0030!important}
-.brandname{font-family:'Barlow Condensed',sans-serif!important;font-size:42px!important;font-weight:900!important;letter-spacing:.06em!important;text-transform:uppercase!important}
-.brandname span{color:var(--green)!important}
-.topright{font-family:'IBM Plex Mono',monospace!important;font-size:11px!important;text-transform:uppercase!important;letter-spacing:.12em!important;border:1px solid #34442d!important;border-radius:4px!important;background:#0b110b!important}
-.tabs{position:sticky!important;top:0!important;z-index:40!important;display:flex!important;gap:0!important;padding:10px 0!important;margin:0 0 20px!important;border:0!important;border-bottom:1px solid #33432b!important;border-radius:0!important;background:#060906ed!important;backdrop-filter:blur(18px)!important}
-.tabs button{font-family:'IBM Plex Mono',monospace!important;font-size:11px!important;letter-spacing:.09em!important;text-transform:uppercase!important;border-radius:3px!important;padding:14px 20px!important;background:transparent!important;color:#879184!important;border-bottom:2px solid transparent!important}
-.tabs button.active{background:#a5ff0010!important;color:var(--green)!important;border:0!important;border-bottom:2px solid var(--green)!important;box-shadow:none!important}
-.panel,.metric,.scene,.growstat{border-radius:5px!important;border:1px solid #2b392c!important;background:linear-gradient(145deg,#111711,#080b08)!important;box-shadow:0 10px 32px #0009,inset 0 1px #ffffff08!important}
-.panel{padding:20px!important}.paneltitle strong,.eyebrow,.metric label{font-family:'IBM Plex Mono',monospace!important;text-transform:uppercase!important;letter-spacing:.12em!important;font-size:10px!important;color:#9aab91!important}
-.metric{padding:19px!important;min-height:116px!important}.metric b{font-family:'Barlow Condensed',sans-serif!important;font-size:36px!important;font-weight:700!important;color:#f3f7ee!important}
-.scene{border-radius:5px!important;border-color:#526a3e!important;background:radial-gradient(ellipse at 50% 48%,#263a1d,#0a100b 70%)!important;box-shadow:0 0 0 1px #a5ff0014,inset 0 0 80px #a5ff0010,0 20px 55px #000c!important}
-.scenehead{padding:22px 24px 0!important}.scene h1{font-family:'Barlow Condensed',sans-serif!important;font-size:clamp(36px,4vw,64px)!important;font-weight:900!important;letter-spacing:.015em!important;text-transform:uppercase!important;line-height:.9!important}
-.scene h1 em{color:var(--green)!important}
-.scenefoot,.viewhint{font-family:'IBM Plex Mono',monospace!important;text-transform:uppercase!important;letter-spacing:.12em!important;border-radius:3px!important}
-.sectionhead h2{font-family:'Barlow Condensed',sans-serif!important;font-size:32px!important;text-transform:uppercase!important;letter-spacing:.04em!important}
-button,input,select,textarea{font-family:Inter,system-ui,sans-serif!important}
-input,select,textarea{background:#070b07!important;border:1px solid #34442f!important;border-radius:4px!important;padding:11px 12px!important}
-button{border-radius:4px!important}
-.btn.primary{background:var(--green)!important;color:#081004!important;font-weight:800!important;box-shadow:0 0 20px #a5ff0022!important}
-.notice{border-radius:3px!important;background:#131e12!important;border-left:3px solid var(--green)!important}
-.growstat{border-radius:4px!important}
-@media(max-width:760px){.shell{padding:8px 10px 34px!important}.brand img{width:54px!important;height:54px!important}.brandname{font-size:25px!important}.tabs{overflow-x:auto}.tabs button{padding:12px 13px!important;font-size:9px!important}.scene{min-height:500px!important}.scene h1{font-size:38px!important}.panel{padding:15px!important}}
-
-
-/* HOODIEGHOST visual rebuild — dashboard composition */
-:root{--green:#8cff00;--green2:#c4ff63;--bg:#030603;--surface:#080d08;--surface2:#101810;--line:#35501c;--muted:#9aa88e;--red:#ff4545;--amber:#ffd21a}
-body{background:radial-gradient(ellipse at 56% 34%,#14200c 0,transparent 46%),#020402;color:#f4f7ef;font-family:Inter,Arial,sans-serif}
-.shell{max-width:none;margin:0 0 0 218px;padding:12px 16px 28px}
-.topbar{height:74px;padding:5px 12px 10px;border:1px solid #30451c;border-radius:12px;background:linear-gradient(100deg,#0d150b,#030603 65%);box-shadow:0 0 18px #8cff0020;position:relative}
-.brand img{width:64px;height:64px;border:1px solid #78b92b;background:#020402;box-shadow:0 0 16px #8cff0040}
-.brandname{font-size:30px;letter-spacing:1.5px;text-shadow:0 0 12px #8cff0060}
-.eyebrow{color:#a6c47c}
-.topright{padding:12px 16px;border:1px solid #476a20;border-radius:8px;background:#070d06}
-.tabs{position:fixed;z-index:20;left:0;top:0;bottom:0;width:202px;padding:18px 12px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;background:linear-gradient(180deg,#0b1209,#020402 85%);border-right:1px solid #39541c;box-shadow:8px 0 30px #000}
-.tabs:before{content:"HOODIEGHOST\\A GROWS";white-space:pre;display:block;text-align:center;font:900 25px/.9 'Barlow Condensed',sans-serif;color:var(--green);text-shadow:0 0 12px #8cff00;padding:12px 0 24px}
-.tabs button{width:100%;text-align:left;border:1px solid #25371b;border-radius:7px;background:linear-gradient(180deg,#111a0e,#060a05);color:#d7e4cd;padding:13px 12px;font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.7px;text-transform:uppercase}
-.tabs button:before{content:"◆";color:#8cff00;margin-right:12px}
-.tabs button.active,.tabs button:hover{background:linear-gradient(90deg,#8cff00,#3b6d00);color:#061000;border-color:#c4ff63;box-shadow:0 0 17px #8cff0060}
-main{padding-top:12px}
-#view-overview{display:grid;grid-template-columns:minmax(0,1fr) 275px;grid-template-areas:"metrics metrics" "scene side" "bottom side" "lineup lineup";gap:12px;align-items:start}
-#view-overview>.metrics{grid-area:metrics;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
-.metric{background:radial-gradient(ellipse at 50% 0,#1c3210,#070b06 72%);border:1px solid #5a8725;border-radius:12px;min-height:100px;padding:15px 18px;box-shadow:inset 0 0 18px #8cff0014,0 0 12px #8cff0014;position:relative}
-.metric:before{content:"";position:absolute;left:12px;right:12px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--green),transparent)}
-.metric label{font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:1px;color:#b7d78c;text-transform:uppercase}
-.metric b{display:block;font:800 clamp(23px,2.3vw,34px) 'Barlow Condensed',sans-serif;color:#fff;margin:6px 0;text-shadow:0 0 12px #8cff0040}
-.metric small{color:#91a481;font:10px 'DM Mono',monospace}
-#view-overview>.hero{display:contents}
-#view-overview .scene{grid-area:scene;min-height:570px;height:clamp(520px,62vh,760px);border:1px solid #75a82a;border-radius:10px;background:radial-gradient(ellipse at 50% 45%,#253c18,#081007 68%,#020402);box-shadow:0 0 25px #8cff0030,inset 0 0 70px #000;overflow:hidden}
-.scene:before{background:linear-gradient(180deg,#02040220,#02040200 30%,#02040266),repeating-linear-gradient(90deg,transparent 0 7.9%,#b7ff0010 8%)}
-.scenehead{top:14px;left:16px;right:16px}
-.scenehead h1{font-size:clamp(22px,3vw,38px);text-shadow:0 2px 12px #000}
-.scenehead .status{background:#061006dd;border-color:#5f9825;color:#baff72}
-.tentpick button{background:#081006dd;border-color:#527c24;color:#d9efc3}
-.tentpick button.active{background:var(--green);color:#061000}
-.tent-art{width:94%;height:75%;bottom:35px;max-width:1000px;filter:drop-shadow(0 0 24px #8cff0030)}
-#greenhouse3d{width:100%;height:100%;display:block}
-#tentFallback{inset:0}
-.viewhint{color:#c1e79a}
-.scenefoot{background:#030603c9;border-top:1px solid #527c24;color:#b5d38d}
-#view-overview>.hero>.sidepanel,.sidepanel{grid-area:side;display:flex;flex-direction:column;gap:10px}
-.panel,.sidepanel .panel{background:linear-gradient(145deg,#10180d,#050805 72%);border:1px solid #405e21;border-radius:9px;box-shadow:inset 0 0 20px #8cff000b,0 0 12px #8cff0012;padding:14px}
-.paneltitle{border-bottom:1px solid #30471c;padding-bottom:9px;margin-bottom:11px}
-.paneltitle strong,.sectionhead h2{font:800 19px 'Barlow Condensed',sans-serif;letter-spacing:.8px;color:#c4ff63}
-.paneltitle .eyebrow{font-size:9px}
-.stage{font:800 28px 'Barlow Condensed',sans-serif;color:var(--green);text-shadow:0 0 12px #8cff0040}
-.growstat{background:#0a1008;border:1px solid #354e20;border-radius:6px;padding:10px}
-.growstat b{color:#c4ff63}
-.notice{background:#11190b!important;border:1px solid #536f25!important;border-left:3px solid var(--green)!important;border-radius:5px!important}
-#view-overview>.sectionhead{grid-area:lineup}
-#view-overview>.grid2{grid-area:bottom;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sectionhead{margin:0 0 10px}
-.sectionhead h2{font-size:24px}
-.btn{border:1px solid #547b28;background:#0c1409;color:#d9f3c2;border-radius:6px}
-.btn.primary{background:linear-gradient(90deg,#a0ff00,#4c8500);color:#071000;border-color:#c8ff77;box-shadow:0 0 12px #8cff0040}
-input,select,textarea{background:#050905!important;border:1px solid #405b28!important;color:#f2f8eb!important;border-radius:5px!important}
-table th{color:#c4ff63}
-.footer{border-color:#39551f;color:#9cb681}
-.plant-inspector{background:#050a04ee;border:1px solid #8cff00}
-@media(max-width:900px){.shell{margin-left:174px;padding:8px}.tabs{width:164px;padding:10px 8px}.tabs:before{font-size:21px}.tabs button{font-size:11px;padding:11px 8px}.topbar{height:auto}.brandname{font-size:23px}#view-overview{grid-template-columns:minmax(0,1fr) 230px}.scene{min-height:480px!important;height:55vh!important}}
-@media(max-width:650px){.shell{margin:0;padding:8px}.tabs{position:sticky;top:0;width:auto;height:auto;bottom:auto;flex-direction:row;padding:7px;overflow-x:auto;border:1px solid #39551f;border-radius:8px}.tabs:before{display:none}.tabs button{min-width:max-content;width:auto;padding:10px}.topbar{margin-bottom:8px}.topright{display:none}#view-overview{display:flex;flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%}#view-overview .scene{width:100%;height:470px!important;min-height:470px!important}.sidepanel,#view-overview>.grid2{width:100%}#view-overview>.grid2{grid-template-columns:1fr}.scenehead h1{font-size:25px}.tent-art{height:65%;width:98%}}
-
-
-/* Correct the active overview's display mode and repair the sidebar */
-.view.active#view-overview{display:grid!important}
-#view-overview{grid-template-columns:minmax(0,1fr) 275px;grid-template-areas:"metrics metrics" "scene side" "bottom side" "lineup lineup";gap:12px;align-items:start}
-#view-overview>.metrics{grid-area:metrics;margin:0}
-#view-overview>.hero{display:contents}
-#view-overview>.hero>.scene{grid-area:scene;min-width:0}
-#view-overview>.hero>.sidepanel{grid-area:side;min-width:0}
-#view-overview>.sectionhead{grid-area:lineup}
-#view-overview>.grid2{grid-area:bottom;min-width:0}
-.tabs:before{content:none!important;display:none!important}
-.tabs{padding-top:18px}
-#view-overview>.hero>.scene{height:clamp(500px,65vh,720px);min-height:500px}
-#tent3dWrap{inset:0!important}
-#greenhouse3d{position:absolute;inset:0;width:100%;height:100%}
-.scenehead{z-index:5}
-.scenefoot{z-index:5}
-@media(max-width:900px){
- #view-overview{grid-template-columns:minmax(0,1fr) 230px;grid-template-areas:"metrics metrics" "scene side" "bottom side" "lineup lineup"}
-}
-@media(max-width:650px){
- .view.active#view-overview{display:flex!important;flex-direction:column}
- #view-overview>.metrics,#view-overview>.hero>.scene,#view-overview>.hero>.sidepanel,#view-overview>.grid2{width:100%}
- #view-overview>.hero>.scene{height:470px;min-height:470px}
-}
-
-
-/* Fresh fixed-image greenhouse dashboard */
-:root{--bg:#050805;--surface:#0b100b;--surface2:#111a0f;--line:#273a1c;--green:#9bff00;--green2:#c5ff75;--muted:#92a188}
-body{background:#030503;color:#f4f8ee}
-.shell{max-width:1720px;padding:14px 18px 34px}
-.topbar{background:linear-gradient(100deg,#0b1209,#050805);border:1px solid #2f491c;border-radius:12px;padding:10px 14px;box-shadow:0 0 25px #8cff0017}
-.brand img{width:68px;height:68px;box-shadow:0 0 14px #9bff0040}
-.brandname{font-size:clamp(24px,3vw,38px);letter-spacing:2px}
-.brandname span{color:var(--green)}
-.tabs{display:flex;gap:7px;flex-wrap:wrap;padding:10px 0 14px;border-bottom:1px solid #26371b}
-.tabs button{background:#0b100a;border:1px solid #263b1b;color:#b8c8ac;border-radius:7px;padding:11px 14px;font:700 12px 'DM Mono',monospace;letter-spacing:.5px}
-.tabs button.active,.tabs button:hover{background:linear-gradient(100deg,#a5ff00,#5d9c00);color:#071000;border-color:#bfff67;box-shadow:0 0 14px #9bff0040}
-#view-overview{display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"metrics metrics" "hero hero" "snapshothead snapshothead" "snapshotgrid snapshotgrid";gap:14px}
-#view-overview>.metrics{grid-area:metrics;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
-#view-overview>.hero{grid-area:hero;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:stretch}
-#view-overview>.sectionhead{grid-area:snapshothead}
-#view-overview>.grid2{grid-area:snapshotgrid;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.metric,.panel,.notice{background:linear-gradient(145deg,#111910,#080c08);border:1px solid #2e461f;border-radius:9px;box-shadow:inset 0 0 18px #9bff0008}
-.metric{padding:14px 16px;min-height:102px}
-.metric label,.paneltitle strong,.growstat label{font-family:'DM Mono',monospace;letter-spacing:.7px}
-.metric b{color:#f5ffe9;font:800 clamp(23px,2.3vw,34px) 'Barlow Condensed',sans-serif;text-shadow:0 0 12px #9bff0030}
-.metric small{color:#9aab8d}
-.scene{position:relative;min-height:520px;border:1px solid #577c29;border-radius:10px;overflow:hidden;background:#050805;box-shadow:0 0 24px #8cff001e}
-.scenehead{z-index:2;left:18px;right:18px;top:16px;text-shadow:0 2px 8px #000}
-.scenehead h1{font-size:clamp(25px,3vw,42px)}
-.scenehead h1 em{color:#a5ff00}
-.fixed-greenhouse{position:absolute;inset:0;width:100%;height:100%;max-width:none;bottom:auto;filter:none}
-.fixed-greenhouse img{width:100%;height:100%;object-fit:cover;object-position:center 54%;display:block}
-.image-vignette{position:absolute;inset:0;background:linear-gradient(180deg,#020502a8 0%,transparent 30%,#0205021c 65%,#020502a8 100%),linear-gradient(90deg,#02050240,transparent 30%,transparent 70%,#02050240);pointer-events:none}
-.viewhint{z-index:3;right:14px;bottom:12px;left:auto;background:#030603c9;border:1px solid #587c2b;border-radius:5px;padding:7px 10px;color:#d4f3b0}
-.scenefoot{z-index:3;background:#030603d9;border-top:1px solid #405e24}
-.tentpick button{background:#050905d9;border:1px solid #8bc64a;color:#f2f9e8}
-.tentpick button.active{background:#a5ff00;color:#071000}
-.sidepanel{display:flex;flex-direction:column;gap:10px}
-.panel{padding:14px}
-.paneltitle{border-bottom:1px solid #2b401e;padding-bottom:9px;margin-bottom:11px}
-.paneltitle strong,.sectionhead h2{color:#c3ff7b}
-.stage{color:#a5ff00}
-.growstat{background:#090f08;border:1px solid #2b401f;border-radius:6px}
-.notice{padding:12px;color:#b8c9ab}
-.btn.primary{background:#9bff00;color:#071000;border-color:#caff82}
-input,select,textarea{background:#050905!important;border:1px solid #354d26!important;color:#eff8e7!important}
-.view:not(.active){display:none!important}
-@media(max-width:850px){#view-overview{grid-template-columns:1fr;grid-template-areas:"metrics" "hero" "snapshot"}#view-overview>.hero{grid-template-columns:minmax(0,1fr) 250px}.scene{min-height:440px}.tabs{overflow-x:auto;flex-wrap:nowrap}.tabs button{white-space:nowrap}}
-@media(max-width:620px){.shell{padding:8px}.topbar{align-items:flex-start}.brand img{width:52px;height:52px}.topright{display:none}.tabs{gap:5px}.tabs button{padding:9px 10px;font-size:10px}#view-overview>.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#view-overview>.hero{display:flex;flex-direction:column}.scene{width:100%;min-height:390px;height:390px}.sidepanel{width:100%}#view-overview>.grid2{grid-template-columns:1fr}.scenehead h1{font-size:25px}}
-
-
-/* Tablet-first layout correction from Safari screenshot */
-.shell{width:min(100%,1500px)!important;max-width:none!important;margin:0 auto!important;padding:12px clamp(10px,2vw,24px) 36px!important;box-sizing:border-box}
-.topbar{width:100%;box-sizing:border-box;min-height:88px}
-.tabs{width:100%;box-sizing:border-box;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:stretch;gap:7px;overflow-x:auto!important;overflow-y:hidden;padding:12px 0 14px;white-space:nowrap}
-.tabs button{flex:0 0 auto!important;width:auto!important;min-width:max-content!important;min-height:42px;text-align:center!important}
-#view-overview.view.active{display:grid!important;width:100%;grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"metrics" "hero" "snapshothead" "snapshotgrid"!important;gap:12px!important;align-items:stretch}
-#view-overview>.metrics{grid-area:metrics!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;flex-direction:initial!important;width:100%;gap:9px!important}
-#view-overview>.hero{grid-area:hero!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%;min-width:0;gap:12px!important}
-#view-overview>.hero>.scene{grid-area:auto!important;width:100%;min-width:0;min-height:0!important;height:clamp(420px,62vw,680px)!important}
-#view-overview>.hero>.sidepanel{grid-area:auto!important;width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:10px}
-#view-overview>.hero>.sidepanel>.notice{grid-column:1/-1}
-#view-overview>.sectionhead{grid-area:snapshothead!important}
-#view-overview>.grid2{grid-area:snapshotgrid!important;width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.fixed-greenhouse{inset:0!important;width:100%!important;height:100%!important}
-.fixed-greenhouse img{width:100%;height:100%;object-fit:cover;object-position:center 48%}
-.scenehead{left:16px;right:16px;top:14px}
-.scenefoot{left:0;right:0;bottom:0}
-@media(max-width:900px){
- #view-overview>.metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- #view-overview>.hero>.scene{height:clamp(390px,78vw,560px)!important}
-}
-@media(max-width:620px){
- .shell{padding:8px 8px 24px!important}
- .topbar{min-height:64px;gap:8px}
- .brand img{width:48px;height:48px}
- .brandname{font-size:23px}
- .tabs button{font-size:10px;padding:9px 10px}
- #view-overview>.hero>.scene{height:430px!important;min-height:430px!important}
- #view-overview>.hero>.sidepanel{grid-template-columns:1fr}
- #view-overview>.grid2{grid-template-columns:1fr}
- .scenehead h1{font-size:25px}
-}
-
-
-/* Individual plant stage tracking */
-.scene-stage-pill{position:absolute;right:16px;top:54px;z-index:4;padding:7px 10px;border:1px solid #8bc64a;border-radius:5px;background:#061006dd;color:#c5ff75;font:700 10px 'DM Mono',monospace;letter-spacing:.7px}
-.plant-record{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,220px) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
-.plant-record-name{min-width:0;display:flex;flex-direction:column;gap:3px}
-.plant-record-name small{color:var(--muted);font-size:11px}
-.plant-stage-field{display:flex;flex-direction:column;gap:4px;color:var(--muted);font:9px 'DM Mono',monospace;letter-spacing:.8px}
-.plant-stage-field select{width:100%;min-width:0}
-@media(max-width:540px){.plant-record{grid-template-columns:1fr auto}.plant-stage-field{grid-column:1/-1;grid-row:2}.plant-record>.btn{grid-column:2;grid-row:1}}
-
-
-/* Stage-aware greenhouse treatment and clearer plant operations */
-#tent3dWrap{--stage-glow:#9bff00;--stage-warmth:0;--stage-contrast:1}
-#tent3dWrap .fixed-stage-caption{position:absolute;z-index:3;left:16px;bottom:48px;padding:8px 11px;border:1px solid color-mix(in srgb,var(--stage-glow) 70%,transparent);border-radius:6px;background:#030803d9;color:#efffe2;font:700 10px 'DM Mono',monospace;letter-spacing:.7px;max-width:calc(100% - 32px)}
-#tent3dWrap .fixed-stage-caption b{color:var(--stage-glow)}
-#tent3dWrap[data-stage="seed-germination"],#tent3dWrap[data-stage="seedling"]{--stage-glow:#9fe7ff;--stage-contrast:.88}
-#tent3dWrap[data-stage="vegetative"]{--stage-glow:#83ff65;--stage-contrast:1}
-#tent3dWrap[data-stage*="flower"]{--stage-glow:#c6ff42;--stage-contrast:1.08}
-#tent3dWrap[data-stage="harvest"]{--stage-glow:#ffc76a;--stage-contrast:1.13}
-#tent3dWrap .image-vignette{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--stage-glow) 12%,transparent)}
-#tent3dWrap .scene-stage-caption{color:var(--stage-glow)}
-.scene-stage-pill{border-color:var(--stage-glow)!important}
-.plant-record{grid-template-columns:minmax(0,1fr) minmax(145px,200px) auto}
-.plant-record-name small{display:flex;gap:7px;align-items:center}
-.plant-stage-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9bff00;box-shadow:0 0 7px currentColor;flex:none}
-.plant-stage-field select{font-size:12px;padding:7px}
-.stage-composition{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
-.stage-composition span{padding:5px 7px;border:1px solid #334b25;border-radius:5px;background:#071006;color:#c7e9b2;font:10px 'DM Mono',monospace}
-@media(max-width:540px){.plant-record{grid-template-columns:1fr auto}.plant-stage-field{grid-column:1/-1;grid-row:2}.plant-record>.btn{grid-column:2;grid-row:1}}
-
-
-.stage-photo-credit{position:absolute;z-index:4;right:12px;bottom:48px;padding:5px 7px;border-radius:4px;background:#030803c9;color:#d2e6c4;font:8px 'DM Mono',monospace;letter-spacing:.4px}
-.fixed-greenhouse img{transition:opacity .25s ease;object-fit:cover;object-position:center center}
-
-.stage-photo-credit a{color:#d5ff9e;text-decoration:underline;text-underline-offset:2px}.stage-photo-credit a:hover{color:#fff}
-
-/* Animated, original vector greenhouse — stage-reactive plant silhouettes */
-.fixed-greenhouse{background:#040805;isolation:isolate}
-.animated-grow-scene{position:absolute;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 65%,#23331c 0%,#0a100b 52%,#020403 100%)}
-.greenhouse-svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 12px #8cff0012)}
-.scene-brand-mark{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%);text-align:center;color:#b9ff65;font:900 clamp(18px,3vw,34px)/.9 'Barlow Condensed',sans-serif;letter-spacing:2px;text-shadow:0 0 20px #8cff0080,0 3px 5px #000;opacity:.82;white-space:nowrap}
-.scene-brand-mark span{font-size:.75em}
-.scene-overlay-glow{position:absolute;inset:0;background:linear-gradient(180deg,#02060320,transparent 35%,#02060330 75%,#020603a8);pointer-events:none}
-.plant-row{transform-box:fill-box;transform-origin:center bottom;animation:plant-sway 5.8s ease-in-out infinite alternate}
-.row-right{animation-delay:-2.4s}
-.plant-leaves{transform-box:fill-box;transform-origin:50% 100%;animation:leaf-sway 3.7s ease-in-out infinite alternate}
-.buds{opacity:0;transition:opacity .7s ease}
-.grow-lights{animation:lamp-breathe 4s ease-in-out infinite alternate}
-.dust{animation:dust-drift 8s ease-in-out infinite alternate}
-.d2{animation-delay:-2s}.d3{animation-delay:-5s}.d4{animation-delay:-3s}
-@keyframes plant-sway{from{transform:rotate(-1.1deg)}to{transform:rotate(1.1deg)}}
-@keyframes leaf-sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
-@keyframes lamp-breathe{from{opacity:.65}to{opacity:1}}
-@keyframes dust-drift{from{transform:translateY(15px);opacity:.1}to{transform:translateY(-28px);opacity:.6}}
-.plant-body{transform-box:fill-box;transform-origin:center bottom;transition:transform .8s ease}
-#tent3dWrap[data-stage="seed---germination"] .plant-body{transform:scale(.28)}
-#tent3dWrap[data-stage="seedling"] .plant-body{transform:scale(.48)}
-#tent3dWrap[data-stage="vegetative"] .plant-body{transform:scale(.78)}
-#tent3dWrap[data-stage="early-flower"] .plant-body,#tent3dWrap[data-stage="mid-flower"] .plant-body{transform:scale(1)}
-#tent3dWrap[data-stage="late-flower"] .plant-body,#tent3dWrap[data-stage="harvest"] .plant-body{transform:scale(1.08)}
-#tent3dWrap[data-stage*="flower"] .buds,#tent3dWrap[data-stage="harvest"] .buds{opacity:.9}
-#tent3dWrap[data-stage="seed---germination"] .plant-leaves,#tent3dWrap[data-stage="seedling"] .plant-leaves{opacity:.55}
-#tent3dWrap[data-stage="harvest"] .plant-leaves{fill:#78934b}
-#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(1) .plant-body{transform:scale(.55)}
-#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(2) .plant-body{transform:scale(.8)}
-#tent3dWrap[data-stage="mixed-stages"] .plant-row use:nth-child(3) .plant-body{transform:scale(1)}
-.fixed-greenhouse .image-vignette{z-index:1}
-@media(prefers-reduced-motion:reduce){.plant-row,.plant-leaves,.grow-lights,.dust{animation:none!important}}
-
-
-/* Comic-book greenhouse art direction */
-.animated-grow-scene{background:radial-gradient(ellipse at 50% 60%,#31471d 0%,#101a0d 46%,#020403 100%);border:2px solid #a5ff00;box-shadow:inset 0 0 0 5px #030603, inset 0 0 45px #9bff0030,0 0 22px #83ff0030}
-.animated-grow-scene:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.2;background-image:radial-gradient(#c9ff85 1px,transparent 1.6px);background-size:7px 7px;mix-blend-mode:screen;mask-image:linear-gradient(90deg,#000 0%,transparent 34%,transparent 66%,#000 100%)}
-.animated-grow-scene:after{content:"";position:absolute;inset:-20%;z-index:2;pointer-events:none;opacity:.23;background:repeating-conic-gradient(from 4deg at 50% 44%,#baff43 0deg 1deg,transparent 1deg 10deg);mask-image:radial-gradient(ellipse at 50% 44%,transparent 0 28%,#000 70%);animation:comic-rays 28s linear infinite}
-.greenhouse-svg{filter:contrast(1.18) saturate(1.22) drop-shadow(0 0 2px #b5ff62);transform:scale(1.015)}
-.greenhouse-svg g[stroke="#354a36"]{stroke:#9bc66b;stroke-width:13;filter:drop-shadow(3px 3px 0 #020402)}
-.plant-leaves{stroke:#a7e66c;stroke-width:2.7;filter:drop-shadow(2px 3px 0 #061006);animation-duration:2.8s}
-.plant-row{filter:drop-shadow(3px 4px 0 #020502);animation-duration:4.2s}
-.grow-lights{filter:drop-shadow(0 0 9px #c5ff5c);animation-duration:2.6s}
-.scene-brand-mark{font-size:clamp(20px,3.5vw,40px);-webkit-text-stroke:1px #e0ffad;text-shadow:3px 3px 0 #15250b,6px 6px 0 #020402,0 0 22px #8cff00;transform:translate(-50%,-50%) rotate(-3deg)}
-.comic-burst{position:absolute;z-index:4;right:5%;top:13%;width:clamp(66px,10vw,112px);aspect-ratio:1;display:grid;place-content:center;text-align:center;clip-path:polygon(50% 0%,61% 17%,79% 5%,81% 27%,100% 32%,86% 49%,100% 67%,78% 72%,77% 95%,57% 84%,43% 100%,35% 80%,12% 88%,17% 66%,0 53%,18% 39%,6% 19%,31% 22%);background:#a5ff00;color:#081003;font:900 clamp(11px,1.5vw,17px)/.85 'Barlow Condensed',sans-serif;letter-spacing:1px;text-shadow:1px 1px 0 #eaffba;filter:drop-shadow(4px 5px 0 #020402);transform:rotate(9deg);animation:burst-pop 3.4s ease-in-out infinite}
-.comic-burst b{font-size:1.35em}
-.comic-caption{position:absolute;z-index:4;left:15px;top:14px;padding:5px 8px;border:1px solid #caff75;background:#050a04e8;color:#d9ffac;font:900 9px 'DM Mono',monospace;letter-spacing:1.2px;transform:rotate(-2deg);box-shadow:3px 3px 0 #020402}
-.fixed-stage-caption{border:2px solid #a5ff00!important;border-radius:0!important;box-shadow:3px 3px 0 #020402;font-weight:900!important;transform:rotate(-1deg);text-shadow:1px 1px 0 #000}
-.scene-overlay-glow{z-index:3;background:linear-gradient(180deg,#02060310,transparent 32%,#02060320 70%,#020603b8)}
-@keyframes comic-rays{to{transform:rotate(360deg)}}
-@keyframes burst-pop{0%,100%{scale:1;rotate:9deg}50%{scale:1.08;rotate:13deg}}
-@media(prefers-reduced-motion:reduce){.animated-grow-scene:after,.comic-burst{animation:none!important}}
-
-
-/* HOODIEGHOST graphic-novel art direction — applied to live interface, not a flat mockup */
-:root{--bg:#050606;--panel:#10110f;--line:#45651d;--green:#a5ff00;--green2:#d8ff8b;--muted:#a2ad93;--white:#f8f8ed;--amber:#ffd52b;--red:#ff3854}
-body{background:radial-gradient(ellipse at 50% 5%,#1c2611 0%,#080a08 42%,#030404 100%);background-attachment:fixed}
-.shell{max-width:1740px;padding:14px 16px 44px}
-.topbar{border:2px solid #83c900;border-radius:14px;padding:9px 14px;background:linear-gradient(100deg,#080b08,#11170b 55%,#050705);box-shadow:0 0 0 3px #050805,0 0 25px #8cff0030,inset 0 0 28px #a5ff0010}
-.brand img{width:70px;height:70px;border:2px solid var(--green);box-shadow:0 0 14px #a5ff0070}
-.brandname{font-size:clamp(25px,3vw,38px);font-weight:900;letter-spacing:1px;text-shadow:2px 2px 0 #263b0d,4px 4px 0 #020402}
-.brandname span{color:var(--green);text-shadow:0 0 14px #a5ff0080}
-.topright>div{border:1px solid #526f25;border-radius:5px;padding:10px 14px;background:#080c08}
-.tabs{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:7px;padding:11px 0 14px}
-.tabs button{border:2px solid #516d25;border-radius:8px;background:linear-gradient(145deg,#151a12,#050705);color:#e7edda;padding:12px 7px;font:800 12px 'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;box-shadow:3px 3px 0 #020302;transition:transform .16s,box-shadow .16s,border-color .16s}
-.tabs button:before{content:"✦";display:block;color:var(--green);font-size:15px;line-height:1.1;margin-bottom:3px}
-.tabs button.active,.tabs button:hover{background:linear-gradient(145deg,#c6ff30,#78bd00);color:#071000;border-color:#e5ff91;box-shadow:0 0 16px #a5ff0080,3px 3px 0 #020302;transform:translateY(-2px)}
-.tabs button.active:before,.tabs button:hover:before{color:#182700}
-.hero{grid-template-columns:minmax(0,1.8fr) minmax(270px,.72fr);gap:12px}
-.scene{border:3px solid #a5ff00;border-radius:4px;box-shadow:0 0 0 3px #050805,0 0 25px #9aff0038,inset 0 0 70px #000;min-height:500px}
-.scene:before{background:repeating-linear-gradient(135deg,transparent 0 7px,#ffffff08 8px 9px),linear-gradient(0deg,#030503aa,transparent 54%)}
-.scenehead h1{font-size:clamp(30px,4vw,52px);text-shadow:3px 3px 0 #071006,5px 5px 0 #020302}
-.scenehead h1 em{color:#baff16;text-shadow:2px 2px 0 #293d08,0 0 18px #a5ff00}
-.tentpick button{border:2px solid #7ea934;border-radius:3px;font:900 12px 'Barlow Condensed';box-shadow:2px 2px 0 #020302}
-.tentpick button.active{box-shadow:0 0 14px #a5ff0080,2px 2px 0 #020302}
-.sidepanel{gap:9px}
-.panel,.metric,.growstat{border:2px solid #324b20;border-radius:5px;background:repeating-linear-gradient(135deg,#ffffff05 0 2px,transparent 2px 7px),linear-gradient(145deg,#151a12,#070907);box-shadow:3px 3px 0 #020302,inset 0 0 18px #8cff0009}
-.paneltitle{border-bottom:1px solid #496522;padding-bottom:8px}
-.paneltitle strong{font:900 20px 'Barlow Condensed';letter-spacing:1px;text-shadow:1px 1px #000}
-.stage{font-size:29px;text-shadow:2px 2px 0 #182700,0 0 12px #a5ff0060}
-.growstat{background:#070a07;border-color:#293d1b}
-.metrics{gap:9px;margin:12px 0}
-.metric{position:relative;overflow:hidden;padding:13px 15px}
-.metric:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--green);box-shadow:0 0 12px var(--green)}
-.metric b{font-size:32px;text-shadow:2px 2px 0 #14200a}
-.sectionhead h2{font-size:32px;text-shadow:2px 2px 0 #111}
-.btn,.tabs button,.tentpick button{transition:filter .15s,transform .15s,box-shadow .15s}
-.btn{border-radius:3px;border:2px solid #8fc52d;box-shadow:2px 2px 0 #020302;font-family:'Barlow Condensed';font-weight:900;letter-spacing:.6px;text-transform:uppercase}
-.btn:hover{filter:brightness(1.2);transform:translateY(-1px);box-shadow:0 0 12px #a5ff0060,2px 2px 0 #020302}
-input,select,textarea{border:1px solid #5a742d;border-radius:3px;background:#080b08}
-input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #a5ff0040}
-.notice{border:2px solid #7f9f28;border-radius:4px;box-shadow:3px 3px 0 #020302}
-.animated-grow-scene{background:radial-gradient(ellipse at 50% 55%,#44213e 0%,#172314 43%,#040605 100%);border:0;box-shadow:inset 0 0 0 4px #080a06,inset 0 0 50px #f0008c30,0 0 24px #a5ff0035}
-.greenhouse-svg{filter:contrast(1.3) saturate(1.45) drop-shadow(0 0 2px #b5ff62)}
-.greenhouse-svg defs #plant .plant-leaves{filter:drop-shadow(2px 3px 0 #061006)}
-.plant-leaves{fill:#398c23;stroke:#c8ff69;stroke-width:2.2;filter:drop-shadow(2px 3px 0 #061006);animation-duration:2.6s}
-.leaf-veins{filter:drop-shadow(1px 1px #17340d)}
-.buds{opacity:0;transition:opacity .8s ease;filter:drop-shadow(0 0 5px #ff83bf)}
-#tent3dWrap[data-stage*="flower"] .buds,#tent3dWrap[data-stage="harvest"] .buds{opacity:1}
-#tent3dWrap[data-stage*="flower"] .plant-leaves{fill:#3d941d}
-#tent3dWrap[data-stage="harvest"] .plant-leaves{fill:#75913e}
-.comic-burst{background:linear-gradient(135deg,#f4f000,#a5ff00 60%,#ff4fbd);color:#100b08;border:2px solid #fff4a0;outline:2px solid #101010;box-shadow:4px 5px 0 #050505,0 0 20px #d6ff00a0}
-.comic-caption{border:2px solid #e0ff8c;box-shadow:3px 3px 0 #020402,0 0 12px #a5ff0050}
-.scene-brand-mark{color:#e7ff9b;-webkit-text-stroke:1.5px #111;text-shadow:3px 3px 0 #18250c,6px 6px 0 #020402,0 0 22px #8cff00}
-.scene-overlay-glow{background:linear-gradient(180deg,#05050524,transparent 36%,#05050525 70%,#020603b8)}
-@media(max-width:900px){.tabs{grid-template-columns:repeat(5,minmax(0,1fr))}.hero{grid-template-columns:1fr}.scene{min-height:430px}}
-@media(max-width:560px){.shell{padding:9px 8px 30px}.topbar{padding:8px}.brand img{width:48px;height:48px}.brandname{font-size:23px}.tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.tabs button{padding:8px 4px;font-size:11px}.scene{min-height:360px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.scenehead{left:12px;right:12px;top:12px}.scenehead h1{font-size:27px}}
-@media(prefers-reduced-motion:reduce){.tabs button,.btn{transition:none!important}}
-
-
-/* Greenhouse scene refinement: cinematic aisle, grow-room hardware and comic inking */
-.animated-grow-scene{background:radial-gradient(ellipse at 50% 45%,#26351e 0%,#101710 45%,#030504 100%);border:2px solid #91c82c;box-shadow:inset 0 0 0 4px #050805,inset 0 0 70px #000b,0 0 20px #8cff0028}
-.animated-grow-scene:after{opacity:.09;mask-image:radial-gradient(ellipse at 50% 45%,transparent 0 36%,#000 78%)}
-.animated-grow-scene:before{opacity:.12;background-size:5px 5px}
-.greenhouse-svg{filter:contrast(1.28) saturate(1.3) drop-shadow(0 0 3px #b5ff6230)}
-.greenhouse-svg .grow-lights{filter:drop-shadow(0 0 14px #d7ff86);animation:lamp-breathe 2.8s ease-in-out infinite alternate}
-.greenhouse-svg .ceiling-hardware{filter:drop-shadow(2px 3px 0 #020402)}
-.greenhouse-svg .vent-hardware{filter:drop-shadow(3px 4px 0 #020402)}
-.fan-blades{transform-box:fill-box;transform-origin:center;animation:fan-spin 5s linear infinite}
-@keyframes fan-spin{to{transform:rotate(360deg)}}
-.grow-pots{filter:drop-shadow(3px 4px 0 #020302)}
-.plant-row{filter:drop-shadow(4px 5px 0 #020302);animation-duration:3.8s}
-.plant-leaves{stroke:#d4ff83;stroke-width:2.5;filter:drop-shadow(2px 3px 0 #081006)}
-.scene-brand-mark{display:none}
-.comic-burst{display:none}
-.comic-caption{left:18px;top:16px;background:#070a07eF;border-color:#b6e46b;transform:rotate(-1deg)}
-.scene-overlay-glow{background:linear-gradient(180deg,#02060318,transparent 38%,#02060320 68%,#020603c4)}
-@media(prefers-reduced-motion:reduce){.fan-blades{animation:none!important}}
-
-/* Complete greenhouse art reset: graphic-novel grow-room stage */
-.animated-grow-scene{background:#050707;border:2px solid #a5ff00;border-radius:3px;box-shadow:0 0 0 5px #050605,0 0 26px #a5ff0030;overflow:hidden}
-.animated-grow-scene:before{display:none}
-.animated-grow-scene:after{opacity:.12;background:repeating-conic-gradient(from 0deg at 50% 48%,#baff43 0deg .6deg,transparent .6deg 13deg);mask-image:radial-gradient(ellipse at 50% 50%,transparent 0 52%,#000 100%);animation:comic-rays 34s linear infinite}
-.greenhouse-svg{width:100%;height:100%;display:block;filter:contrast(1.16) saturate(1.2)}
-.greenhouse-svg .plant-row{filter:drop-shadow(5px 7px 0 #020302);animation:plant-rise 4.5s ease-in-out infinite alternate}
-.greenhouse-svg .row-center{animation-delay:-1.4s}.greenhouse-svg .row-right{animation-delay:-2.7s}
-.greenhouse-svg .plant-body{transform-box:fill-box;transform-origin:center bottom;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
-.greenhouse-svg .plant-leaves{stroke:#101b0b;stroke-width:3.5;filter:drop-shadow(2px 3px 0 #061006);animation:leaf-rustle 3.1s ease-in-out infinite alternate}
-.greenhouse-svg .leaf-veins{opacity:.85}
-.greenhouse-svg .buds{opacity:0;transition:opacity .7s ease;filter:drop-shadow(0 0 7px #d7ff85)}
-#tent3dWrap[data-stage*="flower"] .greenhouse-svg .buds,#tent3dWrap[data-stage="harvest"] .greenhouse-svg .buds{opacity:1}
-#tent3dWrap[data-stage="harvest"] .greenhouse-svg .plant-leaves{fill:#82964a}
-.greenhouse-svg .fan-blades{transform-box:fill-box;transform-origin:center;animation:fan-spin 5s linear infinite}
-.greenhouse-svg .grow-lights{filter:drop-shadow(0 0 12px #dcff9b);animation:lamp-breathe 2.4s ease-in-out infinite alternate}
-.scene-brand-mark,.comic-burst{display:none!important}
-.comic-caption{border:2px solid #d5ff88;background:#080c09;box-shadow:3px 3px 0 #020302}
-.scene-overlay-glow{background:linear-gradient(180deg,#03060312,transparent 48%,#02060365)}
-@keyframes plant-rise{from{transform:translateY(2px)}to{transform:translateY(-4px)}}
-@keyframes leaf-rustle{from{transform:rotate(-1deg)}to{transform:rotate(1deg)}}
-@keyframes fan-spin{to{transform:rotate(360deg)}}
-@keyframes lamp-breathe{from{opacity:.78}to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.animated-grow-scene:after,.greenhouse-svg .plant-row,.greenhouse-svg .plant-leaves,.greenhouse-svg .fan-blades,.greenhouse-svg .grow-lights{animation:none!important}}
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--bg:#0c100d;--surface:#131a15;--surface2:#19221b;--surface3:#202b22;--line:#2a392c;--line2:#3c503d;--text:#eef3e9;--muted:#94a292;--green:#a5e66b;--green2:#d0f6a6;--amber:#e8bd69;--red:#e67c72;--blue:#83b8c8;--radius:16px;--shadow:0 14px 36px #0005}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 60% -15%,#263629 0,transparent 48%),var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;font-size:14px;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1600px;margin:auto;padding:22px 26px 48px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;background:#111812eF;border:1px solid var(--line2);border-radius:20px;box-shadow:var(--shadow);position:sticky;top:10px;z-index:20;backdrop-filter:blur(16px)}.brand{display:flex;align-items:center;gap:14px;min-width:0}.logo{width:52px;height:52px;border-radius:50%;border:1px solid #6e9c4e;background:linear-gradient(145deg,#30482c,#101610);display:grid;place-items:center;color:var(--green);font-weight:800;font-size:17px;letter-spacing:-2px;box-shadow:0 0 20px #a5e66b20}.brand small,.eyebrow{display:block;color:var(--muted);font:500 10px 'DM Mono',monospace;letter-spacing:1.7px;text-transform:uppercase}.brand h1{font-size:20px;letter-spacing:1.1px;margin:3px 0 0;font-weight:800}.brand h1 span{color:var(--green)}.top-actions{display:flex;align-items:center;gap:10px}.status{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:11px 'DM Mono',monospace}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}.btn{border:1px solid var(--line2);border-radius:10px;padding:10px 14px;background:var(--surface2);color:var(--text);font-weight:700;font-size:12px;transition:.18s}.btn:hover{border-color:var(--green);transform:translateY(-1px)}.btn.primary{background:var(--green);border-color:var(--green);color:#14200f}.btn.ghost{background:transparent}.btn.danger{color:var(--red)}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:22px;margin-top:22px}.sidebar{align-self:start;position:sticky;top:110px;padding:12px;background:#111812d9;border:1px solid var(--line);border-radius:18px}.tent-switch{padding:8px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px}.tent-switch label{display:block;margin:0 0 8px 4px}.tent-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.tent-buttons button{padding:9px 3px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:11px 'DM Mono',monospace}.tent-buttons button.active{background:#263a24;color:var(--green2);border-color:#668c4c}.nav{display:grid;gap:4px}.nav button{display:flex;align-items:center;gap:12px;text-align:left;padding:12px;border:1px solid transparent;border-radius:10px;background:transparent;color:#aebbad;font-weight:700;font-size:12px}.nav button:hover,.nav button.active{background:#1c291e;border-color:#344934;color:var(--green2)}.nav .ico{width:20px;text-align:center;font-size:16px}.sidebar-foot{margin:16px 5px 3px;padding-top:12px;border-top:1px solid var(--line);color:var(--muted);font:10px 'DM Mono',monospace;line-height:1.7}.content{min-width:0}.page{display:none;animation:fade .22s ease}.page.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin:5px 0 20px}.page-head h2{font-size:25px;margin:4px 0 0;letter-spacing:-.7px}.page-head p{margin:6px 0 0;color:var(--muted);font-size:12px}.head-actions{display:flex;gap:8px;flex-wrap:wrap}.grid{display:grid;gap:14px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:15px}.card{background:linear-gradient(145deg,#19221b,#111812);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 24px #0002;min-width:0}.metric{padding:17px 18px;position:relative;overflow:hidden}.metric:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;background:#a5e66b0a;right:-35px;top:-40px}.metric .label{color:var(--muted);font:10px 'DM Mono',monospace;letter-spacing:1.2px;text-transform:uppercase}.metric .value{font-size:30px;font-weight:800;letter-spacing:-1px;margin:9px 0 3px}.metric .hint{color:var(--muted);font-size:10px}.metric .unit{font-size:14px;color:var(--muted);font-weight:600}.overview-grid{grid-template-columns:minmax(0,1.6fr) minmax(280px,.9fr);align-items:stretch}.room-card{padding:0;overflow:hidden;position:relative;min-height:390px;background:linear-gradient(140deg,#26382b,#111b15 52%,#0e1510)}.room-top{position:absolute;z-index:2;left:22px;right:22px;top:20px;display:flex;justify-content:space-between;gap:12px;align-items:start}.room-top h3{font-size:23px;margin:5px 0 0;letter-spacing:-.8px}.room-top p{font-size:11px;color:#b0c0ae;margin:5px 0}.room-badge{font:10px 'DM Mono';color:var(--green2);border:1px solid #6c9554;background:#0e1711c9;padding:8px 10px;border-radius:999px}.room-art{position:absolute;inset:0;width:100%;height:100%;opacity:.96}.room-stats{position:absolute;z-index:2;bottom:16px;left:18px;right:18px;display:flex;gap:8px;flex-wrap:wrap}.chip{background:#0b120edb;border:1px solid #536a4b;border-radius:8px;padding:7px 10px;color:#d7e8cf;font:10px 'DM Mono',monospace}.stack{display:grid;gap:14px}.panel{padding:17px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.panel-head h3{font-size:13px;margin:0;letter-spacing:.2px}.panel-head small{color:var(--muted);font:10px 'DM Mono'}.status-list{display:grid;gap:10px}.status-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding-bottom:9px;border-bottom:1px solid #263329}.status-row:last-child{border:0;padding:0}.status-row span{color:var(--muted);font-size:11px}.status-row strong{font:600 12px 'DM Mono';color:var(--text)}.pill{border-radius:999px;padding:4px 8px;font:10px 'DM Mono';background:#263526;color:var(--green2)}.pill.warn{background:#3a3020;color:var(--amber)}.pill.bad{background:#3b2423;color:var(--red)}.lower-grid{grid-template-columns:1.15fr 1fr 1fr;margin-top:14px}.empty{padding:22px;text-align:center;color:var(--muted);font-size:12px;border:1px dashed var(--line2);border-radius:12px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:grid;gap:6px;min-width:0}.field.full{grid-column:1/-1}.field label{color:#b8c5b5;font-size:11px;font-weight:700}.field input,.field select,.field textarea{width:100%;min-width:0;background:#0c130e;border:1px solid var(--line2);border-radius:9px;color:var(--text);padding:11px 12px;outline:none}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #a5e66b18}.field small{font-size:10px;color:var(--muted)}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.data-table{width:100%;border-collapse:collapse;min-width:580px}.data-table th,.data-table td{text-align:left;padding:12px 13px;border-bottom:1px solid var(--line);font-size:11px}.data-table th{color:var(--muted);font:10px 'DM Mono';letter-spacing:1px;text-transform:uppercase;background:#111812}.data-table tr:last-child td{border-bottom:0}.data-table td{color:#dbe4d7}.data-table .muted{color:var(--muted)}.plant-card{padding:15px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.plant-card h4{margin:0 0 5px;font-size:14px}.plant-card p{margin:0;color:var(--muted);font-size:11px}.plant-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.plant-mark{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#273a26;color:var(--green);font-size:21px}.plant-main{display:flex;align-items:center;gap:12px}.plant-actions{display:flex;gap:6px;align-items:center}.mini{padding:6px 9px;font-size:10px}.chart{width:100%;height:180px;display:block}.chart-legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font:10px 'DM Mono'}.legend-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.calendar-head strong{font-size:15px}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.cal-dayname{text-align:center;color:var(--muted);font:10px 'DM Mono';padding:8px 0}.cal-day{min-height:76px;border:1px solid var(--line);background:#111812;border-radius:9px;padding:7px;text-align:left;color:var(--text)}.cal-day.muted{opacity:.35}.cal-day.today{border-color:var(--green)}.cal-day.selected{background:#263b25;border-color:#83b65d}.cal-day b{font:11px 'DM Mono'}.cal-day i{display:block;width:5px;height:5px;border-radius:50%;background:var(--green);margin-top:8px}.notice{padding:12px 14px;border:1px solid #695a36;background:#302a1b;color:#e8d3a3;border-radius:10px;font-size:11px;line-height:1.6}.target-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.target-tile{padding:14px}.target-tile strong{display:block;font-size:18px;margin:7px 0}.target-tile span{color:var(--muted);font-size:10px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#e2f5d3;color:#15210f;border-radius:10px;padding:11px 16px;font-size:12px;font-weight:800;box-shadow:var(--shadow);transition:.2s;z-index:100}.toast.show{opacity:1;transform:translate(-50%,0)}.mobile-nav{display:none}
+@media(max-width:1100px){.layout{grid-template-columns:190px minmax(0,1fr)}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lower-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.lower-grid>.card:last-child{grid-column:1/-1}}
+@media(max-width:760px){.app{padding:12px 12px 90px}.topbar{top:5px;padding:11px 13px;border-radius:14px}.brand h1{font-size:16px}.brand small{font-size:8px}.logo{width:42px;height:42px}.status{display:none}.layout{display:block;margin-top:15px}.sidebar{position:static;padding:8px;margin-bottom:14px}.tent-switch{padding:5px 4px 9px;margin-bottom:7px}.nav{display:flex;overflow:auto;gap:5px;scrollbar-width:none}.nav button{white-space:nowrap;padding:9px 11px;font-size:11px}.nav .ico{font-size:14px;width:auto}.sidebar-foot{display:none}.page-head{align-items:start;flex-direction:column;margin-bottom:14px}.page-head h2{font-size:22px}.overview-grid{grid-template-columns:1fr}.room-card{min-height:340px}.lower-grid{grid-template-columns:1fr}.lower-grid>.card:last-child{grid-column:auto}.plant-grid{grid-template-columns:1fr}.target-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cal-day{min-height:58px;padding:5px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.mobile-nav{display:none}}
+@media(max-width:420px){.metrics{gap:8px}.metric{padding:13px}.metric .value{font-size:25px}.room-card{min-height:300px}.room-top h3{font-size:19px}.head-actions{width:100%}.head-actions .btn{flex:1}.calendar{gap:3px}.cal-day{min-height:48px}.cal-day i{margin-top:4px}}
 </style>
 </head>
 <body>
-<div class="shell">
+<div class="app">
 <header class="topbar">
- <div class="brand"><img src="hoodieghost-logo.jpg" alt="HOODIEGHOST GROWS logo" onerror="this.style.display='none'"><div><div class="eyebrow">Indoor cultivation control</div><div class="brandname">HOODIEGHOST <span>GROWS</span></div></div></div>
- <div class="topright"><div><div class="eyebrow">System status</div><div class="live">LOCAL GROW ROOM ONLINE</div></div></div>
+ <div class="brand"><div class="logo">HG</div><div><small>PRIVATE CULTIVATION WORKSPACE</small><h1>HOODIEGHOST <span>GROWS</span></h1></div></div>
+ <div class="top-actions"><div class="status"><span class="dot"></span> LOCAL DATA SAVED</div><button class="btn ghost" id="quickExport">↧ Export backup</button></div>
 </header>
-<nav class="tabs" aria-label="Main navigation">
- <button class="active" data-view="overview">Grow room</button><button data-view="plants">Plants & timeline</button><button data-view="environment">Environment</button><button data-view="reservoir">Reservoir</button><button data-view="nutrients">Feed lab</button><button data-view="journal">Grow journal</button><button data-view="calendar">Calendar</button><button data-view="settings">Settings & backup</button><button data-view="pro">Grow intelligence</button>
-</nav>
-<main>
-<section class="view active" id="view-overview">
- <div class="hero">
-  <div class="scene">
-   <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div><div class="status">● FIXED GREENHOUSE VIEW</div><div class="scene-stage-pill" id="sceneStagePill">STAGE · NOT SET</div></div>
-   <div class="tent-art fixed-greenhouse" id="tent3dWrap" aria-label="HOODIEGHOST GROWS greenhouse"><div class="animated-grow-scene" aria-hidden="true">
-<svg class="greenhouse-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Graphic novel indoor grow room with illustrated cannabis plants">
-<defs>
-<linearGradient id="comicWall" x2="0" y2="1"><stop stop-color="#24213a"/><stop offset=".55" stop-color="#111a1b"/><stop offset="1" stop-color="#080b0b"/></linearGradient>
-<linearGradient id="comicFloor" x2="0" y2="1"><stop stop-color="#24332c"/><stop offset="1" stop-color="#090d0b"/></linearGradient>
-<linearGradient id="comicPot" x2="0" y2="1"><stop stop-color="#46504a"/><stop offset=".18" stop-color="#202823"/><stop offset="1" stop-color="#090d0b"/></linearGradient>
-<linearGradient id="comicLeaf" x2=".8" y2="1"><stop stop-color="#c8ff69"/><stop offset=".48" stop-color="#5eae32"/><stop offset="1" stop-color="#17451f"/></linearGradient>
-<radialGradient id="comicLamp"><stop stop-color="#edffb7" stop-opacity=".8"/><stop offset="1" stop-color="#a5ff00" stop-opacity="0"/></radialGradient>
-<pattern id="halftone" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="#c5ff71" opacity=".28"/></pattern>
-<g id="plant"><g class="plant-body">
-<path d="M0 0Q-5 -45 0 -132" stroke="#8cc64d" stroke-width="7" fill="none"/>
-<g class="plant-leaves" fill="url(#comicLeaf)" stroke="#101d0c" stroke-width="3.5" stroke-linejoin="round">
-<path d="M0 -25L-11 -35 -10 -45 -21 -42 -24 -57 -35 -53 -39 -68 -50 -64 -53 -82 -43 -92 -28 -80 -14 -58 0 -39Z"/>
-<path d="M0 -42L12 -54 10 -65 22 -62 25 -77 37 -73 41 -89 53 -84 56 -102 45 -111 30 -97 14 -73 0 -56Z"/>
-<path d="M0 -57L-10 -72 -8 -83 -20 -80 -23 -96 -34 -92 -38 -109 -48 -104 -50 -123 -39 -133 -26 -119 -12 -91 0 -72Z"/>
-<path d="M0 -70L11 -85 9 -96 21 -93 24 -109 36 -105 40 -121 52 -116 55 -134 44 -143 29 -130 13 -104 0 -87Z"/>
-<path d="M0 -88L-8 -103 -6 -114 -17 -111 -20 -127 -30 -123 -33 -141 -22 -150 -10 -137 0 -113Z"/>
-<path d="M0 -94L9 -110 7 -121 18 -118 21 -134 31 -130 34 -148 23 -157 11 -144 0 -119Z"/>
-<path d="M0 -98L-9 -115 -6 -133 0 -158 7 -133 9 -115Z"/>
-</g>
-<g class="leaf-veins" fill="none" stroke="#e0ff9b" stroke-width="1.8" opacity=".8"><path d="M0 -26L-43 -88M0 -42L47 -105M0 -57L-43 -126M0 -70L47 -137M0 -88L-27 -145M0 -94L28 -151M0 -98V-153"/></g>
-<g class="buds"><g fill="#c8e77b" stroke="#16220d" stroke-width="2"><circle cx="-8" cy="-109" r="10"/><circle cx="9" cy="-105" r="11"/><circle cx="0" cy="-128" r="12"/><circle cx="-19" cy="-87" r="8"/><circle cx="19" cy="-86" r="8"/><circle cx="0" cy="-96" r="9"/></g><g fill="none" stroke="#f1a8ca" stroke-width="2.2" stroke-linecap="round"><path d="M-8 -109l-9 -12m9 12l-2 -15m10 15l9 -12m-9 12l2 -15M0 -128l-7 -12m7 12l7 -12M-19 -87l-7 -9m7 9l-1 -11M19 -86l8 -10m-8 10l1 -11"/></g><g fill="#fff4d4"><circle cx="-4" cy="-112" r="2"/><circle cx="7" cy="-105" r="2"/><circle cx="0" cy="-131" r="2.2"/></g></g>
-</g></g></defs>
-<rect width="1200" height="700" fill="#050707"/><path d="M0 0H1200V505L0 565Z" fill="url(#comicWall)"/><path d="M0 0H1200V505L0 565Z" fill="url(#halftone)" opacity=".65"/>
-<g fill="none" stroke-linecap="round"><path d="M0 95L1200 30M0 225L1200 160M0 355L1200 290M0 485L1200 420" stroke="#93a77d" stroke-opacity=".22" stroke-width="3"/><path d="M70 0L235 505M1130 0L965 505M390 0L470 500M810 0L730 500" stroke="#c4d2a2" stroke-opacity=".14" stroke-width="4"/><path d="M0 0L1200 505M1200 0L0 505" stroke="#a5ff00" stroke-opacity=".06" stroke-width="10"/></g>
-<g stroke="#b4c79c" stroke-width="5" fill="#18231a"><path d="M90 30H1110V58H90Z"/><path d="M180 85H1020V104H180Z"/><path d="M130 18H340V42H130Z" fill="#eaffb8"/><path d="M495 18H705V42H495Z" fill="#f2ffc8"/><path d="M860 18H1070V42H860Z" fill="#eaffb8"/></g>
-<g fill="url(#comicLamp)"><ellipse cx="235" cy="190" rx="200" ry="210"/><ellipse cx="600" cy="190" rx="230" ry="220"/><ellipse cx="965" cy="190" rx="200" ry="210"/></g>
-<g transform="translate(1055 205)" fill="#7c8d76" stroke="#101710" stroke-width="5"><circle r="59" fill="#101712" stroke="#b7c99b" stroke-width="7"/><g class="fan-blades"><path d="M0 -7Q-39 -72 -13 -62Q17 -53 7 -8ZM8 0Q72 -39 62 -13Q53 17 8 7ZM0 8Q39 72 13 62Q-17 53 -7 8Z"/></g><circle r="10" fill="#d7e7b9"/></g><g fill="none" stroke="#b5c89a" stroke-width="7"><circle cx="1055" cy="205" r="68"/><path d="M1055 273V320M1025 320H1085"/></g>
-<path d="M0 500L1200 440V700H0Z" fill="url(#comicFloor)" stroke="#90a77d" stroke-width="5"/><path d="M0 548L1200 488M0 615L1200 555M0 680L1200 620" stroke="#9eb58b" stroke-opacity=".18" stroke-width="4"/><path d="M45 525L1155 468V650L45 700Z" fill="#101713" stroke="#a5ff00" stroke-opacity=".5" stroke-width="5"/>
-<g class="plant-row row-left"><path d="M125 520L295 512 280 650 145 665Z" fill="url(#comicPot)" stroke="#b7c99b" stroke-width="6"/><path d="M130 520L295 512" stroke="#e1e9d0" stroke-width="9"/><use href="#plant" transform="translate(210 530) scale(1.72)"/></g>
-<g class="plant-row row-center"><path d="M495 485L705 485 688 660 512 660Z" fill="url(#comicPot)" stroke="#c5d4ad" stroke-width="7"/><path d="M500 486H700" stroke="#f0f5df" stroke-width="10"/><use href="#plant" transform="translate(600 493) scale(2.18)"/></g>
-<g class="plant-row row-right"><path d="M905 512L1075 520 1055 665 920 650Z" fill="url(#comicPot)" stroke="#b7c99b" stroke-width="6"/><path d="M905 512L1070 520" stroke="#e1e9d0" stroke-width="9"/><use href="#plant" transform="translate(990 530) scale(1.72)"/></g>
-<path d="M0 0H1200V700H0Z" fill="none" stroke="#0a0c09" stroke-width="24"/><path d="M18 18H1182V682H18Z" fill="none" stroke="#a5ff00" stroke-opacity=".65" stroke-width="3"/>
-<g fill="#d9ff9b" stroke="#111" stroke-width="3" font-family="Arial,sans-serif" font-weight="900" letter-spacing="3"><text x="48" y="465" font-size="19">GROW ROOM / 01</text><text x="950" y="465" font-size="16">LIVE PANEL</text></g>
-<g fill="#d8ff9b" opacity=".55"><circle class="dust d1" cx="280" cy="250" r="3"/><circle class="dust d2" cx="900" cy="300" r="2"/><circle class="dust d3" cx="740" cy="390" r="3"/><circle class="dust d4" cx="430" cy="180" r="2"/></g></svg><div class="scene-brand-mark">HOODIEGHOST<br><span>GROWS</span></div><div class="comic-burst" aria-hidden="true">GROW<br><b>MODE!</b></div><div class="comic-caption" aria-hidden="true">ISSUE 01 · THE GROW ROOM</div><div class="scene-overlay-glow"></div></div><div class="image-vignette"></div><div class="fixed-stage-caption" id="fixedStageCaption">PLANT PROFILE · <b>STAGE NOT SET</b></div><div class="viewhint">HOODIEGHOST GROWS · GREENHOUSE VIEW</div></div>
-   <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
-   <aside class="plant-inspector" id="plantInspector" aria-live="polite">
-    <div class="plant-inspector-head"><div><div class="eyebrow" id="inspectorKicker">PLANT PROFILE</div><h3 id="inspectorName">Plant</h3><div class="age" id="inspectorStrain">Select a plant to inspect</div></div><button class="close" id="closePlantInspector" aria-label="Close plant details">×</button></div>
-    <div class="plant-inspector-grid">
-     <div class="plant-inspector-stat"><small>Growth stage</small><b id="inspectorStage">Not set</b></div>
-     <div class="plant-inspector-stat"><small>Plant age</small><b id="inspectorAge">Not set</b></div>
-     <div class="plant-inspector-stat"><small>Start date</small><b id="inspectorDate">Not set</b></div>
-     <div class="plant-inspector-stat"><small>Plant group</small><b id="inspectorGroup">Standard</b></div>
-    </div>
-    <p class="plant-note">Plant details are read from this tent's saved records. Edit the plant in Plants & timeline.</p>
-   </aside>
-  </div>
-  <aside class="sidepanel">
-   <div class="panel"><div class="paneltitle"><strong>GROW STATUS</strong><span class="eyebrow" id="overviewType">PHOTOPERIOD</span></div><div class="stage" id="overviewStage">Not started</div><div class="age" id="overviewAge">Set a start date to begin the timeline</div><div class="growgrid" style="margin-top:14px"><div class="growstat"><label>Plant count</label><b id="overviewCount">0</b><small>in this tent</small></div><div class="growstat"><label>Grow day</label><b id="overviewDay">—</b><small>from start date</small></div></div></div>
-   <div class="panel"><div class="paneltitle"><strong>QUICK ENVIRONMENT</strong><span class="eyebrow">MANUAL READINGS</span></div><div class="growgrid"><div class="growstat"><label>Air temp</label><b id="quickTemp">—</b><small>°F</small></div><div class="growstat"><label>Humidity</label><b id="quickRh">—</b><small>% RH</small></div><div class="growstat"><label>VPD</label><b id="quickVpd">—</b><small>kPa</small></div><div class="growstat"><label>Room pH</label><b id="quickPh">—</b><small>reservoir</small></div></div></div>
-   <div class="notice" id="overviewAlert">Add your plant start date and environment readings to activate grow tracking.</div>
-  </aside>
+<div class="layout">
+<aside class="sidebar">
+ <div class="tent-switch"><label class="eyebrow">Active grow space</label><div class="tent-buttons" id="tentButtons"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div></div>
+ <nav class="nav" id="nav">
+ <button class="active" data-page="overview"><span class="ico">⌂</span>Overview</button>
+ <button data-page="plants"><span class="ico">♧</span>Plants & timeline</button>
+ <button data-page="environment"><span class="ico">◉</span>Environment</button>
+ <button data-page="reservoir"><span class="ico">◌</span>Reservoir</button>
+ <button data-page="feed"><span class="ico">＋</span>Feed lab</button>
+ <button data-page="journal"><span class="ico">▤</span>Grow journal</button>
+ <button data-page="calendar"><span class="ico">▦</span>Calendar</button>
+ <button data-page="settings"><span class="ico">⚙</span>Settings & backup</button>
+ </nav>
+ <div class="sidebar-foot">HOODIEGHOST GROWS<br>VERSION 2.0 · PRIVATE MODE<br>YOUR DATA STAYS ON THIS DEVICE</div>
+</aside>
+<main class="content">
+<section class="page active" id="page-overview">
+ <div class="page-head"><div><span class="eyebrow" id="overviewDate">GROW ROOM / TODAY</span><h2>Grow room overview</h2><p>Your cultivation activity, at a glance.</p></div><div class="head-actions"><button class="btn" data-goto="plants">＋ Add plant</button><button class="btn primary" data-goto="environment">Log conditions</button></div></div>
+ <div class="grid metrics">
+  <div class="card metric"><div class="label">Air temperature</div><div class="value" id="mTemp">—<span class="unit"> °F</span></div><div class="hint">Latest room reading</div></div>
+  <div class="card metric"><div class="label">Relative humidity</div><div class="value" id="mRh">—<span class="unit"> %</span></div><div class="hint">Latest room reading</div></div>
+  <div class="card metric"><div class="label">Vapor pressure deficit</div><div class="value" id="mVpd">—<span class="unit"> kPa</span></div><div class="hint">Calculated with leaf offset</div></div>
+  <div class="card metric"><div class="label">Net feed strength</div><div class="value" id="mPpm">—<span class="unit"> ppm</span></div><div class="hint">Feed PPM minus source PPM</div></div>
  </div>
- <div class="metrics"><div class="metric"><label>Temperature</label><b id="metricTemp">— °F</b><small>Air temperature</small></div><div class="metric"><label>Relative humidity</label><b id="metricRh">— %</b><small>Room humidity</small></div><div class="metric"><label>Vapor pressure deficit</label><b id="metricVpd">— kPa</b><small>Leaf offset included</small></div><div class="metric"><label>Net feed strength</label><b id="metricPpm">— ppm</b><small>Feed minus source water</small></div></div>
- <div class="sectionhead"><div><h2>ROOM SNAPSHOT</h2><p>Each tent keeps its own plant, environment, and feed records.</p></div><button class="btn primary" onclick="showView('plants')">Manage this tent ↗</button></div>
- <div class="grid2"><div class="panel"><div class="paneltitle"><strong>PLANT LINEUP</strong><span class="eyebrow" id="lineupLabel">TENT 01</span></div><div class="plantlist" id="plantLineup"><span class="muted">No plants added yet.</span></div></div><div class="panel"><div class="paneltitle"><strong>LATEST ACTIVITY</strong><span class="eyebrow">LOG</span></div><div id="latestActivity" class="muted">Your grow journal is ready when you are.</div></div></div>
-</section>
-<section class="view" id="view-plants">
- <div class="sectionhead"><div><h2>PLANTS & TIMELINE</h2><p>Track age from the start date. No fixed day slider.</p></div><span class="eyebrow" id="plantTentTag">TENT 01</span></div>
- <div class="grid2">
-  <div class="panel"><div class="paneltitle"><strong>GROW PROFILE</strong><span class="eyebrow">CURRENT TENT</span></div><div class="formgrid"><label class="field">Grow type<select id="growType"><option>Photoperiod</option><option>Autoflower</option><option>Mixed</option></select></label><label class="field">Growth stage<select id="stage"><option>Seed / Germination</option><option>Seedling</option><option>Vegetative</option><option>Early Flower</option><option>Mid Flower</option><option>Late Flower</option><option>Harvest</option></select></label><label class="field">Start date<input type="date" id="startDate"></label><label class="field">Medium<select id="medium"><option>Coco</option><option>Soil</option><option>Living Soil</option><option>Soilless Mix</option><option>Rockwool</option><option>Clay Pebbles / Hydroton</option><option>DWC</option><option>Other</option></select></label></div><div class="row" style="margin-top:13px"><button class="btn primary" id="saveProfile">Save grow profile</button><span class="muted" id="ageReadout">Age: not started</span></div></div>
-  <div class="panel"><div class="paneltitle"><strong>PLANT INVENTORY</strong><span class="eyebrow">ADD / REMOVE</span></div><div class="formgrid"><label class="field">Plant name<input id="plantName" placeholder="e.g. Ghost #1"></label><label class="field">Strain / note<input id="plantStrain" placeholder="Optional"></label><label class="field">Plant stage<select id="newPlantStage"><option>Seed / Germination</option><option>Seedling</option><option>Vegetative</option><option>Early Flower</option><option>Mid Flower</option><option>Late Flower</option><option>Harvest</option></select></label></div><div class="row" style="margin-top:12px"><button class="btn primary" id="addPlant">+ Add plant</button></div><div id="plantInventory" style="margin-top:14px"></div></div>
+ <div class="grid overview-grid">
+  <div class="card room-card">
+   <div class="room-top"><div><span class="eyebrow">ACTIVE GROW SPACE / <span id="roomTent">TENT 01</span></span><h3>Grow with intention.</h3><p>A clear view of your current grow cycle.</p></div><span class="room-badge" id="roomStage">NO ACTIVE CYCLE</span></div>
+   <svg class="room-art" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid slice" aria-label="Stylized grow room illustration">
+    <defs><linearGradient id="roomBg" x2="0" y2="1"><stop stop-color="#354a37"/><stop offset=".6" stop-color="#18291e"/><stop offset="1" stop-color="#0b120d"/></linearGradient><linearGradient id="roomLight" x2="0" y2="1"><stop stop-color="#e5ffc3" stop-opacity=".7"/><stop offset="1" stop-color="#a5e66b" stop-opacity="0"/></linearGradient><pattern id="roomDots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#d3f7a5" opacity=".14"/></pattern></defs>
+    <rect width="900" height="520" fill="url(#roomBg)"/><path d="M0 0L450 120 900 0V390L450 300 0 390Z" fill="#111b14" stroke="#78916b" stroke-opacity=".4" stroke-width="4"/><path d="M0 390L450 300 900 390V520H0Z" fill="#0a100c"/><path d="M0 0L450 120 900 0" fill="none" stroke="#a5e66b" stroke-opacity=".45" stroke-width="5"/><path d="M70 24L450 120 830 24" fill="none" stroke="#8ba27e" stroke-opacity=".5" stroke-width="7"/><g fill="#eaffce"><path d="M120 44L280 83 280 98 120 59Z"/><path d="M370 106L530 106 530 122 370 122Z"/><path d="M620 83L780 44 780 59 620 98Z"/></g><g fill="url(#roomLight)"><path d="M120 59L280 98 330 390H40Z"/><path d="M370 122H530L580 390H320Z"/><path d="M620 98L780 59 860 390H570Z"/></g><path d="M450 300V520M0 390L450 300 900 390" stroke="#72896a" stroke-opacity=".3" stroke-width="3"/>
+    <g id="roomPlants" stroke="#101a0e" stroke-width="4" stroke-linejoin="round">
+     <g transform="translate(185 380) scale(1.05)"><path d="M0 0V-145" stroke="#81b84f" stroke-width="7"/><path d="M0 -35L-65 -92 -42 -88 -75 -132 -32 -115 -25 -165 0 -127 26 -169 31 -119 76 -140 42 -94 70 -88 0 -35Z" fill="#5c9a3d"/><path d="M0 -60L-52 -107M0 -77L52 -121M0 -105V-157" fill="none" stroke="#c6ee8a" stroke-width="2"/></g>
+     <g transform="translate(450 360) scale(1.55)"><path d="M0 0V-145" stroke="#81b84f" stroke-width="7"/><path d="M0 -35L-65 -92 -42 -88 -75 -132 -32 -115 -25 -165 0 -127 26 -169 31 -119 76 -140 42 -94 70 -88 0 -35Z" fill="#70aa45"/><path d="M0 -60L-52 -107M0 -77L52 -121M0 -105V-157" fill="none" stroke="#d5f59d" stroke-width="2"/></g>
+     <g transform="translate(700 380) scale(1.05)"><path d="M0 0V-145" stroke="#81b84f" stroke-width="7"/><path d="M0 -35L-65 -92 -42 -88 -75 -132 -32 -115 -25 -165 0 -127 26 -169 31 -119 76 -140 42 -94 70 -88 0 -35Z" fill="#5c9a3d"/><path d="M0 -60L-52 -107M0 -77L52 -121M0 -105V-157" fill="none" stroke="#c6ee8a" stroke-width="2"/></g>
+    </g><g fill="#17231a" stroke="#829b70" stroke-width="4"><path d="M130 380H240L230 455H140Z"/><path d="M375 360H525L510 462H390Z"/><path d="M650 380H760L750 455H660Z"/></g><rect width="900" height="520" fill="url(#roomDots)"/>
+   </svg>
+   <div class="room-stats"><span class="chip" id="roomPlantCount">0 PLANTS</span><span class="chip" id="roomGrowType">PHOTOPERIOD</span><span class="chip" id="roomDay">DAY —</span></div>
+  </div>
+  <div class="stack">
+   <div class="card panel"><div class="panel-head"><h3>Grow cycle</h3><small id="cycleType">PHOTOPERIOD</small></div><div class="status-list"><div class="status-row"><span>Current stage</span><strong id="cycleStage">Not set</strong></div><div class="status-row"><span>Days since start</span><strong id="cycleDay">—</strong></div><div class="status-row"><span>Plant count</span><strong id="cycleCount">0</strong></div><div class="status-row"><span>Grow medium</span><strong id="cycleMedium">—</strong></div></div></div>
+   <div class="card panel"><div class="panel-head"><h3>Reservoir snapshot</h3><button class="btn mini" data-goto="reservoir">Details ↗</button></div><div class="status-list"><div class="status-row"><span>Volume</span><strong id="resVolumeMini">—</strong></div><div class="status-row"><span>Water source</span><strong id="resSourceMini">—</strong></div><div class="status-row"><span>Source PPM</span><strong id="resPpmMini">—</strong></div><div class="status-row"><span>Reservoir pH</span><strong id="resPhMini">—</strong></div></div></div>
+  </div>
  </div>
- <div class="panel" style="margin-top:13px"><div class="paneltitle"><strong>STAGE REFERENCE</strong><span class="eyebrow">GENERAL MONITORING GUIDE</span></div><div class="notice">Reference bands are editable starting points, not guarantees. Cultivar, medium, equipment, and local conditions can change what is appropriate. Use your plant's response and equipment guidance.</div><div style="overflow:auto;margin-top:12px"><table><thead><tr><th>Stage</th><th>Air temp °F</th><th>RH %</th><th>VPD kPa</th><th>Focus</th></tr></thead><tbody><tr><td>Seed / Germination</td><td>Use equipment guidance</td><td>—</td><td>—</td><td>Stable, clean start</td></tr><tr><td>Seedling</td><td>70–80</td><td>—</td><td>—</td><td>Gentle environment</td></tr><tr><td>Vegetative</td><td>70–85</td><td>—</td><td>—</td><td>Consistent growth</td></tr><tr><td>Early / Mid Flower</td><td>68–82</td><td>—</td><td>—</td><td>Air movement and stability</td></tr><tr><td>Late Flower</td><td>65–80</td><td>—</td><td>—</td><td>Watch moisture and airflow</td></tr><tr><td>Harvest</td><td>Log actuals</td><td>Log actuals</td><td>—</td><td>Record harvest details</td></tr></tbody></table></div></div>
-</section>
-<section class="view" id="view-environment">
- <div class="sectionhead"><div><h2>ENVIRONMENT CONTROL</h2><p>Enter manual readings to calculate VPD and flag missing or unusual values.</p></div></div>
- <div class="grid2"><div class="panel"><div class="paneltitle"><strong>ROOM READINGS</strong><span class="eyebrow">MANUAL INPUT</span></div><div class="formgrid"><label class="field">Air temperature (°F)<input type="number" step=".1" id="airTemp" placeholder="78"></label><label class="field">Relative humidity (%)<input type="number" step=".1" id="humidity" placeholder="60"></label><label class="field">Leaf temperature (°F)<input type="number" step=".1" id="leafTemp" placeholder="Auto from offset"></label><label class="field">Leaf offset (°F)<input type="number" step=".1" id="leafOffset" value="-2"></label></div><div class="row" style="margin-top:12px"><button class="btn primary" id="saveEnvironment">Save readings</button></div></div><div class="panel"><div class="paneltitle"><strong>VPD ENGINE</strong><span class="eyebrow">LEAF TEMP METHOD</span></div><div class="stage" id="vpdLarge">— kPa</div><div class="muted" id="vpdExplain">Enter temperature and humidity to calculate leaf VPD.</div><div class="notice" style="margin-top:14px">Calculation uses leaf temperature (air temperature plus the leaf offset) for saturation vapor pressure, then subtracts actual air vapor pressure.</div></div></div>
- <div class="panel" style="margin-top:13px"><div class="paneltitle"><strong>ENVIRONMENT HISTORY</strong><span class="eyebrow">SAVED SNAPSHOTS</span></div><div id="environmentHistory" class="empty">No readings saved yet.</div></div>
-</section>
-<section class="view" id="view-reservoir">
- <div class="sectionhead"><div><h2>RESERVOIR & WATER</h2><p>Track source water, feed strength, and runoff in one place.</p></div></div>
- <div class="grid2"><div class="panel"><div class="paneltitle"><strong>RESERVOIR SETUP</strong><span class="eyebrow">WATER SOURCE</span></div><div class="formgrid"><label class="field">Reservoir volume<input id="resVolume" type="number" step=".1" placeholder="5"></label><label class="field">Volume unit<select id="resUnit"><option>Gallons</option><option>Liters</option></select></label><label class="field">Water source<select id="waterSource"><option>RO</option><option>Tap</option></select></label><label class="field">Source water PPM<input id="sourcePpm" type="number" placeholder="0"></label><label class="field">Feed PPM<input id="feedPpm" type="number" placeholder="700"></label><label class="field">Feed pH<input id="feedPh" type="number" step=".01" placeholder="5.8"></label></div><div class="row" style="margin-top:12px"><button class="btn primary" id="saveReservoir">Save reservoir</button></div></div><div class="panel"><div class="paneltitle"><strong>NET FEED STRENGTH</strong><span class="eyebrow">CALCULATED</span></div><div class="stage" id="netPpm">— ppm</div><div class="muted">Feed PPM minus source-water PPM</div><div class="growgrid" style="margin-top:16px"><div class="growstat"><label>Water source</label><b id="waterLabel">—</b></div><div class="growstat"><label>Volume</label><b id="volumeLabel">—</b></div></div></div></div>
- <div class="panel" style="margin-top:13px"><div class="paneltitle"><strong>FEED / RUNOFF LOG</strong><span class="eyebrow">RECORD EACH EVENT</span></div><div class="formgrid three"><label class="field">Feed input PPM<input id="logFeed" type="number" placeholder="700"></label><label class="field">Runoff PPM<input id="runoffPpm" type="number" placeholder="900"></label><label class="field">Runoff pH<input id="runoffPh" type="number" step=".01" placeholder="5.9"></label></div><label class="field" style="margin-top:10px">Notes<input id="feedNotes" placeholder="Volume, observations, nutrient mix..."></label><div class="row" style="margin-top:12px"><button class="btn primary" id="addFeedLog">Save feed / runoff log</button></div><div id="feedHistory" style="margin-top:14px"></div></div>
-</section>
-<section class="view" id="view-nutrients">
- <div class="sectionhead"><div><h2>FEED LAB</h2><p>Build a mix record using your product label rates.</p></div></div>
- <div class="grid2"><div class="panel"><div class="paneltitle"><strong>NUTRIENT CALCULATOR</strong><span class="eyebrow">LABEL RATE INPUTS</span></div><div class="formgrid"><label class="field">Base nutrient system<select id="baseSystem"><option value="1">1-part base</option><option value="3">3-part base</option></select></label><label class="field">Reservoir volume<input type="number" id="mixVolume" placeholder="5"></label><label class="field">Volume unit<select id="mixUnit"><option value="gal">Gallons</option><option value="L">Liters</option></select></label><label class="field">Label rate (ml per gallon)<input type="number" id="baseRate" step=".1" placeholder="5"></label></div><div id="threePart" class="formgrid three" style="display:none;margin-top:10px"><label class="field">Part A ml/gal<input id="partA" type="number" step=".1"></label><label class="field">Part B ml/gal<input id="partB" type="number" step=".1"></label><label class="field">Part C ml/gal<input id="partC" type="number" step=".1"></label></div><label class="field" style="margin-top:10px">Additives (name and ml per gallon)<textarea id="additives" placeholder="Cal-Mag: 2&#10;Silica: 1"></textarea></label><div class="row" style="margin-top:12px"><button class="btn primary" id="calculateMix">Calculate mix</button></div><div id="mixResult" class="notice" style="margin-top:12px">Enter the volume and label rates to calculate total product amounts.</div></div><div class="panel"><div class="paneltitle"><strong>MIX NOTES</strong><span class="eyebrow">KEEP YOUR RECIPE</span></div><label class="field">Recipe name<input id="recipeName" placeholder="Weekly base mix"></label><label class="field" style="margin-top:10px">Mix notes<textarea id="recipeNotes" placeholder="Product order, observations, EC..."></textarea></label><button class="btn" id="saveRecipe" style="margin-top:12px">Save recipe to journal</button><div id="recipeHistory" style="margin-top:14px"></div></div></div>
-</section>
-<section class="view" id="view-journal">
- <div class="sectionhead"><div><h2>GROW JOURNAL</h2><p>Keep notes, observations, and events attached to the selected tent.</p></div></div>
- <div class="panel"><div class="formgrid"><label class="field">Entry type<select id="entryType"><option>General note</option><option>Watering</option><option>Training</option><option>Defoliation</option><option>Transplant</option><option>IPM / inspection</option><option>Harvest</option><option>Other</option></select></label><label class="field">Entry date<input type="date" id="entryDate"></label></div><label class="field" style="margin-top:12px">Journal entry<textarea id="entryText" placeholder="What happened in the grow today?"></textarea></label><div class="row" style="margin-top:12px"><button class="btn primary" id="saveEntry">Save journal entry</button></div></div><div class="panel" style="margin-top:13px"><div class="paneltitle"><strong>GROW LOG</strong><span class="eyebrow">NEWEST FIRST</span></div><div id="journalEntries" class="empty">No journal entries yet.</div></div>
-</section>
-<section class="view" id="view-calendar">
- <div class="sectionhead"><div><h2>GROW CALENDAR</h2><p>Choose a date to review or backdate an entry.</p></div><div class="row"><button class="btn" id="prevMonth">←</button><b id="monthLabel" class="eyebrow"></b><button class="btn" id="nextMonth">→</button></div></div>
- <div class="panel"><div class="calendar" id="calendarGrid"></div><div class="notice" style="margin-top:13px">Selected date: <b id="selectedDateLabel"></b>. Use this date in journal entries or set it as a plant start date.</div><div class="row" style="margin-top:12px"><button class="btn" id="useDateStart">Use as plant start date</button><button class="btn" id="useDateJournal">Use for journal entry</button></div></div>
-</section>
-<section class="view" id="view-settings">
- <div class="sectionhead"><div><h2>SETTINGS & BACKUP</h2><p>Your records are stored locally in this browser on this device.</p></div></div>
- <div class="grid2"><div class="panel"><div class="paneltitle"><strong>DATA BACKUP</strong><span class="eyebrow">LOCAL ONLY</span></div><p class="muted">Export a JSON backup to keep your grow records, or import a previous backup. This does not sync between devices.</p><div class="row"><button class="btn primary" id="exportData">Export backup</button><label class="btn" for="importFile">Import backup</label><input id="importFile" type="file" accept="application/json" style="display:none"></div></div><div class="panel"><div class="paneltitle"><strong>REFERENCE OFFSETS</strong><span class="eyebrow">CALCULATION SETTINGS</span></div><label class="field">Default leaf temperature offset (°F)<input id="settingOffset" type="number" value="-2" step=".1"></label><button class="btn" id="saveOffset" style="margin-top:12px">Save offset</button><div class="notice" style="margin-top:13px">The dashboard is manual-entry only. It does not connect to sensors or automatically control equipment.</div></div></div>
- <div class="panel" style="margin-top:13px"><div class="paneltitle"><strong>RESET ALL LOCAL DATA</strong><span class="eyebrow">CAUTION</span></div><p class="muted">This clears all three tent records from this browser.</p><button class="btn danger" id="resetData">Clear all local grow data</button></div>
-</section>
-
-<section class="view" id="view-pro">
- <div class="sectionhead"><div><h2>GROW INTELLIGENCE</h2><p>Individual plant records, custom stage targets, trends and tent tasks.</p></div><span class="pro-badge">PRO TOOLS</span></div>
- <div class="pro-grid">
-  <div class="panel"><div class="paneltitle"><strong>ADD INDIVIDUAL PLANT</strong><span class="eyebrow">PLANT-LEVEL TIMELINE</span></div>
-   <div class="formgrid"><label class="field">Plant name<input id="proPlantName" placeholder="Plant name"></label><label class="field">Strain / notes<input id="proPlantStrain" placeholder="Optional"></label><label class="field">Start date<input id="proPlantDate" type="date"></label><label class="field">Stage<select id="proPlantStage"><option>Seed / Germination</option><option>Seedling</option><option>Vegetative</option><option>Early Flower</option><option>Mid Flower</option><option>Late Flower</option><option>Harvest</option></select></label></div>
-   <button class="btn primary" id="proAddPlant" style="margin-top:12px">Add plant to selected tent</button><div id="proPlantList" style="margin-top:12px"></div>
-  </div>
-  <div class="panel"><div class="paneltitle"><strong>STAGE TARGETS & ALERTS</strong><span class="eyebrow">CUSTOM LIMITS</span></div>
-   <div class="notice warn">Set the min/max bands you want to monitor for each stage. The app will compare saved temperature, humidity and VPD readings with your entries. Blank limits are not graded.</div>
-   <div class="pro-table" id="proTargets" style="margin-top:10px"></div><button class="btn primary" id="proSaveTargets" style="margin-top:10px">Save target bands</button><div id="proAlertList" style="margin-top:10px"></div>
-  </div>
-  <div class="panel"><div class="paneltitle"><strong>ENVIRONMENT TREND</strong><span class="eyebrow">VPD HISTORY</span></div><canvas id="proEnvChart" class="pro-chart" width="640" height="180"></canvas><p class="muted">Charts use readings saved in the Environment tab.</p></div>
-  <div class="panel"><div class="paneltitle"><strong>FEED TREND</strong><span class="eyebrow">FEED PPM HISTORY</span></div><canvas id="proFeedChart" class="pro-chart" width="640" height="180"></canvas><p class="muted">Charts use feed records saved in the Reservoir tab.</p></div>
-  <div class="panel"><div class="paneltitle"><strong>GROW TASKS & REMINDERS</strong><span class="eyebrow">SELECTED TENT</span></div><div class="formgrid"><label class="field">Task<input id="proTaskText" placeholder="Inspect plants, check reservoir..."></label><label class="field">Due date<input id="proTaskDate" type="date"></label></div><button class="btn primary" id="proAddTask" style="margin-top:12px">Add reminder</button><div id="proTaskList" style="margin-top:12px"></div><div class="notice warn" style="margin-top:12px">Tasks are stored on this device. This static app cannot guarantee background notifications when Safari is closed.</div>
-  </div>
-  <div class="panel"><div class="paneltitle"><strong>SYNC & DATA STATUS</strong><span class="eyebrow">LOCAL STORAGE</span></div><p class="muted">Each tent is isolated on this device. Use Settings & Backup to export/import your data between devices. Automatic cloud sync needs a secure account/database connection and is not enabled in this build.</p><div class="notice good">Your existing three-tent records and current dashboard tools remain available.</div></div>
+ <div class="grid lower-grid">
+  <div class="card panel"><div class="panel-head"><h3>Environment history</h3><small>RECENT READINGS</small></div><canvas class="chart" id="envChart" width="500" height="190"></canvas><div class="chart-legend"><span><i class="legend-dot" style="background:#a5e66b"></i>Temperature</span><span><i class="legend-dot" style="background:#83b8c8"></i>Humidity</span></div></div>
+  <div class="card panel"><div class="panel-head"><h3>Recent feed log</h3><button class="btn mini" data-goto="feed">Open log ↗</button></div><div id="recentFeed"></div></div>
+  <div class="card panel"><div class="panel-head"><h3>Recent journal</h3><button class="btn mini" data-goto="journal">Open journal ↗</button></div><div id="recentJournal"></div></div>
  </div>
 </section>
 
-</main>
-<footer class="footer"><span>HOODIEGHOST GROWS // PRIVATE GROW ROOM</span><span>LOCAL STORAGE · MANUAL READINGS</span></footer>
-</div>
+<section class="page" id="page-plants">
+ <div class="page-head"><div><span class="eyebrow">CULTIVATION RECORDS</span><h2>Plants & timeline</h2><p>Track individual plants, growth stage and age by calendar day.</p></div><div class="head-actions"><button class="btn primary" id="showPlantForm">＋ Add plant</button></div></div>
+ <div class="card panel" id="plantFormCard" hidden><div class="panel-head"><h3>New plant record</h3><small>ADD TO ACTIVE TENT</small></div><form id="plantForm"><div class="form-grid">
+  <div class="field"><label>Plant name / ID</label><input name="name" required placeholder="e.g. Plant 01"></div><div class="field"><label>Strain / cultivar</label><input name="strain" placeholder="Optional"></div>
+  <div class="field"><label>Plant type</label><select name="type"><option>Photoperiod</option><option>Autoflower</option></select></div><div class="field"><label>Current stage</label><select name="stage"><option>Seedling</option><option>Vegetative</option><option>Pre-flower</option><option>Flowering</option><option>Harvest</option><option>Drying</option><option>Curing</option></select></div>
+  <div class="field"><label>Start date</label><input name="start" type="date" required></div><div class="field"><label>Medium</label><select name="medium"><option>Coco</option><option>Soil</option><option>Hydroponic</option><option>Rockwool</option><option>Other</option></select></div>
+  <div class="field full"><label>Notes</label><textarea name="notes" placeholder="Optional plant notes"></textarea></div>
+ </div><div class="form-actions"><button type="button" class="btn" id="cancelPlant">Cancel</button><button class="btn primary">Save plant</button></div></form></div>
+ <div class="grid plant-grid" id="plantList"></div>
+ <div class="card panel" style="margin-top:14px"><div class="panel-head"><h3>Grow timeline</h3><small>SELECT A DATE TO REVIEW</small></div><div class="form-grid"><div class="field"><label>Timeline date</label><input id="timelineDate" type="date"></div><div class="field"><label>Days since selected plant start</label><input id="timelineAge" readonly value="—"></div></div><p class="eyebrow" id="timelineNote" style="margin:12px 0 0">Choose a plant and date to review its timeline.</p></div>
+</section>
 
+<section class="page" id="page-environment">
+ <div class="page-head"><div><span class="eyebrow">ROOM CONDITIONS</span><h2>Environment</h2><p>Log readings and review your own target ranges. No preset grow prescriptions.</p></div></div>
+ <div class="grid overview-grid">
+  <div class="card panel"><div class="panel-head"><h3>Log environment reading</h3><small>ACTIVE TENT</small></div><form id="envForm"><div class="form-grid">
+   <div class="field"><label>Air temperature (°F)</label><input name="temp" type="number" step=".1" placeholder="e.g. 76"></div><div class="field"><label>Relative humidity (%)</label><input name="rh" type="number" step=".1" placeholder="e.g. 55"></div>
+   <div class="field"><label>Leaf temperature (°F)</label><input name="leaf" type="number" step=".1" placeholder="Optional"></div><div class="field"><label>Leaf offset (°F)</label><input name="offset" type="number" step=".1" value="-2"></div>
+  </div><div class="form-actions"><button class="btn primary">Save reading</button></div></form></div>
+  <div class="card panel"><div class="panel-head"><h3>Calculated VPD</h3><small>LEAF OFFSET INCLUDED</small></div><div class="metric" style="padding:12px 0;background:none;border:0;box-shadow:none"><div class="value" id="envVpd">— <span class="unit">kPa</span></div><div class="hint" id="vpdFormula">Log temperature and humidity to calculate.</div></div><div class="notice">VPD is an informational calculation from the logged room and leaf readings. Set your own target ranges in Settings.</div></div>
+ </div>
+ <div class="card panel" style="margin-top:14px"><div class="panel-head"><h3>Environment history</h3><small>NEWEST FIRST</small></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Date / time</th><th>Air °F</th><th>RH %</th><th>Leaf °F</th><th>VPD kPa</th></tr></thead><tbody id="envHistory"></tbody></table></div></div>
+</section>
+
+<section class="page" id="page-reservoir">
+ <div class="page-head"><div><span class="eyebrow">WATER & RESERVOIR</span><h2>Reservoir</h2><p>Track volume, source water and solution measurements.</p></div></div>
+ <div class="grid overview-grid">
+  <div class="card panel"><div class="panel-head"><h3>Reservoir details</h3><small>ACTIVE TENT</small></div><form id="resForm"><div class="form-grid">
+   <div class="field"><label>Volume</label><input name="volume" type="number" step=".1" placeholder="e.g. 25"></div><div class="field"><label>Volume unit</label><select name="unit"><option>Gallons</option><option>Liters</option></select></div>
+   <div class="field"><label>Water source</label><select name="source"><option>RO</option><option>Tap</option><option>Filtered</option><option>Other</option></select></div><div class="field"><label>Source water PPM</label><input name="sourcePpm" type="number" placeholder="e.g. 20"></div>
+   <div class="field"><label>Mixed solution PPM</label><input name="feedPpm" type="number" placeholder="e.g. 850"></div><div class="field"><label>Solution pH</label><input name="ph" type="number" step=".1" placeholder="e.g. 5.8"></div>
+  </div><div class="form-actions"><button class="btn primary">Save reservoir</button></div></form></div>
+  <div class="card panel"><div class="panel-head"><h3>Solution summary</h3><small>LIVE CALCULATION</small></div><div class="target-grid"><div class="card target-tile"><span>VOLUME</span><strong id="resVolOut">—</strong><span>Reservoir capacity</span></div><div class="card target-tile"><span>SOURCE PPM</span><strong id="resSourceOut">—</strong><span>Starting water</span></div><div class="card target-tile"><span>NET PPM</span><strong id="resNetOut">—</strong><span>Solution minus source</span></div></div><p class="eyebrow" id="resSummary" style="margin-top:15px">Enter your reservoir details to begin.</p></div>
+ </div>
+</section>
+
+<section class="page" id="page-feed">
+ <div class="page-head"><div><span class="eyebrow">MIXING & INPUT LOG</span><h2>Feed lab</h2><p>Calculate your own mix and record feed / runoff observations.</p></div></div>
+ <div class="grid overview-grid">
+  <div class="card panel"><div class="panel-head"><h3>Nutrient mix calculator</h3><small>USER-DEFINED RECIPE</small></div><form id="mixForm"><div class="form-grid">
+   <div class="field"><label>Base nutrient system</label><select name="system" id="baseSystem"><option value="1-part">1-part base</option><option value="3-part">3-part base</option></select></div><div class="field"><label>Batch volume (gallons)</label><input name="volume" type="number" min=".1" step=".1" value="1"></div>
+   <div class="field"><label>Base A rate (ml/gal)</label><input name="a" type="number" min="0" step=".1" value="0"></div><div class="field"><label>Base B rate (ml/gal)</label><input name="b" type="number" min="0" step=".1" value="0"></div>
+   <div class="field"><label>Base C rate (ml/gal)</label><input name="c" type="number" min="0" step=".1" value="0"></div><div class="field"><label>Additives (ml/gal)</label><input name="additives" type="number" min="0" step=".1" value="0"></div>
+  </div><div class="form-actions"><button type="button" class="btn" id="calcMix">Calculate</button><button class="btn primary">Save recipe</button></div><div id="mixResult" class="notice" style="margin-top:12px" hidden></div></form></div>
+  <div class="card panel"><div class="panel-head"><h3>Feed & runoff log</h3><small>RECORD EACH EVENT</small></div><form id="feedForm"><div class="form-grid">
+   <div class="field"><label>Date</label><input name="date" type="date" required></div><div class="field"><label>Feed input PPM</label><input name="inputPpm" type="number" placeholder="Optional"></div>
+   <div class="field"><label>Runoff PPM</label><input name="runoffPpm" type="number" placeholder="Optional"></div><div class="field"><label>Runoff pH</label><input name="runoffPh" type="number" step=".1" placeholder="Optional"></div>
+   <div class="field full"><label>Notes</label><textarea name="notes" placeholder="Mix, observations, volume, etc."></textarea></div>
+  </div><div class="form-actions"><button class="btn primary">Add feed log</button></div></form></div>
+ </div>
+ <div class="card panel" style="margin-top:14px"><div class="panel-head"><h3>Feed / runoff history</h3><small>ACTIVE TENT</small></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>Input PPM</th><th>Runoff PPM</th><th>Runoff pH</th><th>Notes</th><th></th></tr></thead><tbody id="feedHistory"></tbody></table></div></div>
+ <div class="card panel" style="margin-top:14px"><div class="panel-head"><h3>Saved recipes</h3><small>YOUR RECIPES</small></div><div id="recipeList"></div></div>
+</section>
+
+<section class="page" id="page-journal">
+ <div class="page-head"><div><span class="eyebrow">GROW NOTES</span><h2>Grow journal</h2><p>Keep a dated record of observations, tasks and milestones.</p></div></div>
+ <div class="card panel"><div class="panel-head"><h3>New journal entry</h3><small>ACTIVE TENT</small></div><form id="journalForm"><div class="form-grid">
+  <div class="field"><label>Date</label><input name="date" type="date" required></div><div class="field"><label>Entry type</label><select name="type"><option>Observation</option><option>Maintenance</option><option>Training</option><option>Milestone</option><option>Issue</option><option>Harvest</option></select></div>
+  <div class="field full"><label>Entry</label><textarea name="text" required placeholder="What happened today?"></textarea></div>
+ </div><div class="form-actions"><button class="btn primary">Save journal entry</button></div></form></div>
+ <div class="grid" id="journalList" style="margin-top:14px"></div>
+</section>
+
+<section class="page" id="page-calendar">
+ <div class="page-head"><div><span class="eyebrow">GROW PLANNER</span><h2>Calendar</h2><p>Review dates and add reminders for your grow.</p></div></div>
+ <div class="card panel"><div class="calendar-head"><button class="btn" id="prevMonth">←</button><strong id="monthLabel">Month</strong><button class="btn" id="nextMonth">→</button></div><div class="calendar" id="calendarGrid"></div><div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)"><div class="panel-head"><h3 id="selectedDateLabel">Selected date</h3><small>REMINDERS</small></div><form id="taskForm" class="form-grid"><div class="field"><label>Reminder</label><input name="title" required placeholder="e.g. Check equipment"></div><div class="field"><label>Date</label><input name="date" id="taskDate" type="date" required></div><div class="field full"><label>Details</label><input name="notes" placeholder="Optional"></div><div class="field full"><button class="btn primary">Add reminder</button></div></form><div id="dayTasks" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="page" id="page-settings">
+ <div class="page-head"><div><span class="eyebrow">PREFERENCES & DATA</span><h2>Settings & backup</h2><p>Customize your workspace and manage local records.</p></div></div>
+ <div class="grid overview-grid">
+  <div class="card panel"><div class="panel-head"><h3>Workspace preferences</h3><small>LOCAL SETTINGS</small></div><form id="settingsForm"><div class="form-grid">
+   <div class="field"><label>VPD leaf temperature offset (°F)</label><input name="offset" type="number" step=".1" value="-2"></div><div class="field"><label>Temperature display</label><select name="tempUnit"><option>Fahrenheit</option><option>Celsius</option></select></div>
+   <div class="field"><label>Default volume unit</label><select name="volumeUnit"><option>Gallons</option><option>Liters</option></select></div><div class="field"><label>Workspace name</label><input name="workspace" placeholder="HOODIEGHOST GROWS"></div>
+  </div><div class="form-actions"><button class="btn primary">Save preferences</button></div></form></div>
+  <div class="card panel"><div class="panel-head"><h3>Backup & restore</h3><small>YOUR DATA</small></div><p style="color:var(--muted);font-size:12px;line-height:1.7">Your records are stored in this browser on this device. Export a backup regularly before clearing browser data or changing devices.</p><div class="grid" style="grid-template-columns:1fr 1fr"><button class="btn primary" id="exportData">↓ Export JSON</button><label class="btn" style="text-align:center">↑ Import JSON<input id="importData" type="file" accept="application/json" hidden></label></div><p class="eyebrow" style="margin-top:15px">LOCAL STORAGE · 3 INDEPENDENT TENTS</p></div>
+ </div>
+ <div class="card panel" style="margin-top:14px"><div class="panel-head"><h3>Your editable reference bands</h3><small>NO DEFAULT CULTIVATION PRESCRIPTIONS</small></div><p style="color:var(--muted);font-size:11px">Add your own reminder bands if you want the dashboard to flag readings. These are personal tracking preferences, not recommendations.</p><form id="targetForm" class="form-grid">
+  <div class="field"><label>Temperature low (°F)</label><input name="tempLow" type="number" step=".1"></div><div class="field"><label>Temperature high (°F)</label><input name="tempHigh" type="number" step=".1"></div>
+  <div class="field"><label>Humidity low (%)</label><input name="rhLow" type="number" step=".1"></div><div class="field"><label>Humidity high (%)</label><input name="rhHigh" type="number" step=".1"></div>
+  <div class="field"><label>VPD low (kPa)</label><input name="vpdLow" type="number" step=".01"></div><div class="field"><label>VPD high (kPa)</label><input name="vpdHigh" type="number" step=".01"></div>
+  <div class="field full"><button class="btn primary">Save reference bands</button></div>
+ </form></div>
+ <div class="card panel" style="margin-top:14px;border-color:#58312e"><div class="panel-head"><h3>Reset workspace</h3><small>CAUTION</small></div><p style="color:var(--muted);font-size:11px">This clears all three tent records from this browser. Export a backup first.</p><button class="btn danger" id="resetData">Reset all local data</button></div>
+</section>
+</main></div></div>
+<div class="toast" id="toast">Saved</div>
 <script>
-const KEY='hoodieghost_freshroom_v2';
-const blankTent=()=>({type:'Photoperiod',stage:'Seed / Germination',startDate:'',medium:'Coco',plants:[],env:{temp:'',rh:'',leaf:'',offset:-2},res:{volume:'',unit:'Gallons',source:'RO',sourcePpm:'',feedPpm:'',ph:''},envHistory:[],feedLogs:[],journal:[],recipes:[]});
-let data=load(),activeTent=0,selectedDate=new Date(),calendarMonth=new Date();
-function load(){try{let x=JSON.parse(localStorage.getItem(KEY));if(x&&Array.isArray(x.tents)&&x.tents.length===3)return x}catch(e){}return{tents:[blankTent(),blankTent(),blankTent()],offset:-2}}
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
-function t(){return data.tents[activeTent]}
-function $(id){return document.getElementById(id)}
-function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function showView(name){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===name));if(name==='calendar')renderCalendar();window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
-document.querySelectorAll('[data-tent]').forEach(b=>b.addEventListener('click',()=>{activeTent=+b.dataset.tent;document.querySelectorAll('[data-tent]').forEach(x=>x.classList.toggle('active',x===b));render()}));
-function age(){if(!t().startDate)return null;let start=new Date(t().startDate+'T00:00:00'),now=new Date();now.setHours(0,0,0,0);return Math.max(0,Math.floor((now-start)/86400000)+1)}
-function vpdCalc(temp,rh,leaf,offset){if(temp===''||rh===''||!isFinite(+temp)||!isFinite(+rh))return null;let air=+temp,rel=+rh,leafT=leaf===''?air+(+offset||0):+leaf;let svp=x=>0.6108*Math.exp((17.27*x)/(x+237.3));let c=x=>(x-32)*5/9;let result=svp(c(leafT))-(rel/100)*svp(c(air));return Math.max(0,result)}
-function netPpm(){let r=t().res;if(r.feedPpm===''||r.sourcePpm==='')return null;return +r.feedPpm-(+r.sourcePpm)}
-function setText(id,value){$(id).textContent=value}
-function render(){let x=t(),a=age(),v=vpdCalc(x.env.temp,x.env.rh,x.env.leaf,x.env.offset??data.offset),net=netPpm();setText('sceneTentName','Tent 0'+(activeTent+1));setText('lineupLabel','TENT 0'+(activeTent+1));setText('plantTentTag','TENT 0'+(activeTent+1));setText('overviewType',x.type.toUpperCase());setText('overviewStage',x.startDate?x.stage:'Not started');setText('overviewAge',a?'Day '+a+' · '+x.medium:'Set a start date to begin the timeline');setText('overviewCount',x.plants.length);setText('overviewDay',a||'—');setText('scenePlantCount',String(x.plants.length).padStart(2,'0')+' PLANTS');const plantStages=[...new Set(x.plants.map(p=>p.stage||x.stage).filter(Boolean))];const tentStage=plantStages.length===1?plantStages[0]:plantStages.length>1?'Mixed stages':x.stage||'Not set';setText('sceneStagePill','STAGE · '+tentStage.toUpperCase());$('tent3dWrap').dataset.stage=tentStage.toLowerCase().replace(/[^a-z]+/g,'-');setText('fixedStageCaption','PLANT PROFILE · '+tentStage.toUpperCase());$('fixedStageCaption').innerHTML='PLANT PROFILE · <b>'+safe(tentStage.toUpperCase())+'</b>';
-const stageKey=tentStage.toLowerCase();
-$('tent3dWrap').dataset.stage=stageKey.replace(/[^a-z]+/g,'-');
-setText('fixedStageCaption','PLANT PROFILE · '+tentStage.toUpperCase());
-setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
-$('overviewAlert').textContent=!x.startDate?'Add a plant start date and environment readings to activate grow tracking.':v===null?'Grow timeline active. Add environment readings to calculate VPD.':(v<0.4||v>1.8?'Review VPD reading against your stage and equipment.':'Readings saved. Keep monitoring consistency.');
-$('overviewAlert').className='notice'+(v!==null&&(v<.4||v>1.8)?' warn':'');
-$('plantLineup').innerHTML=x.plants.length?x.plants.map(p=>'<span class="plantchip">'+safe(p.name)+(p.strain?' · '+safe(p.strain):'')+'</span>').join(''):'<span class="muted">No plants added yet.</span>';
-$('latestActivity').textContent=x.journal.length?x.journal[0].date+' · '+x.journal[0].type+': '+x.journal[0].text:'Your grow journal is ready when you are.';
-$('growType').value=x.type;$('stage').value=x.stage;$('startDate').value=x.startDate;$('medium').value=x.medium;$('ageReadout').textContent=a?'Current age: Day '+a:'Age: not started';
-$('plantInventory').innerHTML=x.plants.length?x.plants.map((p,i)=>'<div class="plant-record"><div class="plant-record-name"><b>'+safe(p.name)+'</b><small><i class="plant-stage-dot"></i>'+safe(p.strain||'No strain noted')+' · '+safe(p.stage||x.stage||'Stage not set')+'</small></div><label class="plant-stage-field"><span>GROWTH STAGE</span><select aria-label="Growth stage for '+safe(p.name)+'" onchange="setPlantStage('+i+',this.value)">'+['Seed / Germination','Seedling','Vegetative','Early Flower','Mid Flower','Late Flower','Harvest'].map(st=>'<option'+((p.stage||x.stage)===st?' selected':'')+'>'+st+'</option>').join('')+'</select></label><button class="btn danger" onclick="removePlant('+i+')">Remove</button></div>').join(''):'<div class="empty">No plants in this tent yet.</div>';
-$('airTemp').value=x.env.temp;$('humidity').value=x.env.rh;$('leafTemp').value=x.env.leaf;$('leafOffset').value=x.env.offset??data.offset;$('resVolume').value=x.res.volume;$('resUnit').value=x.res.unit;$('waterSource').value=x.res.source;$('sourcePpm').value=x.res.sourcePpm;$('feedPpm').value=x.res.feedPpm;$('feedPh').value=x.res.ph;$('settingOffset').value=data.offset;
-$('environmentHistory').innerHTML=x.envHistory.length?'<table><thead><tr><th>Date</th><th>Temp</th><th>RH</th><th>VPD</th></tr></thead><tbody>'+x.envHistory.slice().reverse().map(h=>'<tr><td>'+h.date+'</td><td>'+h.temp+'°F</td><td>'+h.rh+'%</td><td>'+h.vpd+' kPa</td></tr>').join('')+'</tbody></table>':'<div class="empty">No readings saved yet.</div>';
-$('feedHistory').innerHTML=x.feedLogs.length?'<table><thead><tr><th>Date</th><th>Feed</th><th>Runoff</th><th>Runoff pH</th><th>Notes</th></tr></thead><tbody>'+x.feedLogs.slice().reverse().map(h=>'<tr><td>'+h.date+'</td><td>'+h.feed+'</td><td>'+h.runoff+'</td><td>'+h.ph+'</td><td>'+safe(h.notes)+'</td></tr>').join('')+'</tbody></table>':'<div class="empty">No feed events recorded.</div>';
-$('journalEntries').innerHTML=x.journal.length?x.journal.slice().reverse().map(h=>'<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="eyebrow">'+h.date+' · '+safe(h.type)+'</div><p style="margin:7px 0">'+safe(h.text)+'</p></div>').join(''):'<div class="empty">No journal entries yet.</div>';
-$('recipeHistory').innerHTML=x.recipes.length?x.recipes.slice().reverse().map(r=>'<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>'+safe(r.name)+'</b><div class="muted">'+safe(r.summary)+'</div></div>').join(''):'';
-$('threePart').style.display=$('baseSystem').value==='3'?'grid':'none';
-document.querySelectorAll('[data-tent]').forEach((b,i)=>b.classList.toggle('active',i===activeTent));
-}
-function setPlantStage(i,stage){if(!t().plants[i])return;t().plants[i].stage=stage;save()}
-function removePlant(i){if(confirm('Remove this plant?')){t().plants.splice(i,1);save()}}
-$('saveProfile').onclick=()=>{Object.assign(t(),{type:$('growType').value,stage:$('stage').value,startDate:$('startDate').value,medium:$('medium').value});save()};
-$('addPlant').onclick=()=>{let name=$('plantName').value.trim();if(!name){alert('Enter a plant name first.');return}t().plants.push({name,strain:$('plantStrain').value.trim(),stage:$('newPlantStage').value||t().stage});$('plantName').value='';$('plantStrain').value='';save()};
-$('saveEnvironment').onclick=()=>{let x=t();x.env={temp:$('airTemp').value,rh:$('humidity').value,leaf:$('leafTemp').value,offset:$('leafOffset').value};let v=vpdCalc(x.env.temp,x.env.rh,x.env.leaf,x.env.offset);if(v!==null)x.envHistory.push({date:new Date().toISOString().slice(0,10),temp:x.env.temp,rh:x.env.rh,vpd:v.toFixed(2)});save()};
-$('saveReservoir').onclick=()=>{t().res={volume:$('resVolume').value,unit:$('resUnit').value,source:$('waterSource').value,sourcePpm:$('sourcePpm').value,feedPpm:$('feedPpm').value,ph:$('feedPh').value};save()};
-$('addFeedLog').onclick=()=>{t().feedLogs.push({date:new Date().toISOString().slice(0,10),feed:$('logFeed').value||t().res.feedPpm,runoff:$('runoffPpm').value,ph:$('runoffPh').value,notes:$('feedNotes').value});$('feedNotes').value='';save()};
-$('baseSystem').onchange=()=>{$('threePart').style.display=$('baseSystem').value==='3'?'grid':'none'};
-let lastMix='';
-$('calculateMix').onclick=()=>{let vol=+$('mixVolume').value,unit=$('mixUnit').value,factor=unit==='gal'?vol:vol/3.78541;if(!(vol>0)){alert('Enter a reservoir volume.');return}let lines=[];if($('baseSystem').value==='1'){lines.push('Base: '+(factor*(+$('baseRate').value||0)).toFixed(1)+' ml')}else{['A','B','C'].forEach(k=>lines.push('Part '+k+': '+(factor*(+$('part'+k).value||0)).toFixed(1)+' ml'))}let adds=$('additives').value.split('\n').map(s=>s.trim()).filter(Boolean);adds.forEach(s=>{let p=s.split(':');if(p.length>1)lines.push(p[0].trim()+': '+(factor*(parseFloat(p[1])||0)).toFixed(1)+' ml')});lastMix=lines.join(' · ');$('mixResult').textContent='For '+vol+' '+unit+': '+lastMix};
-$('saveRecipe').onclick=()=>{if(!lastMix){alert('Calculate the mix first.');return}t().recipes.push({name:$('recipeName').value||'Untitled recipe',summary:lastMix+' — '+$('recipeNotes').value});save()};
-$('saveEntry').onclick=()=>{let text=$('entryText').value.trim();if(!text){alert('Write a journal entry first.');return}t().journal.push({date:$('entryDate').value||new Date().toISOString().slice(0,10),type:$('entryType').value,text});$('entryText').value='';save()};
-function renderCalendar(){let y=calendarMonth.getFullYear(),m=calendarMonth.getMonth(),first=new Date(y,m,1),start=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),today=new Date().toISOString().slice(0,10);setText('monthLabel',calendarMonth.toLocaleDateString(undefined,{month:'long',year:'numeric'}));setText('selectedDateLabel',selectedDate.toISOString().slice(0,10));let out=['M','T','W','T','F','S','S'].map(d=>'<div class="eyebrow" style="text-align:center;padding:6px">'+d+'</div>').join('');for(let i=0;i<start;i++)out+='<div></div>';for(let d=1;d<=days;d++){let date=new Date(y,m,d),key=date.toISOString().slice(0,10);out+='<button class="day '+(key===today?'today ':'')+(key===selectedDate.toISOString().slice(0,10)?'selected':'')+'" data-date="'+key+'">'+d+(t().journal.some(j=>j.date===key)?'<small>● log</small>':'')+'</button>'}$('calendarGrid').innerHTML=out;$('calendarGrid').querySelectorAll('[data-date]').forEach(b=>b.onclick=()=>{selectedDate=new Date(b.dataset.date+'T12:00:00');renderCalendar()})}
-$('prevMonth').onclick=()=>{calendarMonth.setMonth(calendarMonth.getMonth()-1);renderCalendar()};$('nextMonth').onclick=()=>{calendarMonth.setMonth(calendarMonth.getMonth()+1);renderCalendar()};
-$('useDateStart').onclick=()=>{$('startDate').value=selectedDate.toISOString().slice(0,10);showView('plants')};$('useDateJournal').onclick=()=>{$('entryDate').value=selectedDate.toISOString().slice(0,10);showView('journal')};
-$('saveOffset').onclick=()=>{data.offset=+$('settingOffset').value;t().env.offset=data.offset;save()};
-$('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='hoodieghost-grow-backup.json';a.click();URL.revokeObjectURL(a.href)};
-$('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.tents)||d.tents.length!==3)throw Error();data=d;save();alert('Backup imported.')}catch(err){alert('That backup file could not be read.')}};
-$('resetData').onclick=()=>{if(confirm('This permanently clears all three tent records in this browser. Continue?')){data={tents:[blankTent(),blankTent(),blankTent()],offset:-2};save()}};
-$('entryDate').value=new Date().toISOString().slice(0,10);render();
-
-
-/* Interactive Three.js grow room. The existing dashboard remains the source of truth. */
-let room3D=null, roomPlants3D=[], roomFans3D=[], selectedPlant3D=null;
-function initGrowRoom3D(){
- const canvas=$('greenhouse3d'),wrap=$('tent3dWrap');
- if(!canvas||room3D)return;
- if(!window.THREE){canvas.style.display='none';$('tentFallback').style.display='block';return;}
- const THREE=window.THREE;
- try{
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
-  renderer.outputColorSpace=THREE.SRGBColorSpace;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
-  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x101a12,.035);
-  const camera=new THREE.PerspectiveCamera(42,1,.1,100);
-  const orbit=new THREE.Group();scene.add(orbit);orbit.add(camera);camera.position.set(0,2.25,13.4);camera.lookAt(0,2.25,0);
-  const hemi=new THREE.HemisphereLight(0xd9ffe0,0x101810,1.15);scene.add(hemi);
-  const keyLight=new THREE.DirectionalLight(0xe8ffdf,1.75);keyLight.position.set(-5,9,7);keyLight.castShadow=true;keyLight.shadow.mapSize.set(1024,1024);scene.add(keyLight);
-  const rimLight=new THREE.DirectionalLight(0x75ff9b,.65);rimLight.position.set(6,4,-5);scene.add(rimLight);
-  const mat=(color,metalness=0,roughness=.65,extra={})=>new THREE.MeshStandardMaterial({color,metalness,roughness,...extra});
-  // Procedural materials keep the greenhouse self-contained.
-  const makeSurface=(base,accent)=>{
-   const c=document.createElement('canvas');c.width=512;c.height=512;const g=c.getContext('2d');
-   g.fillStyle=base;g.fillRect(0,0,512,512);
-   for(let i=0;i<1900;i++){const x=Math.random()*512,y=Math.random()*512,a=.018+Math.random()*.07;g.fillStyle='rgba(220,240,220,'+a+')';g.fillRect(x,y,1+Math.random()*2,1+Math.random()*13)}
-   for(let x=0;x<=512;x+=64){g.fillStyle='rgba(0,0,0,.13)';g.fillRect(x,0,2,512);g.fillStyle='rgba(210,235,210,.12)';g.fillRect(x+3,0,1,512)}
-   g.strokeStyle=accent;g.globalAlpha=.2;g.lineWidth=2;for(let y=28;y<512;y+=64){g.beginPath();g.moveTo(0,y);g.lineTo(512,y);g.stroke()}g.globalAlpha=1;
-   const tex=new THREE.CanvasTexture(c);tex.wrapS=tex.wrapT=THREE.RepeatWrapping;tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=renderer.capabilities.getMaxAnisotropy();return tex;
-  };
-  const foilMap=makeSurface('#28352b','#879b82'),floorMap=makeSurface('#171f18','#657763');
-  const steel=mat(0x89978d,.82,.25),black=mat(0x111713,.45,.48),fabric=new THREE.MeshStandardMaterial({color:0xffffff,map:foilMap,metalness:.48,roughness:.38}),floorMat=new THREE.MeshStandardMaterial({color:0xffffff,map:floorMap,metalness:.22,roughness:.72}),trim=mat(0xb1beb2,.78,.24);
-  const room=new THREE.Group();orbit.add(room);
-  const floor=new THREE.Mesh(new THREE.BoxGeometry(6.9,.18,5.25),floorMat);floor.position.y=-.12;floor.receiveShadow=true;room.add(floor);
-  const floorEdge=new THREE.Mesh(new THREE.BoxGeometry(7.02,.08,5.36),mat(0x66756a,.72,.32));floorEdge.position.y=-.205;room.add(floorEdge);
-  const back=new THREE.Mesh(new THREE.BoxGeometry(6.9,5.35,.12),fabric);back.position.set(0,2.52,-2.55);back.receiveShadow=true;room.add(back);
-  const leftWall=new THREE.Mesh(new THREE.BoxGeometry(.12,5.35,5.05),black);leftWall.position.set(-3.38,2.52,0);room.add(leftWall);
-  const rightWall=leftWall.clone();rightWall.position.x=3.38;room.add(rightWall);
-  const roof=new THREE.Mesh(new THREE.BoxGeometry(6.9,.14,5.25),steel);roof.position.y=5.18;room.add(roof);
-  // Aluminum frame and front opening
-  const bar=(a,b,r=.045,material=trim)=>{const d=new THREE.Vector3().subVectors(b,a),m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),10),material);m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());m.castShadow=true;room.add(m);return m};
-  [[-3.3,0,-2.48],[3.3,0,-2.48],[-3.3,0,2.48],[3.3,0,2.48]].forEach(([x,y,z])=>bar(new THREE.Vector3(x,0,z),new THREE.Vector3(x,5.12,z),.055));
-  bar(new THREE.Vector3(-3.3,5.12,2.48),new THREE.Vector3(3.3,5.12,2.48),.06);
-  bar(new THREE.Vector3(-3.3,0,2.48),new THREE.Vector3(3.3,0,2.48),.05);
-  // Reflective inner wall seams and floor grid
-  for(let x=-3;x<=3;x+=.5){const line=new THREE.Mesh(new THREE.BoxGeometry(.012,.012,4.9),mat(0x78907a,.2,.8,{transparent:true,opacity:.24}));line.position.set(x,.0,0);room.add(line)}
-  const grid=new THREE.GridHelper(6.65,26,0x8ca18e,0x506253);grid.position.y=-.018;room.add(grid);
-  // Roof cross rails and LED grow bars
-  for(let z of [-1.75,1.7]){const rail=new THREE.Mesh(new THREE.BoxGeometry(6.5,.07,.07),steel);rail.position.set(0,4.95,z);room.add(rail)}
-  const ledGroup=new THREE.Group();room.add(ledGroup);
-  for(let i=0;i<5;i++){
-   const bar=new THREE.Group();bar.position.set((i-2)*1.18,4.76,-.15);ledGroup.add(bar);
-   const housing=new THREE.Mesh(new THREE.BoxGeometry(.72,.13,1.45),black);housing.castShadow=true;bar.add(housing);
-   const diode=new THREE.Mesh(new THREE.BoxGeometry(.59,.025,1.29),mat(0xeaffd8,.1,.2,{emissive:0xcaff9a,emissiveIntensity:1.7}));diode.position.y=-.075;bar.add(diode);
-  }
-  const glow=new THREE.PointLight(0xbaff82,27,12);glow.position.set(0,4.35,0);room.add(glow);
-  const fillGlow=new THREE.PointLight(0x8affaa,8,9);fillGlow.position.set(0,2.5,2.1);room.add(fillGlow);
-  // Ventilation duct, carbon filter and fans
-  const ductMat=mat(0x626f65,.72,.38);
-  const duct=new THREE.Mesh(new THREE.CylinderGeometry(.24,.24,2.4,20),ductMat);duct.rotation.z=Math.PI/2;duct.position.set(0,4.45,-1.9);room.add(duct);
-  const filter=new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.85,24),black);filter.rotation.z=Math.PI/2;filter.position.set(-1.45,4.4,-1.9);room.add(filter);
-  const fanMat=mat(0x9eaca1,.78,.24);
-  [-2.65,2.65].forEach(x=>{
-   const fan=new THREE.Group();fan.position.set(x,3.55,-2.38);
-   const ring=new THREE.Mesh(new THREE.TorusGeometry(.48,.065,10,32),fanMat);fan.add(ring);
-   const rotor=new THREE.Group();
-   for(let b=0;b<7;b++){const blade=new THREE.Mesh(new THREE.ShapeGeometry((()=>{const sh=new THREE.Shape();sh.moveTo(0,0);sh.quadraticCurveTo(.18,.32,.08,.67);sh.quadraticCurveTo(-.02,.55,-.12,.12);sh.closePath();return sh})()),fanMat);blade.position.set(0,0,.035);blade.rotation.z=b*Math.PI*2/7;rotor.add(blade)}
-   const hub=new THREE.Mesh(new THREE.CylinderGeometry(.14,.14,.13,20),black);hub.rotation.x=Math.PI/2;rotor.add(hub);fan.add(rotor);room.add(fan);roomFans3D.push(rotor);
-  });
-  room3D={THREE,renderer,scene,camera,orbit,room,glow,wrap,drag:false,lastX:0,lastY:0,rotY:-.32,rotX:0,zoom:13.4};
-  orbit.rotation.y=room3D.rotY;
-  const resize=()=>{if(!room3D)return;const w=wrap.clientWidth,h=wrap.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};
-  room3D.resize=resize;new ResizeObserver(resize).observe(wrap);resize();
-  wrap.addEventListener('pointerdown',e=>{room3D.drag=true;room3D.moved=false;room3D.lastX=e.clientX;room3D.lastY=e.clientY;wrap.setPointerCapture(e.pointerId)});
-  wrap.addEventListener('pointermove',e=>{if(!room3D?.drag)return;const dx=e.clientX-room3D.lastX,dy=e.clientY-room3D.lastY;if(Math.abs(dx)+Math.abs(dy)>3)room3D.moved=true;room3D.lastX=e.clientX;room3D.lastY=e.clientY;room3D.rotY+=dx*.007;room3D.rotX=Math.max(-.28,Math.min(.28,room3D.rotX+dy*.003));room3D.orbit.rotation.y=room3D.rotY;room3D.orbit.rotation.x=room3D.rotX});
-  wrap.addEventListener('pointerup',e=>{if(!room3D)return;const wasMoved=room3D.moved;room3D.drag=false;if(!wasMoved)pick3DPlant(e)});
-  wrap.addEventListener('pointercancel',()=>{if(room3D)room3D.drag=false});
-  const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
-  room3D.raycaster=raycaster;room3D.pointer=pointer;
-  $('closePlantInspector').addEventListener('click',closePlantInspector);
-  wrap.addEventListener('wheel',e=>{e.preventDefault();room3D.zoom=Math.max(8,Math.min(15,room3D.zoom+e.deltaY*.012));camera.position.set(0,2.25,room3D.zoom)},{passive:false});
-  sync3DPlants();
-  const clock=new THREE.Clock();
-  const animate=()=>{requestAnimationFrame(animate);const tm=clock.getElapsedTime();roomFans3D.forEach((f,i)=>f.rotation.z=tm*(i?7:-8));if(room3D){room3D.glow.intensity=32+Math.sin(tm*1.4)*3;roomPlants3D.forEach((p,i)=>{p.rotation.z=Math.sin(tm*1.15+i*.8)*.018;p.rotation.x=Math.cos(tm*1.1+i)*.009})}renderer.render(scene,camera)};
-  animate();
- }catch(err){console.warn('3D greenhouse unavailable',err);canvas.style.display='none';const fallback=$('tentFallback');if(fallback)fallback.style.display='block'}
-}
-function plantRecords3D(){
- const normal=(t().plants||[]).map((p,index)=>({record:p,index,source:'PLANT',stage:p.stage||t().stage||'Seedling'}));
- const pro=(t().proPlants||[]).map((p,index)=>({record:p,index,source:'GROW INTELLIGENCE',stage:p.stage||t().stage||'Seedling'}));
- return normal.concat(pro).slice(0,12);
-}
-function stageModel(stage){
- const s=String(stage||'').toLowerCase();
- if(s.includes('seed /')||s.includes('germ'))return {scale:1.05,leaves:7,height:.9,bloom:0,label:'GERMINATION'};
- if(s.includes('seedling'))return {scale:1.48,leaves:12,height:1.25,bloom:0,label:'SEEDLING'};
- if(s.includes('vegetative'))return {scale:1.72,leaves:20,height:1.65,bloom:0,label:'VEGETATIVE'};
- if(s.includes('early flower'))return {scale:1.88,leaves:24,height:1.82,bloom:.25,label:'EARLY FLOWER'};
- if(s.includes('mid flower'))return {scale:1.98,leaves:26,height:1.95,bloom:.7,label:'MID FLOWER'};
- if(s.includes('late flower'))return {scale:1.92,leaves:24,height:1.9,bloom:1,label:'LATE FLOWER'};
- if(s.includes('harvest'))return {scale:1.78,leaves:20,height:1.75,bloom:.9,label:'HARVEST'};
- return {scale:1.62,leaves:18,height:1.58,bloom:0,label:'GROWING'};
-}
-function makeLeaf(T,material){
- // Sculpted, gently serrated leaf silhouette with a raised central midrib.
- const shape=new T.Shape(),left=[],right=[],steps=9;
- for(let i=0;i<=steps;i++){const t=i/steps,y=.045+t*.43,w=Math.sin(Math.PI*t)*(.22+.035*Math.sin(t*Math.PI*5));right.push([w,y])}
- for(let i=steps;i>=0;i--){const t=i/steps,y=.045+t*.43,w=Math.sin(Math.PI*t)*(.22+.035*Math.sin(t*Math.PI*5));left.push([-w,y])}
- shape.moveTo(0,0);right.forEach((p,i)=>{const n=right[Math.min(i+1,steps)];shape.quadraticCurveTo(p[0]+.025,p[1]-.018,n[0],n[1])});
- left.forEach((p,i)=>{const n=left[Math.min(i+1,steps)];shape.quadraticCurveTo(p[0]-.025,p[1]-.018,n[0],n[1])});
- shape.closePath();
- const mesh=new T.Mesh(new T.ShapeGeometry(shape,12),material);mesh.castShadow=true;mesh.receiveShadow=true;mesh.userData.plantPick=true;
- const ridgeMat=new T.MeshStandardMaterial({color:0xa4c982,roughness:.78});
- const points=[new T.Vector3(0,.025,.012),new T.Vector3(0,.18,.026),new T.Vector3(0,.34,.018),new T.Vector3(0,.47,0)];
- const ridge=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(points),12,.008,5,false),ridgeMat);ridge.userData.plantPick=true;mesh.add(ridge);
- for(let side of [-1,1])for(let k=1;k<=3;k++){const y=.12+k*.075,w=Math.sin(Math.PI*((y-.045)/.43))*.19;const vein=new T.Mesh(new T.CylinderGeometry(.0025,.004,.13,5),ridgeMat);vein.position.set(side*w*.42,y+.025,.012);vein.rotation.z=side*.58;mesh.add(vein)}
- return mesh;
-}
-function sync3DPlants(){
- if(!room3D)return;
- const T=room3D.THREE,room=room3D.room,records=plantRecords3D();
- roomPlants3D.forEach(p=>{room.remove(p);p.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material.dispose()}})});roomPlants3D=[];
- records.forEach((entry,i)=>{
-  const p=entry.record,model=stageModel(entry.stage),plant=new T.Group(),cols=Math.min(4,records.length),row=Math.floor(i/4),x=((i%4)-(Math.min(cols,4)-1)/2)*1.42,z=row*1.38+(records.length===1?.45:-.45);
-  plant.position.set(x,0,z);plant.scale.setScalar(model.scale);plant.userData.plantRecord=entry;plant.userData.stageLabel=model.label;
-  const potMat=new T.MeshStandardMaterial({color:0x39483d,metalness:.28,roughness:.52});
-  const pot=new T.Mesh(new T.CylinderGeometry(.38,.29,.55,32),potMat);pot.position.y=.275;pot.castShadow=true;pot.userData.plantPick=true;plant.add(pot);
-  const rim=new T.Mesh(new T.TorusGeometry(.35,.04,10,32),new T.MeshStandardMaterial({color:0x9aaa9c,metalness:.65,roughness:.25}));rim.rotation.x=Math.PI/2;rim.position.y=.54;rim.userData.plantPick=true;plant.add(rim);
-  const soil=new T.Mesh(new T.CylinderGeometry(.32,.32,.05,24),new T.MeshStandardMaterial({color:0x30251a,roughness:1}));soil.position.y=.57;soil.userData.plantPick=true;plant.add(soil);
-  const stemMat=new T.MeshStandardMaterial({color:0x477b3c,roughness:.82});
-  const stemCurve=new T.CatmullRomCurve3([new T.Vector3(0,.57,0),new T.Vector3(.018,.57+model.height*.28,0),new T.Vector3(-.025,.57+model.height*.68,.012),new T.Vector3(0,.57+model.height,0)]);
-  const stem=new T.Mesh(new T.TubeGeometry(stemCurve,24,.043,8,false),stemMat);stem.castShadow=true;stem.userData.plantPick=true;plant.add(stem);
-  const leafPalette=[0x286b35,0x347d3c,0x4c9147,0x68a951,0x7dbb5e];
-  for(let j=0;j<model.leaves;j++){
-   const angle=j*2.399,level=.62+(j%5)*(.14+model.scale*.025),radius=.22+(j%4)*.105;
-   const branch=new T.Group();branch.position.set(Math.cos(angle)*radius,.57+level,Math.sin(angle)*radius);branch.rotation.y=-angle;branch.rotation.z=(j%2?-.24:.24);
-   // Tapered curved petiole visibly connects each leaf cluster to the main stalk.
-   const baseY=.57+Math.max(.08,level-.2),base=new T.Vector3(0,baseY,0),tip=new T.Vector3(branch.position.x,branch.position.y,branch.position.z);
-   const curve=new T.CatmullRomCurve3([base,new T.Vector3(tip.x*.38,baseY+.1,tip.z*.38),new T.Vector3(tip.x*.78,tip.y-.04,tip.z*.78),tip]);
-   const petiole=new T.Mesh(new T.TubeGeometry(curve,10,.026,6,false),stemMat);petiole.castShadow=true;petiole.userData.plantPick=true;plant.add(petiole);
-   const joint=new T.Mesh(new T.SphereGeometry(.045,8,6),stemMat);joint.position.copy(tip);joint.userData.plantPick=true;plant.add(joint);
-   const leafMat=new T.MeshStandardMaterial({color:leafPalette[j%leafPalette.length],roughness:.72,side:T.DoubleSide});
-   const leaf=makeLeaf(T,leafMat);leaf.scale.setScalar(1.18+(j%3)*.16);leaf.rotation.z=(j%2?-.18:.18);branch.add(leaf);
-   const vein=new T.Mesh(new T.CylinderGeometry(.006,.003,.29,6),new T.MeshStandardMaterial({color:0xa4c982,roughness:.8}));vein.rotation.z=Math.PI/2;vein.position.set(.015,.025,.01);branch.add(vein);
-   plant.add(branch);
-  }
-  if(model.bloom>0){
-   const bloomMat=new T.MeshStandardMaterial({color:0x9cbf72,roughness:.8});
-   const budMat=new T.MeshStandardMaterial({color:0xc4d99a,roughness:.76});
-   for(let b=0;b<Math.round(3+model.bloom*7);b++){
-    const a=b*2.4,yy=.49+model.height*(.58+(b%3)*.12),rr=.12+(b%2)*.1;
-    const bud=new T.Group();bud.position.set(Math.cos(a)*rr,yy,Math.sin(a)*rr);
-    const core=new T.Mesh(new T.IcosahedronGeometry(.105*model.bloom,2),bloomMat);core.userData.plantPick=true;bud.add(core);
-    for(let k=0;k<5;k++){const petal=new T.Mesh(new T.SphereGeometry(.045*model.bloom,8,6),budMat);const aa=k*Math.PI*2/5;petal.position.set(Math.cos(aa)*.09*model.bloom,.035,Math.sin(aa)*.09*model.bloom);bud.add(petal)}
-    plant.add(bud);
-   }
-  }
-  const tagCanvas=document.createElement('canvas');tagCanvas.width=360;tagCanvas.height=88;const ctx=tagCanvas.getContext('2d');
-  ctx.fillStyle='#09120c';ctx.fillRect(0,0,360,88);ctx.strokeStyle='#76ff43';ctx.lineWidth=3;ctx.strokeRect(2,2,356,84);
-  ctx.fillStyle='#d8f8c9';ctx.font='bold 25px Arial';ctx.textAlign='center';ctx.fillText(String(p.name||'PLANT').slice(0,22),180,36);
-  ctx.fillStyle='#82bd70';ctx.font='bold 15px Arial';ctx.fillText(model.label,180,65);
-  const tex=new T.CanvasTexture(tagCanvas),tag=new T.Mesh(new T.PlaneGeometry(1.2,.29),new T.MeshBasicMaterial({map:tex,transparent:true,side:T.DoubleSide}));
-  tag.position.set(0,1.05,.58);tag.userData.plantPick=true;plant.add(tag);
-  room.add(plant);roomPlants3D.push(plant);
- });
- const total=(t().plants||[]).length+(t().proPlants||[]).length;
- setText('scenePlantCount',String(total).padStart(2,'0')+' PLANTS');
- if(selectedPlant3D){const still=records.some(e=>e.source===selectedPlant3D.source&&e.index===selectedPlant3D.index);if(!still)closePlantInspector()}
-}
-function pick3DPlant(event){
- if(!room3D||!roomPlants3D.length)return;
- const rect=room3D.wrap.getBoundingClientRect();
- room3D.pointer.x=((event.clientX-rect.left)/rect.width)*2-1;
- room3D.pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;
- room3D.raycaster.setFromCamera(room3D.pointer,room3D.camera);
- const hits=room3D.raycaster.intersectObjects(roomPlants3D,true);
- const hit=hits.find(h=>{let o=h.object;while(o&&o!==room3D.room){if(o.userData.plantPick)return true;o=o.parent}return false});
- if(!hit){closePlantInspector();return}
- let node=hit.object;while(node&&node.parent!==room3D.room)node=node.parent;
- if(node?.userData?.plantRecord)showPlantInspector(node.userData.plantRecord);
-}
-function showPlantInspector(entry){
- const p=entry.record,started=p.date||t().startDate||'',days=started?Math.max(1,Math.floor((new Date().setHours(0,0,0,0)-new Date(started+'T00:00:00'))/86400000)+1):null;
- selectedPlant3D={source:entry.source,index:entry.index};
- $('inspectorKicker').textContent=entry.source+' · TENT 0'+(activeTent+1);
- $('inspectorName').textContent=p.name||'Unnamed plant';
- $('inspectorStrain').textContent=p.strain||'Strain not specified';
- $('inspectorStage').textContent=entry.stage||p.stage||t().stage||'Not set';
- $('inspectorAge').textContent=days?'Day '+days:'Not set';
- $('inspectorDate').textContent=started||'Not set';
- $('inspectorGroup').textContent=entry.source==='PLANT'?'Plant list':'Grow intelligence';
- $('inspectorKicker').textContent=entry.source+' · '+stageModel(entry.stage).label+' · TENT 0'+(activeTent+1);
- $('plantInspector').classList.add('open');
- roomPlants3D.forEach(g=>g.scale.setScalar(g.userData.plantRecord===entry?1.1:1));
-}
-function closePlantInspector(){
- selectedPlant3D=null;
- const panel=$('plantInspector');if(panel)panel.classList.remove('open');
- roomPlants3D.forEach(g=>g.scale.setScalar(1));
-}
-
-/* Grow Intelligence extension */
-const proStages=['Seed / Germination','Seedling','Vegetative','Early Flower','Mid Flower','Late Flower','Harvest'];
-const proBlankTargets=()=>Object.fromEntries(proStages.map(st=>[st,{tmin:'',tmax:'',rhmin:'',rhmax:'',vmin:'',vmax:''}]));
-function proTent(){let q=data.tents[activeTent];q.proPlants=q.proPlants||[];q.proTargets=q.proTargets||proBlankTargets();q.proTasks=q.proTasks||[];return q}
-function proSave(){localStorage.setItem(KEY,JSON.stringify(data));proRender()}
-function proDay(date){if(!date)return 'No start date';let n=new Date();n.setHours(0,0,0,0);let d=new Date(date+'T00:00:00');return 'Day '+Math.max(1,Math.floor((n-d)/86400000)+1)}
-function proRender(){
- let q=proTent(),pl=$('proPlantList');if(!pl)return;
- pl.innerHTML=q.proPlants.length?q.proPlants.map((p,i)=>'<div class="pro-card"><div class="row"><b>'+safe(p.name)+'</b><span class="muted">'+safe(p.strain||'')+'</span><span class="spacer"></span><span class="pro-badge">'+proDay(p.date)+'</span></div><div class="muted" style="margin-top:6px">'+safe(p.stage)+'</div><button class="btn danger" style="margin-top:8px" onclick="proRemovePlant('+i+')">Remove</button></div>').join(''):'<div class="empty">No individually tracked plants yet.</div>';
- let keys=['tmin','tmax','rhmin','rhmax','vmin','vmax'],labs=['Temp min °F','Temp max °F','RH min %','RH max %','VPD min','VPD max'];
- $('proTargets').innerHTML='<table><thead><tr><th>Stage</th>'+labs.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+proStages.map(st=>'<tr><td>'+st+'</td>'+keys.map(k=>'<td><input type="number" step=".1" data-pro-stage="'+st+'" data-pro-key="'+k+'" value="'+(q.proTargets[st]?.[k]??'')+'"></td>').join('')+'</tr>').join('')+'</tbody></table>';
- $('proTaskList').innerHTML=q.proTasks.length?q.proTasks.map((x,i)=>'<div class="row pro-card"><span class="pro-badge">'+safe(x.date)+'</span><span>'+safe(x.text)+'</span><span class="spacer"></span><button class="btn danger" onclick="proRemoveTask('+i+')">Done</button></div>').join(''):'<div class="empty">No reminders yet.</div>';
- proCharts();proAlerts();
-}
-function proRemovePlant(i){proTent().proPlants.splice(i,1);proSave()}
-function proRemoveTask(i){proTent().proTasks.splice(i,1);proSave()}
-function proCharts(){
- [['proEnvChart',t().envHistory.slice(-12).map(x=>+x.vpd),'VPD kPa'],['proFeedChart',t().feedLogs.slice(-12).map(x=>+x.feed||0),'Feed PPM']].forEach(([id,vals,label])=>{let c=$(id);if(!c)return;let x=c.getContext('2d'),w=c.width,h=c.height;x.clearRect(0,0,w,h);x.strokeStyle='#2a382e';for(let n=1;n<4;n++){x.beginPath();x.moveTo(0,h*n/4);x.lineTo(w,h*n/4);x.stroke()}x.fillStyle='#96a397';x.font='12px sans-serif';x.fillText(vals.length?label:'Save at least two readings to see a trend',12,18);if(vals.length<2)return;let lo=Math.min(...vals),hi=Math.max(...vals),range=hi-lo||1;x.strokeStyle='#76ff43';x.lineWidth=3;x.beginPath();vals.forEach((v,i)=>{let px=15+i*(w-30)/(vals.length-1),py=h-18-(v-lo)/range*(h-48);i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke()})
-}
-function proAlerts(){
- let q=proTent(),v=vpdCalc(t().env.temp,t().env.rh,t().env.leaf,t().env.offset),alerts=[];
- let stages=[...new Set(q.proPlants.map(p=>p.stage).concat([t().stage]))];
- stages.forEach(st=>{let a=q.proTargets[st]||{},tests=[['Temperature',t().env.temp,a.tmin,a.tmax],['Humidity',t().env.rh,a.rhmin,a.rhmax],['VPD',v,a.vmin,a.vmax]];tests.forEach(([name,val,min,max])=>{if(val!==''&&val!==null&&min!==''&&max!==''&&min!==undefined&&max!==undefined&&(val<+min||val>+max))alerts.push(st+' · '+name+' is outside your saved target band')})});
- $('proAlertList').innerHTML=alerts.length?alerts.map(x=>'<div class="pro-alert">'+safe(x)+'</div>').join(''):'<div class="pro-alert good">No saved target-band violations detected. Set complete min/max values to activate alerts.</div>';
-}
-$('proAddPlant').onclick=()=>{let name=$('proPlantName').value.trim();if(!name){alert('Enter a plant name.');return}proTent().proPlants.push({name,strain:$('proPlantStrain').value.trim(),date:$('proPlantDate').value,stage:$('proPlantStage').value});$('proPlantName').value='';$('proPlantStrain').value='';$('proPlantDate').value='';proSave()};
-$('proSaveTargets').onclick=()=>{let q=proTent();q.proTargets=proBlankTargets();document.querySelectorAll('[data-pro-stage]').forEach(el=>q.proTargets[el.dataset.proStage][el.dataset.proKey]=el.value===''?'':+el.value);proSave();alert('Your stage target bands have been saved.')};
-$('proAddTask').onclick=()=>{let text=$('proTaskText').value.trim(),date=$('proTaskDate').value;if(!text||!date){alert('Enter a task and due date.');return}proTent().proTasks.push({text,date});$('proTaskText').value='';proSave()};
-const oldShowView=showView;showView=function(name){oldShowView(name);if(name==='pro')proRender()};
-const oldTentRender=render;render=function(){oldTentRender();proRender()};
-proRender();
-
-</script>
-<script>
-/* Dashboard layout polish: use the existing live controls and saved data */
 (function(){
- const ov=document.getElementById('view-overview');
- const hero=ov&&ov.querySelector('.hero');
- const metrics=ov&&ov.querySelector('.metrics');
- const section=ov&&ov.querySelector('.sectionhead');
- const grid=ov&&ov.querySelector('.grid2');
- if(hero&&metrics){ov.insertBefore(metrics,hero)}
- if(hero&&section&&grid){ov.appendChild(section);ov.appendChild(grid)}
- const scene=hero&&hero.querySelector('.scene');
- const side=hero&&hero.querySelector('.sidepanel');
- if(scene&&side){hero.insertBefore(scene,side)}
+'use strict';
+const KEY='hoodieghost_grows_professional_v1';
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+const blankTent=()=>({type:'Photoperiod',stage:'Not started',startDate:'',medium:'Coco',plants:[],env:{temp:'',rh:'',leaf:'',offset:-2},envHistory:[],res:{volume:'',unit:'Gallons',source:'RO',sourcePpm:'',feedPpm:'',ph:''},feedLogs:[],recipes:[],journal:[],tasks:[],targets:{}});
+let state=loadState(),activeTent=0,currentPage='overview',calMonth=new Date(),selectedDate=today(),selectedPlant='';
+function loadState(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&Array.isArray(v.tents)&&v.tents.length===3)return v}catch(e){}return{tents:[blankTent(),blankTent(),blankTent()],prefs:{offset:-2,tempUnit:'Fahrenheit',volumeUnit:'Gallons',workspace:'HOODIEGHOST GROWS'}}}
+function saveState(){localStorage.setItem(KEY,JSON.stringify(state));$('saveStatus')?.classList.add('on')}
+function t(){return state.tents[activeTent]}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1900)}
+function daysBetween(a,b=today()){if(!a)return null;return Math.max(1,Math.floor((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000)+1)}
+function vpd(temp,rh,leaf,offset){if(temp===''||rh===''||!Number.isFinite(+temp)||!Number.isFinite(+rh)||+rh<=0)return null;const tc=(leaf!==''&&Number.isFinite(+leaf)?+leaf:+temp+(Number(offset)||0)-32)*5/9;const air=(+temp-32)*5/9;const svp=x=>0.6108*Math.exp((17.27*x)/(x+237.3));return Math.max(0,svp(air)*(1-(+rh/100))+(svp(tc)-svp(air))*0.5)}
+function netPpm(){const r=t().res;return r.feedPpm!==''&&r.sourcePpm!==''?Number(r.feedPpm)-Number(r.sourcePpm):null}
+function latestEnv(){return t().envHistory[0]||null}
+function setPage(page){currentPage=page;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+page));document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));renderPage(page);window.scrollTo({top:0,behavior:'smooth'})}
+function switchTent(n){activeTent=n;document.querySelectorAll('[data-tent]').forEach(b=>b.classList.toggle('active',+b.dataset.tent===n));renderAll()}
+function fmt(v,unit=''){return v===''||v===null||v===undefined?'—':esc(v)+(unit?' '+unit:'')}
+function renderOverview(){const x=t(),e=latestEnv(),r=x.res,net=netPpm(),v=e?vpd(e.temp,e.rh,e.leaf,e.offset):null; $('mTemp').innerHTML=fmt(e?.temp,'°F');$('mRh').innerHTML=fmt(e?.rh,'%');$('mVpd').innerHTML=v===null?'—':v.toFixed(2)+'<span class="unit"> kPa</span>';$('mPpm').innerHTML=net===null?'—':net+'<span class="unit"> ppm</span>';
+$('roomTent').textContent='TENT 0'+(activeTent+1);$('roomStage').textContent=x.stage.toUpperCase();$('roomPlantCount').textContent=x.plants.length+' PLANTS';$('roomGrowType').textContent=x.type.toUpperCase();$('roomDay').textContent='DAY '+(x.startDate?daysBetween(x.startDate):'—');
+$('cycleType').textContent=x.type.toUpperCase();$('cycleStage').textContent=x.stage;$('cycleDay').textContent=x.startDate?daysBetween(x.startDate):'—';$('cycleCount').textContent=x.plants.length;$('cycleMedium').textContent=x.medium||'—';
+$('resVolumeMini').textContent=r.volume? r.volume+' '+r.unit:'—';$('resSourceMini').textContent=r.source||'—';$('resPpmMini').textContent=fmt(r.sourcePpm);$('resPhMini').textContent=fmt(r.ph);
+$('recentFeed').innerHTML=x.feedLogs.length?x.feedLogs.slice(0,3).map(f=>'<div class="status-row"><span>'+esc(f.date)+'</span><strong>'+fmt(f.inputPpm,'PPM')+'</strong></div>').join(''):'<div class="empty">No feed events logged yet.</div>';
+$('recentJournal').innerHTML=x.journal.length?x.journal.slice(0,3).map(j=>'<div class="status-row"><span>'+esc(j.date)+' · '+esc(j.type)+'</span><strong>'+esc(j.text.slice(0,28))+(j.text.length>28?'…':'')+'</strong></div>').join(''):'<div class="empty">Your grow notes will appear here.</div>';drawChart()}
+function drawChart(){const c=$('envChart');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);ctx.strokeStyle='#2b392d';ctx.lineWidth=1;for(let i=1;i<5;i++){ctx.beginPath();ctx.moveTo(12,i*h/5);ctx.lineTo(w-8,i*h/5);ctx.stroke()}const arr=t().envHistory.slice(0,12).reverse();if(arr.length<2){ctx.fillStyle='#91a18e';ctx.font='12px Manrope';ctx.fillText('Log a few readings to see trends',18,90);return}const draw=(key,color)=>{const vals=arr.map(x=>Number(x[key]));const min=Math.min(...vals),max=Math.max(...vals),range=max-min||1;ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();vals.forEach((v,i)=>{const px=18+i*(w-36)/(vals.length-1),py=h-18-(v-min)/range*(h-42);i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.stroke()};draw('temp','#a5e66b');draw('rh','#83b8c8')}
+function renderPlants(){const p=t().plants;$('plantList').innerHTML=p.length?p.map((x,i)=>'<article class="card plant-card"><div class="plant-main"><div class="plant-mark">♧</div><div><h4>'+esc(x.name)+'</h4><p>'+esc(x.strain||'Cultivar not specified')+' · '+esc(x.type)+' · '+esc(x.stage)+'</p><p>'+esc(x.medium)+' · '+(x.start?('Day '+daysBetween(x.start)):'No start date')+'</p></div></div><div class="plant-actions"><button class="btn mini" data-edit-plant="'+i+'">Edit</button><button class="btn mini danger" data-remove-plant="'+i+'">×</button></div></article>').join(''):'<div class="empty" style="grid-column:1/-1">No plant records in Tent 0'+(activeTent+1)+'. Add your first plant to start its timeline.</div>';if(!selectedPlant&&p.length)selectedPlant=p[0].id;updateTimeline()}
+function updateTimeline(){const p=t().plants.find(x=>x.id===selectedPlant)||t().plants[0],d=$('timelineDate').value||today();$('timelineAge').value=p?.start?'Day '+daysBetween(p.start,d):'—';$('timelineNote').textContent=p?'Viewing '+p.name+' · '+p.stage+' · Started '+(p.start||'date not set'):'Choose a plant and date to review its timeline.'}
+function renderEnv(){const e=latestEnv();$('envVpd').innerHTML=e&&vpd(e.temp,e.rh,e.leaf,e.offset)!==null?vpd(e.temp,e.rh,e.leaf,e.offset).toFixed(2)+' <span class="unit">kPa</span>':'— <span class="unit">kPa</span>';$('vpdFormula').textContent=e?'Calculated from air temperature, humidity and leaf offset of '+e.offset+'°F.':'Log temperature and humidity to calculate.';$('envHistory').innerHTML=t().envHistory.length?t().envHistory.map(e=>'<tr><td>'+esc(e.at)+'</td><td>'+fmt(e.temp)+'</td><td>'+fmt(e.rh)+'</td><td>'+fmt(e.leaf)+'</td><td>'+fmt(e.vpd)+'</td></tr>').join(''):'<tr><td colspan="5" class="muted">No environment readings logged.</td></tr>'}
+function renderReservoir(){const r=t().res,n=netPpm();$('resVolOut').textContent=r.volume? r.volume+' '+r.unit:'—';$('resSourceOut').textContent=fmt(r.sourcePpm);$('resNetOut').textContent=n===null?'—':n+' ppm';$('resSummary').textContent=n===null?'Enter source and mixed solution PPM to calculate net feed strength.':'Net feed strength is '+n+' PPM after subtracting '+r.source+' source water ('+r.sourcePpm+' PPM).';const f=$('resForm');['volume','unit','source','sourcePpm','feedPpm','ph'].forEach(k=>f.elements[k].value=r[k]??'')}
+function renderFeed(){const a=t().feedLogs;$('feedHistory').innerHTML=a.length?a.map((f,i)=>'<tr><td>'+esc(f.date)+'</td><td>'+fmt(f.inputPpm)+'</td><td>'+fmt(f.runoffPpm)+'</td><td>'+fmt(f.runoffPh)+'</td><td>'+esc(f.notes||'')+'</td><td><button class="btn mini danger" data-remove-feed="'+i+'">Remove</button></td></tr>').join(''):'<tr><td colspan="6" class="muted">No feed or runoff events logged.</td></tr>';$('recipeList').innerHTML=t().recipes.length?t().recipes.map((r,i)=>'<div class="status-row"><span>'+esc(r.name)+' · '+esc(r.system)+'</span><strong>'+esc(r.summary)+' <button class="btn mini danger" data-remove-recipe="'+i+'">×</button></strong></div>').join(''):'<div class="empty">Saved recipes will appear here.</div>'}
+function renderJournal(){const a=t().journal;$('journalList').innerHTML=a.length?a.map((j,i)=>'<article class="card panel"><div class="panel-head"><h3>'+esc(j.type)+'</h3><small>'+esc(j.date)+'</small></div><p style="white-space:pre-wrap;color:#cbd6c8;font-size:12px;line-height:1.7">'+esc(j.text)+'</p><div style="text-align:right"><button class="btn mini danger" data-remove-journal="'+i+'">Delete entry</button></div></article>').join(''):'<div class="empty">No journal entries yet. Add your first note above.</div>'}
+function renderCalendar(){const y=calMonth.getFullYear(),m=calMonth.getMonth(),first=new Date(y,m,1),offset=first.getDay(),days=new Date(y,m+1,0).getDate();$('monthLabel').textContent=first.toLocaleDateString(undefined,{month:'long',year:'numeric'});let h=['SUN','MON','TUE','WED','THU','FRI','SAT'].map(x=>'<div class="cal-dayname">'+x+'</div>').join('');for(let i=0;i<42;i++){let n=i-offset+1,d=new Date(y,m,n),valid=n>0&&n<=days,key=d.toISOString().slice(0,10),has=t().tasks.some(x=>x.date===key);h+='<button class="cal-day '+(!valid?'muted ':'')+(key===today()?'today ':'')+(key===selectedDate?'selected':'')+'" data-date="'+key+'"><b>'+d.getDate()+'</b>'+(has?'<i></i>':'')+'</button>'} $('calendarGrid').innerHTML=h;$('selectedDateLabel').textContent=new Date(selectedDate+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});$('taskDate').value=selectedDate;const tasks=t().tasks.filter(x=>x.date===selectedDate);$('dayTasks').innerHTML=tasks.length?tasks.map((x,i)=>'<div class="status-row"><span>'+esc(x.title)+(x.notes?' · '+esc(x.notes):'')+'</span><button class="btn mini" data-done-task="'+t().tasks.indexOf(x)+'">✓</button></div>').join(''):'<div class="empty">No reminders for this date.</div>'}
+function renderSettings(){const f=$('settingsForm');Object.keys(state.prefs).forEach(k=>{if(f.elements[k])f.elements[k].value=state.prefs[k]});const g=$('targetForm');['tempLow','tempHigh','rhLow','rhHigh','vpdLow','vpdHigh'].forEach(k=>g.elements[k].value=t().targets[k]??'')}
+function renderPage(p){({overview:renderOverview,plants:renderPlants,environment:renderEnv,reservoir:renderReservoir,feed:renderFeed,journal:renderJournal,calendar:renderCalendar,settings:renderSettings}[p]||(()=>{}))()}
+function renderAll(){renderOverview();renderPage(currentPage)}
+function formObj(form){return Object.fromEntries(new FormData(form).entries())}
+$('nav').addEventListener('click',e=>{const b=e.target.closest('[data-page]');if(b)setPage(b.dataset.page)});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if(g)setPage(g.dataset.goto);const tb=e.target.closest('[data-tent]');if(tb)switchTent(+tb.dataset.tent)});
+$('showPlantForm').onclick=()=>{$('plantFormCard').hidden=false;$('plantForm').elements.start.value=today()};
+$('cancelPlant').onclick=()=>{$('plantFormCard').hidden=true};
+$('plantForm').onsubmit=e=>{e.preventDefault();const x=formObj(e.target);const p={...x,id:crypto.randomUUID?crypto.randomUUID():String(Date.now())};t().plants.push(p);t().type=x.type;t().stage=x.stage;t().startDate=t().startDate||x.start;t().medium=x.medium;selectedPlant=p.id;saveState();e.target.reset();$('plantFormCard').hidden=true;renderAll();toast('Plant record saved')};
+$('plantList').addEventListener('click',e=>{const rm=e.target.closest('[data-remove-plant]');if(rm){if(confirm('Remove this plant record?')){t().plants.splice(+rm.dataset.removePlant,1);selectedPlant='';saveState();renderPlants();renderOverview();toast('Plant removed')}}const ed=e.target.closest('[data-edit-plant]');if(ed){const p=t().plants[+ed.dataset.editPlant];$('plantFormCard').hidden=false;Object.keys(p).forEach(k=>{if($('plantForm').elements[k])$('plantForm').elements[k].value=p[k]});$('plantForm').onsubmit=ev=>{ev.preventDefault();Object.assign(p,formObj(ev.target));saveState();$('plantFormCard').hidden=true;$('plantForm').onsubmit=addPlantHandler;renderAll();toast('Plant updated')}}});
+function addPlantHandler(e){e.preventDefault();const x=formObj(e.target),p={...x,id:String(Date.now())};t().plants.push(p);t().type=x.type;t().stage=x.stage;t().startDate=t().startDate||x.start;t().medium=x.medium;selectedPlant=p.id;saveState();e.target.reset();$('plantFormCard').hidden=true;renderAll();toast('Plant record saved')}
+$('plantForm').onsubmit=addPlantHandler;
+$('timelineDate').value=today();$('timelineDate').onchange=updateTimeline;
+$('envForm').onsubmit=e=>{e.preventDefault();const x=formObj(e.target),offset=x.offset===''?state.prefs.offset:Number(x.offset);const v=vpd(x.temp,x.rh,x.leaf,offset);t().env={...x,offset};t().envHistory.unshift({at:new Date().toLocaleString(),...x,offset,vpd:v===null?'—':v.toFixed(2)});t().envHistory=t().envHistory.slice(0,100);saveState();renderAll();toast('Environment reading saved')};
+$('resForm').onsubmit=e=>{e.preventDefault();t().res=formObj(e.target);saveState();renderAll();toast('Reservoir saved')};
+function calcMix(){const f=formObj($('mixForm')),vol=Number(f.volume)||0,sys=f.system,parts=sys==='1-part'?['a']:['a','b','c'];const lines=parts.map(k=>k.toUpperCase()+': '+(Number(f[k]||0)*vol).toFixed(1)+' ml');if(Number(f.additives)>0)lines.push('ADDITIVES: '+(Number(f.additives)*vol).toFixed(1)+' ml');$('mixResult').hidden=false;$('mixResult').textContent='Batch estimate · '+vol+' gallons · '+lines.join(' · ');return{f,summary:lines.join(' / ')}}
+$('calcMix').onclick=calcMix;
+$('mixForm').onsubmit=e=>{e.preventDefault();const {f,summary}=calcMix(),name=prompt('Name this recipe:','Custom mix');if(!name)return;t().recipes.unshift({name,system:f.system,summary,volume:f.volume,date:today()});saveState();renderFeed();toast('Recipe saved')};
+$('feedForm').elements.date.value=today();$('feedForm').onsubmit=e=>{e.preventDefault();t().feedLogs.unshift(formObj(e.target));saveState();e.target.reset();e.target.elements.date.value=today();renderAll();toast('Feed event logged')};
+$('feedHistory').addEventListener('click',e=>{const b=e.target.closest('[data-remove-feed]');if(b&&confirm('Remove this feed entry?')){t().feedLogs.splice(+b.dataset.removeFeed,1);saveState();renderFeed()}});
+$('recipeList').addEventListener('click',e=>{const b=e.target.closest('[data-remove-recipe]');if(b){t().recipes.splice(+b.dataset.removeRecipe,1);saveState();renderFeed()}});
+$('journalForm').elements.date.value=today();$('journalForm').onsubmit=e=>{e.preventDefault();t().journal.unshift(formObj(e.target));saveState();e.target.reset();e.target.elements.date.value=today();renderAll();toast('Journal entry saved')};
+$('journalList').addEventListener('click',e=>{const b=e.target.closest('[data-remove-journal]');if(b&&confirm('Delete this journal entry?')){t().journal.splice(+b.dataset.removeJournal,1);saveState();renderJournal()}});
+$('prevMonth').onclick=()=>{calMonth.setMonth(calMonth.getMonth()-1);renderCalendar()};$('nextMonth').onclick=()=>{calMonth.setMonth(calMonth.getMonth()+1);renderCalendar()};
+$('calendarGrid').addEventListener('click',e=>{const b=e.target.closest('[data-date]');if(b){selectedDate=b.dataset.date;renderCalendar()}});
+$('taskForm').onsubmit=e=>{e.preventDefault();t().tasks.push(formObj(e.target));saveState();e.target.elements.title.value='';e.target.elements.notes.value='';renderCalendar();toast('Reminder added')};
+$('dayTasks').addEventListener('click',e=>{const b=e.target.closest('[data-done-task]');if(b){t().tasks.splice(+b.dataset.doneTask,1);saveState();renderCalendar();toast('Reminder cleared')}});
+$('settingsForm').onsubmit=e=>{e.preventDefault();state.prefs=formObj(e.target);saveState();renderAll();toast('Preferences saved')};
+$('targetForm').onsubmit=e=>{e.preventDefault();t().targets=formObj(e.target);saveState();toast('Reference bands saved')};
+function exportBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='hoodieghost-grows-backup-'+today()+'.json';a.click();URL.revokeObjectURL(url);toast('Backup exported')}
+$('exportData').onclick=exportBackup;$('quickExport').onclick=exportBackup;
+$('importData').onchange=e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const x=JSON.parse(reader.result);if(!Array.isArray(x.tents)||x.tents.length!==3)throw new Error('Invalid backup');if(confirm('Replace the current local records with this backup?')){state=x;saveState();renderAll();toast('Backup restored')}}catch(err){alert('Could not import this backup file.')}};reader.readAsText(file);e.target.value=''};
+$('resetData').onclick=()=>{if(confirm('This permanently clears all three tent records in this browser. Export a backup first. Continue?')){state={tents:[blankTent(),blankTent(),blankTent()],prefs:state.prefs};activeTent=0;saveState();renderAll();toast('Workspace reset')}};
+$('tentButtons').addEventListener('click',()=>{});
+document.querySelectorAll('[data-tent]').forEach(b=>b.addEventListener('click',()=>{}));
+renderAll();
 })();
 </script>
 </body></html>
