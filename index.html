@@ -441,6 +441,77 @@ main{grid-column:2;grid-row:1 / span 2;min-width:0;padding-top:8px}
  .sidepanel{display:grid!important;grid-template-columns:1fr!important}
 }
 
+
+/* HOODIEGHOST COMPLETE DASHBOARD REBUILD */
+:root{--green:#66ff33;--green2:#b7ff8a;--bg:#050806;--surface:#0b130d;--line:#315b2b}
+body{background:radial-gradient(ellipse at 50% -20%,#18351b 0,transparent 48%),#040705;color:#f6fff2}
+.shell{width:100%;max-width:1900px;margin:0 auto;padding:10px 14px 30px;display:grid;grid-template-columns:220px minmax(0,1fr);grid-template-rows:auto 1fr;gap:10px 14px;align-items:start}
+.topbar{grid-column:1;grid-row:1;border:0;padding:0;display:block;min-width:0}
+.brand{display:block}
+.brand img{display:block;width:100%;height:142px;object-fit:contain;object-position:center;border:0;border-radius:0;background:transparent;box-shadow:none}
+.brandname,.brand .eyebrow,.topbar .topright{display:none}
+.tabs{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:6px;padding:0;margin:0;overflow:visible}
+.tabs button{width:100%;min-height:42px;text-align:left;padding:9px 12px;border-radius:9px;border:1px solid #243d25;background:linear-gradient(180deg,#111d13,#050906);color:#efffea;font:700 15px 'Barlow Condensed';letter-spacing:.2px;text-transform:uppercase}
+.tabs button.active{background:linear-gradient(180deg,#aaff79,#66ff33);color:#061005;border-color:#caffb3;box-shadow:0 0 16px #66ff3370}
+main{grid-column:2;grid-row:1 / span 2;min-width:0;padding:0}
+#view-overview .dashboard-tentpick{display:flex;gap:8px;margin:0 0 10px;padding:0}
+.dashboard-tentpick button{flex:1;min-height:54px;border:1px solid #456f3c;border-radius:11px;background:linear-gradient(180deg,#172319,#070d08);color:#f7fff2;font:800 18px 'Barlow Condensed';box-shadow:0 4px 14px #0008}
+.dashboard-tentpick button.active{background:linear-gradient(180deg,#b8ff8a,#66ff33);color:#061005;border-color:#d5ffc1;box-shadow:0 0 20px #66ff3370}
+#view-overview>.hero{grid-template-columns:minmax(0,1.85fr) minmax(280px,.9fr);gap:11px;align-items:stretch}
+#view-overview .scene{min-height:clamp(450px,42vw,600px);border:2px solid #66ff33;border-radius:18px;background:#080c09 url('./02-grow-room-tent-background.webp?v=14') center/cover no-repeat;box-shadow:0 0 24px #66ff3340,inset 0 0 45px #000a;isolation:isolate}
+#view-overview .scene:before{z-index:1;background:linear-gradient(90deg,#02060366,transparent 28% 72%,#02060355),linear-gradient(0deg,#02060399,transparent 42%)}
+#view-overview .scene:after{content:"";position:absolute;z-index:2;left:19%;right:19%;top:4%;height:11%;border:5px solid #29332b;border-radius:8px;background:repeating-linear-gradient(90deg,#fff9d9 0 5px,#ffb17c 5px 9px,#351c36 9px 19px);box-shadow:0 0 15px #ffe2b0,0 0 34px #ffb0d077,0 8px 20px #000d;pointer-events:none}
+#view-overview .scenehead{z-index:5;top:13px;left:14px;right:14px}
+#view-overview .scenehead h1{font-size:clamp(22px,2.6vw,36px);text-shadow:0 3px 14px #000}
+#view-overview .scenehead .status{background:#041006ed;border-color:#66ff33;color:#66ff33}
+#view-overview .scene-watermark{display:block!important;position:absolute!important;z-index:4!important;left:50%!important;top:47%!important;transform:translate(-50%,-50%)!important;width:clamp(130px,20%,220px)!important;height:auto!important;max-height:45%!important;object-fit:contain!important;opacity:.96!important;filter:drop-shadow(0 6px 16px #000)!important;pointer-events:none!important}
+#view-overview .scene-mascot{display:none!important}
+#view-overview .tent-art{display:none!important}
+#view-overview .scenefoot{z-index:5;bottom:12px;text-shadow:0 2px 8px #000}
+#view-overview .stage-gallery{position:absolute;z-index:7;left:9px;right:9px;bottom:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:8px;background:#030804eF;border:1px solid #5f9b4c;border-radius:12px;box-shadow:0 0 18px #000c}
+.stage-gallery-label{grid-column:1/-1;font:700 10px 'DM Mono';letter-spacing:1.2px;color:#d8ffd0}
+.stage-card{min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px;border:1px solid #355a30;border-radius:9px;background:linear-gradient(180deg,#132016,#050906);color:#f5fff2}
+.stage-card .stage-thumb{display:block;width:100%;height:66px;border-radius:6px;background-image:url('./03-plant-stage-progression.webp?v=4');background-repeat:no-repeat;background-size:400% 100%;background-position:0 center}
+.stage-card.veg .stage-thumb{background-position:33.333% center}
+.stage-card.flower .stage-thumb{background-position:66.666% center}
+.stage-card.harvest .stage-thumb{background-position:100% center}
+.stage-card b{font:800 11px 'Barlow Condensed';text-align:center}
+.stage-card small{font:9px 'DM Mono';color:#a9c6a2;text-align:center}
+.stage-card.active{border:2px solid #66ff33;background:linear-gradient(180deg,#1e3a1a,#071007);box-shadow:0 0 16px #66ff3370}
+#view-overview .sidepanel{gap:9px}
+#view-overview .panel{padding:12px;background:linear-gradient(145deg,#132017,#050a07);border:1px solid #426b39;box-shadow:0 0 13px #66ff3318,inset 0 1px #ffffff10}
+#view-overview .paneltitle strong{font:800 19px 'Barlow Condensed';color:#f5fff2}
+#view-overview .stage{color:#66ff33}
+#view-overview .growstat{background:#050b07;border-color:#29482a}
+#view-overview .metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+#view-overview .metric{background:linear-gradient(145deg,#112017,#050906);border-color:#315b2b}
+#view-overview .metric b{color:#66ff33}
+#view-overview .sectionhead h2{font:900 28px 'Barlow Condensed'}
+.btn.primary{background:#66ff33;color:#061005;border-color:#b7ff8a;box-shadow:0 0 15px #66ff3350}
+input,select,textarea{background:#050b07;border-color:#315b2b}
+.view .panel{border-color:#315b2b}
+@media(max-width:1000px){
+ .shell{display:block!important;padding:8px 10px 24px!important}
+ .topbar{display:flex!important;align-items:center!important;padding:0 0 6px!important}
+ .brand img{width:clamp(130px,22vw,190px)!important;height:clamp(64px,12vw,100px)!important}
+ .tabs{display:flex!important;flex-direction:row!important;overflow-x:auto!important;gap:6px!important;padding:6px 0 11px!important}
+ .tabs button{flex:0 0 auto!important;width:auto!important;min-height:38px!important;text-align:center!important;padding:8px 11px!important;font-size:12px!important}
+ main{display:block!important;width:100%!important;padding:0!important}
+ #view-overview>.hero{grid-template-columns:minmax(0,1.55fr) minmax(240px,.85fr)!important}
+ #view-overview .scene{min-height:clamp(410px,55vw,560px)!important}
+}
+@media(max-width:680px){
+ #view-overview>.hero{grid-template-columns:1fr!important}
+ #view-overview .scene{min-height:430px!important}
+ #view-overview .stage-gallery{bottom:8px;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:5px}
+ #view-overview .stage-card .stage-thumb{height:52px}
+ #view-overview .stage-card b{font-size:9px}
+ #view-overview .stage-card small{display:none}
+ #view-overview .scenefoot{display:none}
+ #view-overview .metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #view-overview .sidepanel{display:grid!important;grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 <body>
@@ -454,9 +525,10 @@ main{grid-column:2;grid-row:1 / span 2;min-width:0;padding-top:8px}
 </nav>
 <main>
 <section class="view active" id="view-overview">
+ <div class="tentpick dashboard-tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div>
  <div class="hero">
-  <div class="scene"><img class="scene-watermark" src="./hoodieghost-logo.jpg" alt="" aria-hidden="true"><img class="scene-mascot" src="./01-mascot-brand.webp?v=3" alt="" aria-hidden="true">
-   <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div><div class="stagepick" aria-label="Select artwork growth stage"><span>ARTWORK STAGE</span><button data-stage="Seedling">SEEDLING</button><button data-stage="Vegetative">VEGETATIVE</button><button data-stage="Flowering">FLOWERING</button><button data-stage="Harvest & Drying">HARVEST / DRYING</button></div></div><div class="status">● SIMULATED ROOM</div></div>
+  <div class="scene"><img class="scene-watermark" src="./hoodieghost-logo.jpg" alt="Original HoodieGhost logo" aria-hidden="true">
+   <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="stage-gallery" aria-label="Select artwork growth stage"><span class="stage-gallery-label">SELECT TENT ARTWORK</span><button class="stage-card seed" data-stage="Seedling"><span class="stage-thumb"></span><b>SEEDLING</b><small>Early growth</small></button><button class="stage-card veg" data-stage="Vegetative"><span class="stage-thumb"></span><b>VEGETATIVE</b><small>Leaf development</small></button><button class="stage-card flower" data-stage="Flowering"><span class="stage-thumb"></span><b>FLOWERING</b><small>Bloom stage</small></button><button class="stage-card harvest" data-stage="Harvest & Drying"><span class="stage-thumb"></span><b>HARVEST / DRYING</b><small>Finish & dry</small></button></div></div><div class="status">● SIMULATED ROOM</div></div>
    <div class="tent-art" aria-label="Animated grow tent illustration"><div class="tent-roof"></div><div class="tent-back"></div><div class="tent-side left"></div><div class="tent-side right"></div><div class="led"></div><div class="fan left"></div><div class="fan right"></div><div class="plants" id="scenePlants"><div class="plant" style="--h:90%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:100%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:78%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div></div><div class="tent-floor"></div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
   </div>
