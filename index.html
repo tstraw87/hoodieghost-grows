@@ -929,7 +929,7 @@ function $(id){return document.getElementById(id)}
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function showView(name){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===name));if(name==='calendar')renderCalendar();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
-document.querySelectorAll('[data-tent]').forEach(b=>b.addEventListener('click',()=>{activeTent=+b.dataset.tent;document.querySelectorAll('[data-tent]').forEach(x=>x.classList.toggle('active',x===b));render()}));
+document.querySelectorAll('.tentpick [data-tent]').forEach(b=>b.addEventListener('click',()=>{activeTent=+b.dataset.tent;document.querySelectorAll('.tentpick [data-tent]').forEach(x=>x.classList.toggle('active',x===b));render()}));
 document.querySelectorAll('[data-stage]').forEach(b=>b.addEventListener('click',()=>{t().stage=b.dataset.stage;save()}));
 function age(){if(!t().startDate)return null;let start=new Date(t().startDate+'T00:00:00'),now=new Date();now.setHours(0,0,0,0);return Math.max(0,Math.floor((now-start)/86400000)+1)}
 function vpdCalc(temp,rh,leaf,offset){if(temp===''||rh===''||!isFinite(+temp)||!isFinite(+rh))return null;let air=+temp,rel=+rh,leafT=leaf===''?air+(+offset||0):+leaf;let svp=x=>0.6108*Math.exp((17.27*x)/(x+237.3));let c=x=>(x-32)*5/9;let result=svp(c(leafT))-(rel/100)*svp(c(air));return Math.max(0,result)}
@@ -969,7 +969,7 @@ $('feedHistory').innerHTML=x.feedLogs.length?'<table><thead><tr><th>Date</th><th
 $('journalEntries').innerHTML=x.journal.length?x.journal.slice().reverse().map(h=>'<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="eyebrow">'+h.date+' · '+safe(h.type)+'</div><p style="margin:7px 0">'+safe(h.text)+'</p></div>').join(''):'<div class="empty">No journal entries yet.</div>';
 $('recipeHistory').innerHTML=x.recipes.length?x.recipes.slice().reverse().map(r=>'<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>'+safe(r.name)+'</b><div class="muted">'+safe(r.summary)+'</div></div>').join(''):'';
 $('threePart').style.display=$('baseSystem').value==='3'?'grid':'none';
-document.querySelectorAll('[data-tent]').forEach((b,i)=>{b.classList.toggle('active',i===activeTent);b.innerHTML='<strong>TENT 0'+(i+1)+'</strong><small>'+safe(data.tents[i].stage||'Not started')+'</small>';});
+document.querySelectorAll('.tentpick [data-tent]').forEach((b,i)=>{b.classList.toggle('active',i===activeTent);b.innerHTML='<strong>TENT 0'+(i+1)+'</strong><small>'+safe(data.tents[i].stage||'Not started')+'</small>';});
 paintStageArtwork();
 }
 function removePlant(i){if(confirm('Remove this plant?')){t().plants.splice(i,1);save()}}
