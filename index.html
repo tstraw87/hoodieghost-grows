@@ -419,6 +419,28 @@ main{grid-column:2;grid-row:1 / span 2;min-width:0;padding-top:8px}
  #view-overview .scene{min-height:440px}
 }
 
+
+/* Tablet portrait correction: prevent desktop two-column shell from collapsing */
+@media(max-width:1024px){
+ .shell{display:block!important;width:100%!important;max-width:none!important;padding:8px 12px 28px!important}
+ .topbar{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:4px 0 8px!important}
+ .brand{display:block!important}
+ .brand img{width:clamp(145px,24vw,220px)!important;height:clamp(68px,12vw,110px)!important;object-fit:contain!important}
+ .topbar .topright{display:none!important}
+ .tabs{display:flex!important;flex-direction:row!important;align-items:stretch!important;overflow-x:auto!important;gap:6px!important;padding:8px 0 12px!important;margin:0!important}
+ .tabs button{flex:0 0 auto!important;width:auto!important;min-height:40px!important;text-align:center!important;padding:8px 12px!important}
+ main{display:block!important;width:100%!important;min-width:0!important;padding:0!important}
+ #view-overview>.hero{grid-template-columns:minmax(0,1.55fr) minmax(245px,.85fr)!important;gap:10px!important}
+ #view-overview .scene{min-height:clamp(420px,55vw,560px)!important}
+ #view-overview .metrics{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+@media(max-width:680px){
+ #view-overview>.hero{grid-template-columns:1fr!important}
+ #view-overview .scene{min-height:430px!important}
+ #view-overview .metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .sidepanel{display:grid!important;grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 <body>
@@ -590,6 +612,15 @@ $('proAddTask').onclick=()=>{let text=$('proTaskText').value.trim(),date=$('proT
 const oldShowView=showView;showView=function(name){oldShowView(name);if(name==='pro')proRender()};
 const oldTentRender=render;render=function(){oldTentRender();proRender()};
 proRender();
+
+
+/* Keep tent switching in its own row above the grow-room scene */
+(function(){
+ const v=document.getElementById('view-overview');
+ const h=v&&v.querySelector('.hero');
+ const p=v&&v.querySelector('.scene .tentpick');
+ if(v&&h&&p&&p.parentElement!==v){v.insertBefore(p,h);}
+})();
 
 </script>
 </body></html>
