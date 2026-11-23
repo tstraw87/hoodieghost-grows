@@ -551,6 +551,33 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
 
 #view-overview .scene:after{left:14%!important;right:14%!important;top:2%!important;height:19%!important;background:repeating-linear-gradient(0deg,#202a22 0 6px,#fff6dc 6px 10px,#ff9d78 10px 13px,#202a22 13px 20px)!important;border:6px solid #28352a!important}
 
+
+/* Correct the actual stage-gallery hierarchy and show the real full-spectrum tent photo */
+#view-overview .scene{background:#080d09 url('./open-grow-tent.jpg?v=2') center/cover no-repeat!important}
+#view-overview .scene:after{display:none!important}
+#view-overview .scene:before{background:linear-gradient(90deg,#02060333,transparent 28% 72%,#02060333),linear-gradient(0deg,#02060399,transparent 45%)!important}
+#view-overview .scenehead{position:absolute;z-index:6;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start}
+#view-overview .stage-gallery{position:absolute!important;z-index:8!important;left:10px!important;right:10px!important;bottom:10px!important;top:auto!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important;padding:8px!important;background:#030804ed!important;border:1px solid #66ff33!important;border-radius:12px!important;box-shadow:0 0 18px #000d!important}
+#view-overview .stage-gallery-label{grid-column:1/-1!important}
+#view-overview .stage-card .stage-thumb{height:75px!important;background-size:900% 100%!important}
+#view-overview .stage-card.seed .stage-thumb{background-position:12.5% center!important}
+#view-overview .stage-card.veg .stage-thumb{background-position:37.5% center!important}
+#view-overview .stage-card.flower .stage-thumb{background-position:75% center!important}
+#view-overview .stage-card.harvest .stage-thumb{background-position:100% center!important}
+#view-overview .scene-stage-plant{display:none!important}
+#view-overview .scene-watermark{display:none!important}
+.brand img{width:100%!important;max-width:220px!important;height:138px!important;object-fit:contain!important;object-position:center!important;display:block!important;border:0!important;background:transparent!important;box-shadow:none!important}
+@media(max-width:1000px){
+ .brand img{width:clamp(150px,24vw,220px)!important;height:clamp(82px,14vw,130px)!important;max-width:220px!important}
+ #view-overview .scene{min-height:clamp(480px,65vw,620px)!important}
+ #view-overview .stage-card .stage-thumb{height:64px!important}
+}
+@media(max-width:680px){
+ #view-overview .scene{min-height:470px!important}
+ #view-overview .stage-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #view-overview .stage-card .stage-thumb{height:56px!important}
+}
+
 </style>
 </head>
 <body>
@@ -566,8 +593,7 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
 <section class="view active" id="view-overview">
  <div class="tentpick dashboard-tentpick"><button class="active" data-tent="0">TENT 01</button><button data-tent="1">TENT 02</button><button data-tent="2">TENT 03</button></div>
  <div class="hero">
-  <div class="scene"><img class="scene-watermark" src="./hoodieghost-logo.jpg" alt="Original HoodieGhost logo" aria-hidden="true"><div class="scene-stage-plant" aria-hidden="true"></div>
-   <div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1><div class="stage-gallery" aria-label="Select artwork growth stage"><span class="stage-gallery-label">SELECT TENT ARTWORK</span><button class="stage-card seed" data-stage="Seedling"><span class="stage-thumb"></span><b>SEEDLING</b><small>Early growth</small></button><button class="stage-card veg" data-stage="Vegetative"><span class="stage-thumb"></span><b>VEGETATIVE</b><small>Leaf development</small></button><button class="stage-card flower" data-stage="Flowering"><span class="stage-thumb"></span><b>FLOWERING</b><small>Bloom stage</small></button><button class="stage-card harvest" data-stage="Harvest & Drying"><span class="stage-thumb"></span><b>HARVEST / DRYING</b><small>Finish & dry</small></button></div></div><div class="status">● SIMULATED ROOM</div></div>
+  <div class="scene"><div class="scenehead"><div><div class="eyebrow">Live tent visualization / <span id="sceneTentName">Tent 01</span></div><h1>YOUR GROW.<br><em>YOUR CONTROL.</em></h1></div><div class="status">● SIMULATED ROOM</div></div><div class="scene-stage-plant" aria-hidden="true"></div><div class="stage-gallery" aria-label="Select artwork growth stage"><span class="stage-gallery-label">SELECT TENT ARTWORK</span><button class="stage-card seed" data-stage="Seedling"><span class="stage-thumb"></span><b>SEEDLING</b><small>Early growth</small></button><button class="stage-card veg" data-stage="Vegetative"><span class="stage-thumb"></span><b>VEGETATIVE</b><small>Leaf development</small></button><button class="stage-card flower" data-stage="Flowering"><span class="stage-thumb"></span><b>FLOWERING</b><small>Bloom stage</small></button><button class="stage-card harvest" data-stage="Harvest & Drying"><span class="stage-thumb"></span><b>HARVEST / DRYING</b><small>Finish & dry</small></button></div>
    <div class="tent-art" aria-label="Animated grow tent illustration"><div class="tent-roof"></div><div class="tent-back"></div><div class="tent-side left"></div><div class="tent-side right"></div><div class="led"></div><div class="fan left"></div><div class="fan right"></div><div class="plants" id="scenePlants"><div class="plant" style="--h:90%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:100%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div><div class="plant" style="--h:78%"><i class="stem"></i><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="plantpot"></i></div></div><div class="tent-floor"></div></div>
    <div class="scenefoot"><span>LED ARRAY // ACTIVE</span><span>INLINE AIRFLOW // ACTIVE</span><span>GROW SPACE // <b id="scenePlantCount">03 PLANTS</b></span></div>
   </div>
