@@ -578,6 +578,45 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
  #view-overview .stage-card .stage-thumb{height:56px!important}
 }
 
+
+/* Tablet and compact viewport: give the dashboard the full canvas */
+@media(max-width:1250px){
+ .shell{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:8px 12px 28px!important}
+ .topbar{display:flex!important;align-items:center!important;justify-content:flex-start!important;min-height:88px!important;border:0!important;padding:0 0 8px!important}
+ .brand{display:flex!important;align-items:center!important;gap:12px!important}
+ .brand img{display:block!important;width:clamp(112px,16vw,170px)!important;height:clamp(78px,12vw,118px)!important;max-width:none!important;object-fit:contain!important;object-position:center!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+ .tabs{display:flex!important;flex-direction:row!important;align-items:stretch!important;gap:7px!important;overflow-x:auto!important;padding:8px 0 13px!important;margin:0!important;border:0!important}
+ .tabs button{flex:0 0 auto!important;width:auto!important;min-height:42px!important;padding:9px 14px!important;text-align:center!important;font-size:13px!important}
+ main{display:block!important;width:100%!important;min-width:0!important;padding:0!important}
+ #view-overview>.hero{grid-template-columns:minmax(0,1.7fr) minmax(280px,.85fr)!important;gap:12px!important}
+ #view-overview .scene{min-height:clamp(460px,55vw,650px)!important}
+ #view-overview .metrics{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ .dashboard-widgets{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+ #view-overview>.hero{grid-template-columns:1fr!important}
+ #view-overview .scene{min-height:480px!important}
+ #view-overview .metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .dashboard-widgets{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+#view-overview .stage-card .stage-thumb{height:78px!important;background-size:900% 135%!important;background-repeat:no-repeat!important;background-position-y:top!important;border-radius:6px!important}
+#view-overview .stage-card.seed .stage-thumb{background-position-x:12.5%!important}
+#view-overview .stage-card.veg .stage-thumb{background-position-x:37.5%!important}
+#view-overview .stage-card.flower .stage-thumb{background-position-x:75%!important}
+#view-overview .stage-card.harvest .stage-thumb{background-position-x:100%!important}
+#view-overview .stage-card{padding:7px!important;gap:5px!important}
+#view-overview .stage-card b{font-size:12px!important;letter-spacing:.4px!important}
+#view-overview .stage-card small{font-size:10px!important}
+#view-overview .stage-gallery{padding:10px!important;gap:9px!important}
+#view-overview .scenehead h1{font-size:clamp(27px,3.5vw,44px)!important}
+#view-overview .scene{background-position:center!important}
+@media(max-width:760px){
+ #view-overview .stage-card .stage-thumb{height:64px!important}
+ #view-overview .stage-card b{font-size:10px!important}
+ #view-overview .stage-card small{display:block!important;font-size:8px!important}
+ #view-overview .stage-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
 </style>
 </head>
 <body>
