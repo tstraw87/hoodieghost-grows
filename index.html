@@ -679,6 +679,28 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
  #view-overview .scenefoot{display:none!important}
 }
 
+
+/* Screenshot follow-up: remove accidental sprite overlay and crop each card to the plant only */
+#view-overview .scene-stage-plant{display:none!important;background:none!important}
+#view-overview .scene{min-height:clamp(520px,62vw,700px)!important}
+#view-overview .stage-card .stage-thumb{
+ background-image:url('./03-plant-stage-progression.webp?v=8')!important;
+ background-size:900% 135px!important;
+ background-position-y:50%!important;
+ background-repeat:no-repeat!important;
+ height:90px!important;
+}
+#view-overview .stage-card.seed .stage-thumb{background-position-x:12.5%!important}
+#view-overview .stage-card.veg .stage-thumb{background-position-x:37.5%!important}
+#view-overview .stage-card.flower .stage-thumb{background-position-x:75%!important}
+#view-overview .stage-card.harvest .stage-thumb{background-position-x:100%!important}
+#view-overview .stage-gallery{bottom:10px!important}
+#view-overview .scenefoot{display:none!important}
+@media(max-width:760px){
+ #view-overview .scene{min-height:550px!important}
+ #view-overview .stage-card .stage-thumb{height:78px!important;background-size:900% 117px!important}
+}
+
 </style>
 </head>
 <body>
