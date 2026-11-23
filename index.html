@@ -713,6 +713,19 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
 }
 @media(max-width:760px){#view-overview .scene:after{left:31%!important;right:31%!important;bottom:31%!important;height:7%!important}}
 
+
+/* Correct the background-logo mask position based on the latest iPad screenshot */
+#view-overview .scene:after{
+ left:34%!important;right:34%!important;bottom:43%!important;height:10%!important;
+ border:0!important;border-radius:5px!important;
+ background:linear-gradient(90deg,transparent 0%,rgba(5,9,6,.90) 12%,rgba(5,9,6,.97) 50%,rgba(5,9,6,.90) 88%,transparent 100%)!important;
+ box-shadow:none!important;
+}
+#view-overview .scenehead{z-index:7!important}
+#view-overview .scenehead>div:first-child{max-width:72%!important}
+#view-overview .scenehead h1{max-width:100%!important;text-shadow:0 2px 8px #000!important}
+#view-overview .stage-gallery{z-index:9!important}
+
 </style>
 </head>
 <body>
