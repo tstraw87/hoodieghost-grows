@@ -793,6 +793,16 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
  #view-overview .stage-card .stage-thumb svg{max-height:76px!important}
 }
 
+
+/* Actual uploaded four-scene artwork strip */
+#view-overview .stage-card .stage-thumb{background-image:url('./stage-art-strip.webp?v=1')!important;background-size:400% 100%!important;background-repeat:no-repeat!important;background-position-y:center!important}
+#view-overview .stage-card.seed .stage-thumb{background-position-x:0%!important}
+#view-overview .stage-card.veg .stage-thumb{background-position-x:33.333%!important}
+#view-overview .stage-card.flower .stage-thumb{background-position-x:66.666%!important}
+#view-overview .stage-card.harvest .stage-thumb{background-position-x:100%!important}
+#view-overview .stage-card .stage-thumb svg{display:none!important}
+#view-overview .scene-stage-plant{display:none!important}
+
 </style>
 </head>
 <body>
@@ -915,10 +925,16 @@ const stageArt={
  "Harvest & Drying":'<svg viewBox="0 0 220 150" role="img" aria-label="Harvest and drying illustration"><defs><linearGradient id="budD" x2="0" y2="1"><stop stop-color="#d5c76b"/><stop offset=".6" stop-color="#8e9c42"/><stop offset="1" stop-color="#46532c"/></linearGradient></defs><path d="M28 19H192" stroke="#a9b6a2" stroke-width="5" stroke-linecap="round"/><path d="M51 20V35M88 20V29M132 20V35M170 20V30" stroke="#b4bfaa" stroke-width="2"/><g stroke="#627b37" stroke-width="3" fill="none"><path d="M51 34Q46 63 53 108M88 29Q82 58 89 108M132 34Q126 65 133 108M170 29Q165 59 171 108"/></g><g fill="url(#budD)" stroke="#344b28" stroke-width="1.5"><path d="M39 55Q27 43 42 35Q53 29 61 42Q69 55 56 67Q45 70 39 55Z"/><path d="M47 83Q33 70 48 61Q60 55 67 69Q74 83 60 94Q50 98 47 83Z"/><path d="M76 53Q65 41 79 33Q91 27 98 41Q106 54 92 65Q81 68 76 53Z"/><path d="M83 85Q70 72 85 64Q97 57 104 72Q111 85 97 96Q87 100 83 85Z"/><path d="M119 56Q107 43 122 35Q134 29 141 44Q148 57 134 68Q124 71 119 56Z"/><path d="M126 86Q113 73 128 65Q140 58 147 73Q154 86 140 97Q130 101 126 86Z"/><path d="M158 52Q147 39 161 31Q173 25 180 40Q187 53 174 64Q163 67 158 52Z"/><path d="M165 84Q152 71 167 63Q179 56 186 71Q193 84 179 95Q169 99 165 84Z"/></g><path d="M26 118H194" stroke="#66ff33" stroke-width="2" opacity=".5"/><g fill="#f5e7a8" opacity=".85"><circle cx="48" cy="48" r="1.7"/><circle cx="86" cy="44" r="1.5"/><circle cx="130" cy="49" r="1.6"/><circle cx="169" cy="45" r="1.5"/></g></svg>'
 };
 function paintStageArtwork(){
- const x=t(),stage=x.stage==='Seed / Germination'?'Seedling':x.stage;
- document.querySelectorAll('.stage-card').forEach(b=>{const art=stageArt[b.dataset.stage];const thumb=b.querySelector('.stage-thumb');if(thumb&&art)thumb.innerHTML=art;});
- const scenePlant=document.querySelector('.scene-stage-plant');
- if(scenePlant){scenePlant.innerHTML=stageArt[stage]||stageArt.Seedling;scenePlant.classList.toggle('is-harvest',stage==='Harvest & Drying');}
+ const map={'seed':'0%','veg':'33.333%','flower':'66.666%','harvest':'100%'};
+ document.querySelectorAll('.stage-card').forEach(b=>{
+  const thumb=b.querySelector('.stage-thumb');if(!thumb)return;
+  thumb.innerHTML='';
+  thumb.style.backgroundImage="url('./stage-art-strip.webp?v=1')";
+  thumb.style.backgroundSize='400% 100%';
+  thumb.style.backgroundPosition=(map[b.classList.contains('seed')?'seed':b.classList.contains('veg')?'veg':b.classList.contains('flower')?'flower':'harvest']||'0%')+' center';
+  thumb.style.backgroundRepeat='no-repeat';
+ });
+ const scenePlant=document.querySelector('.scene-stage-plant');if(scenePlant)scenePlant.innerHTML='';
 }
 
 function render(){let x=t(),a=age(),v=vpdCalc(x.env.temp,x.env.rh,x.env.leaf,x.env.offset??data.offset),net=netPpm();setText('sceneTentName','Tent 0'+(activeTent+1));setText('dashPlantStage',x.stage);setText('dashPlantAge',a?'Day '+a+' · '+x.medium:'Set a start date to track age');setText('dashPhoto',x.type);setText('dashMonth',calendarMonth.toLocaleDateString(undefined,{month:'long',year:'numeric'}));setText('dashReservoir',(x.res.volume||'—')+' '+(x.res.unit||'Gallons'));setText('dashWater',(x.res.source||'RO')+' water · source PPM '+(x.res.sourcePpm||'—'));setText('dashFeedCount',x.feedLogs.length+' entries');setText('dashLastFeed',x.feedLogs.length?'Latest: '+(x.feedLogs[x.feedLogs.length-1].date||'logged'):'Record feed input and runoff');$('sceneStageName')&&setText('sceneStageName',x.stage);document.querySelector('.scene')?.setAttribute('data-stage',x.stage);document.querySelectorAll('[data-stage]').forEach(b=>b.classList.toggle('active',b.dataset.stage===x.stage||(x.stage==='Seed / Germination'&&b.dataset.stage==='Seedling')));setText('lineupLabel','TENT 0'+(activeTent+1));setText('plantTentTag','TENT 0'+(activeTent+1));setText('overviewType',x.type.toUpperCase());setText('overviewStage',x.startDate?x.stage:'Not started');setText('overviewAge',a?'Day '+a+' · '+x.medium:'Set a start date to begin the timeline');setText('overviewCount',x.plants.length);setText('overviewDay',a||'—');setText('scenePlantCount',String(x.plants.length).padStart(2,'0')+' PLANTS');setText('quickTemp',x.env.temp||'—');setText('quickRh',x.env.rh||'—');setText('quickVpd',v===null?'—':v.toFixed(2));setText('quickPh',x.res.ph||'—');setText('metricTemp',(x.env.temp||'—')+' °F');setText('metricRh',(x.env.rh||'—')+' %');setText('metricVpd',v===null?'—':v.toFixed(2)+' kPa');setText('metricPpm',net===null?'—':net+' ppm');setGauge('tempGauge',x.env.temp,100);setGauge('rhGauge',x.env.rh,100);setGauge('vpdGauge',v,3);$('feedGauge').style.width=(net===null?0:Math.max(0,Math.min(100,net/1500*100)))+'%';setText('vpdLarge',v===null?'— kPa':v.toFixed(2)+' kPa');setText('vpdExplain',v===null?'Enter temperature and humidity to calculate leaf VPD.':'Leaf temperature: '+(x.env.leaf===''?(+x.env.temp+(+x.env.offset||0)).toFixed(1):x.env.leaf)+'°F · offset '+(x.env.offset??data.offset)+'°F');setText('netPpm',net===null?'— ppm':net+' ppm');setText('waterLabel',x.res.source);setText('volumeLabel',x.res.volume?x.res.volume+' '+x.res.unit:'—');
