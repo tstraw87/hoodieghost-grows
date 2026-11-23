@@ -736,6 +736,13 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
 #view-overview .stage-card.active{border:2px solid #66ff33!important;box-shadow:0 0 16px #66ff3360!important}
 @media(max-width:760px){#view-overview .stage-card .stage-thumb{height:72px!important}#view-overview .scene-stage-plant{bottom:178px!important;width:38%!important;height:140px!important}}
 
+
+/* Keep selected tent stage illustration above the old photo lettering mask */
+#view-overview .scene-stage-plant{z-index:6!important}
+#view-overview .scenehead{z-index:7!important}
+#view-overview .stage-gallery{z-index:9!important}
+#view-overview .stage-card .stage-thumb{background-image:none!important}
+
 </style>
 </head>
 <body>
