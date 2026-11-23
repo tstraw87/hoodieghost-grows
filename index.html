@@ -743,6 +743,19 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
 #view-overview .stage-gallery{z-index:9!important}
 #view-overview .stage-card .stage-thumb{background-image:none!important}
 
+
+/* Fix the floating plant: the full photographic tent is the centerpiece.
+   Stage artwork stays inside the four selector tiles only. */
+#view-overview .scene-stage-plant{display:none!important}
+#view-overview .stage-gallery{bottom:12px!important;left:12px!important;right:12px!important;z-index:8!important}
+#view-overview .stage-card .stage-thumb{height:76px!important;min-height:76px!important}
+#view-overview .stage-card .stage-thumb svg{width:100%!important;height:100%!important;max-height:76px!important}
+#view-overview .scenefoot{display:none!important}
+@media(max-width:680px){
+ #view-overview .stage-gallery{bottom:10px!important;left:8px!important;right:8px!important;gap:5px!important;padding:6px!important}
+ #view-overview .stage-card .stage-thumb{height:64px!important;min-height:64px!important}
+}
+
 </style>
 </head>
 <body>
