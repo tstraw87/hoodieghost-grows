@@ -756,6 +756,43 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
  #view-overview .stage-card .stage-thumb{height:64px!important;min-height:64px!important}
 }
 
+
+/* Stage selector visual finish: make the four distinct plant illustrations read as artwork */
+#view-overview .stage-gallery{
+ bottom:10px!important;left:10px!important;right:10px!important;
+ padding:9px!important;gap:8px!important;
+ background:linear-gradient(180deg,rgba(3,10,5,.96),rgba(4,8,5,.99))!important;
+ border:1px solid #66ff33!important;
+ box-shadow:0 0 0 1px #66ff3322,inset 0 1px #baff8b22,0 8px 22px #000c!important;
+}
+#view-overview .stage-card{
+ min-height:126px!important;padding:7px 6px 6px!important;
+ background:linear-gradient(155deg,#1b2b1d,#0a120c 72%)!important;
+ border:1px solid #385b35!important;border-radius:9px!important;
+}
+#view-overview .stage-card .stage-thumb{
+ height:91px!important;min-height:91px!important;padding:0!important;
+ background:radial-gradient(ellipse at 50% 75%,#33512c 0%,#142417 50%,#0a120d 100%)!important;
+ border:1px solid #29452a!important;border-radius:6px!important;
+}
+#view-overview .stage-card .stage-thumb svg{
+ width:100%!important;height:100%!important;max-height:91px!important;
+ filter:drop-shadow(0 4px 5px #000c)!important;
+}
+#view-overview .stage-card b{font-size:12px!important;letter-spacing:.65px!important}
+#view-overview .stage-card small{font-size:9px!important;letter-spacing:.15px!important}
+#view-overview .stage-card.active{
+ border:2px solid #66ff33!important;
+ background:linear-gradient(155deg,#244321,#0a150b 75%)!important;
+ box-shadow:0 0 14px #66ff3355,inset 0 0 12px #66ff3315!important;
+}
+@media(max-width:680px){
+ #view-overview .stage-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #view-overview .stage-card{min-height:112px!important}
+ #view-overview .stage-card .stage-thumb{height:76px!important;min-height:76px!important}
+ #view-overview .stage-card .stage-thumb svg{max-height:76px!important}
+}
+
 </style>
 </head>
 <body>
