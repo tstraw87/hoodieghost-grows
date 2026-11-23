@@ -617,6 +617,68 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
  #view-overview .stage-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
+
+/* HOODIEGHOST final responsive dashboard pass */
+.shell{width:100%;max-width:none;margin:0 auto}
+@media(min-width:1251px){.shell{max-width:1880px;padding:14px 18px;grid-template-columns:248px minmax(0,1fr);gap:14px 18px}}
+@media(max-width:1250px){
+ .shell{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:8px 12px 28px!important}
+ .topbar{display:flex!important;align-items:center!important;justify-content:flex-start!important;min-height:96px!important;padding:0 0 8px!important}
+ .brand{display:flex!important;align-items:center!important;gap:12px!important;width:100%!important}
+ .brand img{display:block!important;flex:0 0 auto!important;width:clamp(140px,19vw,205px)!important;height:clamp(82px,13vw,130px)!important;max-width:none!important;object-fit:contain!important;object-position:center!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+ .brandname{display:block!important;font-size:clamp(18px,2.5vw,26px)!important}
+ .brand .eyebrow{display:block!important}
+ .topbar .topright{display:flex!important}
+ .tabs{display:flex!important;flex-direction:row!important;align-items:stretch!important;gap:7px!important;overflow-x:auto!important;padding:8px 0 13px!important;margin:0!important;border:0!important}
+ .tabs button{flex:0 0 auto!important;width:auto!important;min-height:42px!important;padding:9px 14px!important;text-align:center!important;font-size:13px!important}
+ main{display:block!important;width:100%!important;min-width:0!important;padding:0!important}
+ #view-overview>.hero{grid-template-columns:minmax(0,1.7fr) minmax(280px,.85fr)!important;gap:12px!important}
+ #view-overview .scene{min-height:clamp(490px,56vw,660px)!important}
+ #view-overview .metrics{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ .dashboard-widgets{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+ .topbar{min-height:72px!important}
+ .brand img{width:clamp(112px,25vw,155px)!important;height:76px!important}
+ .topbar .topright{display:none!important}
+ #view-overview>.hero{grid-template-columns:1fr!important}
+ #view-overview .scene{min-height:500px!important}
+ #view-overview .metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .dashboard-widgets{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+#view-overview .dashboard-tentpick{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important;margin:0 0 12px!important}
+#view-overview .dashboard-tentpick button{min-width:0!important;min-height:58px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;padding:7px 10px!important;font:800 15px 'Barlow Condensed'!important;letter-spacing:.5px!important}
+#view-overview .dashboard-tentpick button strong{font-size:17px!important}
+#view-overview .dashboard-tentpick button small{font:10px 'DM Mono'!important;opacity:.82!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important}
+#view-overview .scene{position:relative!important;background-position:center center!important;background-size:cover!important;overflow:hidden!important}
+#view-overview .scene:after{display:none!important}
+#view-overview .scenehead{position:absolute!important;z-index:6!important;top:14px!important;left:16px!important;right:16px!important;display:flex!important;justify-content:space-between!important;align-items:flex-start!important}
+#view-overview .scenehead h1{font-size:clamp(28px,3.2vw,44px)!important;line-height:.98!important}
+#view-overview .scene-stage-plant{display:block!important;position:absolute!important;z-index:4!important;left:50%!important;bottom:145px!important;transform:translateX(-50%)!important;width:170px!important;height:132px!important;background-image:url('./03-plant-stage-progression.webp?v=7')!important;background-repeat:no-repeat!important;background-size:900% 100%!important;background-position:12.5% top!important;filter:drop-shadow(0 8px 13px #000c)!important;pointer-events:none!important}
+#view-overview .scene[data-stage="Seed / Germination"] .scene-stage-plant,#view-overview .scene[data-stage="Seedling"] .scene-stage-plant{background-position:12.5% top!important}
+#view-overview .scene[data-stage="Vegetative"] .scene-stage-plant{background-position:37.5% top!important}
+#view-overview .scene[data-stage="Flowering"] .scene-stage-plant{background-position:75% top!important}
+#view-overview .scene[data-stage="Harvest & Drying"] .scene-stage-plant{background-position:100% top!important}
+#view-overview .stage-gallery{position:absolute!important;z-index:8!important;left:10px!important;right:10px!important;bottom:10px!important;top:auto!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;padding:9px!important;background:#030804ed!important;border:1px solid #66ff33!important;border-radius:12px!important;box-shadow:0 0 18px #000d!important}
+#view-overview .stage-gallery-label{grid-column:1/-1!important;font-size:10px!important}
+#view-overview .stage-card{min-width:0!important;padding:6px!important;gap:4px!important}
+#view-overview .stage-card .stage-thumb{height:118px!important;background-image:url('./03-plant-stage-progression.webp?v=7')!important;background-repeat:no-repeat!important;background-size:900% 100%!important;background-position-y:top!important;border-radius:6px!important}
+#view-overview .stage-card.seed .stage-thumb{background-position-x:12.5%!important}
+#view-overview .stage-card.veg .stage-thumb{background-position-x:37.5%!important}
+#view-overview .stage-card.flower .stage-thumb{background-position-x:75%!important}
+#view-overview .stage-card.harvest .stage-thumb{background-position-x:100%!important}
+#view-overview .stage-card b{font:800 12px 'Barlow Condensed'!important;text-align:center!important}
+#view-overview .stage-card small{font:9px 'DM Mono'!important;text-align:center!important}
+#view-overview .scene-watermark{display:none!important}
+#view-overview .scenefoot{z-index:6!important;bottom:160px!important}
+@media(max-width:760px){
+ #view-overview .scene{min-height:540px!important}
+ #view-overview .scene-stage-plant{bottom:180px!important;width:145px!important;height:112px!important}
+ #view-overview .stage-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important;bottom:8px!important}
+ #view-overview .stage-card .stage-thumb{height:88px!important}
+ #view-overview .scenefoot{display:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -743,7 +805,7 @@ $('feedHistory').innerHTML=x.feedLogs.length?'<table><thead><tr><th>Date</th><th
 $('journalEntries').innerHTML=x.journal.length?x.journal.slice().reverse().map(h=>'<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="eyebrow">'+h.date+' · '+safe(h.type)+'</div><p style="margin:7px 0">'+safe(h.text)+'</p></div>').join(''):'<div class="empty">No journal entries yet.</div>';
 $('recipeHistory').innerHTML=x.recipes.length?x.recipes.slice().reverse().map(r=>'<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>'+safe(r.name)+'</b><div class="muted">'+safe(r.summary)+'</div></div>').join(''):'';
 $('threePart').style.display=$('baseSystem').value==='3'?'grid':'none';
-document.querySelectorAll('[data-tent]').forEach((b,i)=>b.classList.toggle('active',i===activeTent));
+document.querySelectorAll('[data-tent]').forEach((b,i)=>{b.classList.toggle('active',i===activeTent);b.innerHTML='<strong>TENT 0'+(i+1)+'</strong><small>'+safe(data.tents[i].stage||'Not started')+'</small>';});
 }
 function removePlant(i){if(confirm('Remove this plant?')){t().plants.splice(i,1);save()}}
 $('saveProfile').onclick=()=>{Object.assign(t(),{type:$('growType').value,stage:$('stage').value,startDate:$('startDate').value,medium:$('medium').value});save()};
