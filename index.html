@@ -823,6 +823,10 @@ input,select,textarea{background:#050b07;border-color:#315b2b}
 #view-overview .stage-card .stage-thumb{background-image:none!important;background-size:contain!important;overflow:hidden}
 #view-overview .stage-card .stage-thumb svg{width:100%;height:100%;display:block;object-fit:contain}
 #view-overview .scene{background-color:#050906!important}
+
+/* Ensure stage artwork image elements remain visible on Safari */
+#view-overview .stage-card .stage-thumb{height:66px!important;min-height:66px!important;display:block!important;background:none!important;overflow:hidden!important}
+#view-overview .stage-card .stage-thumb img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;visibility:visible!important;opacity:1!important}
 </style>
 </head>
 <body>
@@ -947,11 +951,16 @@ const stageArt={
 function paintStageArtwork(){
  document.querySelectorAll('.stage-card').forEach(b=>{
   const thumb=b.querySelector('.stage-thumb');if(!thumb)return;
-  thumb.innerHTML=stageArt[b.dataset.stage]||stageArt['Seedling'];
+  const svg=stageArt[b.dataset.stage]||stageArt['Seedling'];
+  const img=document.createElement('img');
+  img.alt=b.dataset.stage+' artwork';
+  img.decoding='async';
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  img.style.cssText='display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;max-width:100%;max-height:100%';
+  thumb.replaceChildren(img);
+  thumb.style.setProperty('background','transparent','important');
   thumb.style.setProperty('background-image','none','important');
-  thumb.style.setProperty('background-size','auto','important');
-  thumb.style.setProperty('background-position','center','important');
-  const art=thumb.querySelector('svg');if(art){art.style.width='100%';art.style.height='100%';art.style.display='block';art.style.objectFit='contain'}
+  thumb.style.setProperty('overflow','hidden','important');
  });
  document.querySelectorAll('.stage-card').forEach(b=>b.classList.toggle('active',b.dataset.stage===t().stage));
 }
